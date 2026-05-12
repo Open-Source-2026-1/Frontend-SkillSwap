@@ -1,0 +1,41 @@
+<mat-card class="donation-card">
+  <div class="card-section header-section">
+    <div class="icon-circle">
+      <mat-icon>volunteer_activism</mat-icon>
+    </div>
+    <div class="header-text">
+      <h3>Donación #{{ donation.id }}</h3>
+      <span class="amount">S/ {{ donation.amount | number:'1.2-2' }}</span>
+      <div class="tx-badge">Stripe ID: {{ donation.stripeTransactionId | slice:0:10 }}</div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="card-section details-section">
+    <div class="payment-info">
+      <mat-icon>credit_card</mat-icon>
+      <span>Tarjeta de Crédito</span>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="card-section footer-section">
+    <div class="participants">
+      <div class="user-item">
+        <mat-icon>person</mat-icon>
+        <span>Tutor ID: <strong>{{ donation.tutorId }}</strong></span>
+      </div>
+      <div class="user-item">
+        <mat-icon>class</mat-icon>
+        <span>Sesión ID: <strong>{{ donation.sessionId }}</strong></span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn edit-btn" (click)="onEdit()">Editar</button>
+      <button class="action-btn delete-btn" (click)="onDelete()">Eliminar</button>
+    </div>
+  </div>
+</mat-card>

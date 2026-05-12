@@ -1,0 +1,30 @@
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+
+<div class="list-header">
+  <h2>Historial de donaciones</h2>
+  <button mat-raised-button color="primary" (click)="router.navigate(['payments/donations/new'])">
+    <mat-icon>add</mat-icon> Hacer una donación
+  </button>
+</div>
+
+@if (store.donations().length === 0 && !store.loading()) {
+  <div class="empty-state">
+    <mat-icon>inbox</mat-icon>
+    <p>Aún no has recibido ninguna donación. Completa sesiones de tutoría para empezar a acumular saldo.</p>
+  </div>
+}
+
+<div class="cards-container">
+  @for (donation of store.donations(); track donation.id) {
+    <app-donation-card
+      [donation]="donation"
+      (edit)="editDonation($event)"
+      (delete)="deleteDonation($event)">
+    </app-donation-card>
+  }
+</div>

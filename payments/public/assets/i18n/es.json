@@ -1,0 +1,26 @@
+{
+  "option": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "wallet": "Mi Billetera",
+    "donations": "Donaciones"
+  },
+  "about": {
+    "title": "Acerca de nosotros",
+    "content": "Skillswap es una plataforma de tutorías que conecta estudiantes con tutores expertos."
+  },
+  "home": {
+    "title": "Bienvenido",
+    "content": "Bienvenido a Skillswap."
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalidPath }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "powered-by": "Desarrollado con",
+    "and": "y"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "donations": [
+    {
+      "id": 1,
+      "amount": 15,
+      "commissionFee": 0.75,
+      "netAmount": 14.25,
+      "stripeTransactionId": "txn_001ABC",
+      "tutorId": 101,
+      "sessionId": 201
+    },
+    {
+      "id": 2,
+      "amount": 20,
+      "commissionFee": 1,
+      "netAmount": 19,
+      "stripeTransactionId": "txn_002DEF",
+      "tutorId": 101,
+      "sessionId": 202
+    },
+    {
+      "id": 3,
+      "amount": 10,
+      "commissionFee": 0.5,
+      "netAmount": 9.5,
+      "stripeTransactionId": "txn_003GHI",
+      "tutorId": 102,
+      "sessionId": 203
+    },
+    {
+      "id": 4,
+      "amount": 25,
+      "commissionFee": 1.25,
+      "netAmount": 23.75,
+      "stripeTransactionId": "txn_004JKL",
+      "tutorId": 103,
+      "sessionId": 204
+    },
+    {
+      "id": 5,
+      "amount": 50,
+      "commissionFee": 2.5,
+      "netAmount": 47.5,
+      "stripeTransactionId": "txn_005MNO",
+      "tutorId": 102,
+      "sessionId": 205
+    },
+    {
+      "id": 6,
+      "amount": 60,
+      "commissionFee": 3,
+      "netAmount": 57,
+      "stripeTransactionId": " txn_006MNO",
+      "tutorId": 13,
+      "sessionId": 233
+    },
+    {
+      "id": 7,
+      "amount": 46,
+      "commissionFee": 2.3,
+      "netAmount": 43.7,
+      "stripeTransactionId": " txn_007MNO",
+      "tutorId": 13,
+      "sessionId": 256
+    }
+  ]
+}
