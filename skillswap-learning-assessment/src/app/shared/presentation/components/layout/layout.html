@@ -1,0 +1,24 @@
+<mat-toolbar class="skillswap-toolbar">
+  <mat-toolbar-row>
+    <span class="brand">⚡ SkillSwap</span>
+    <div class="mat-spacer"></div>
+    @for (option of options; track option.label) {
+      <a mat-button [routerLink]="option.link" routerLinkActive="active-link">
+        {{ option.label | translate }}
+      </a>
+    }
+    <app-language-switcher/>
+    <button mat-icon-button class="icon-btn" title="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button class="icon-btn" title="Profile">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-button class="logout-btn" title="Log out">
+      <mat-icon>logout</mat-icon>
+      Log out
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet/>
+<app-footer-content/>

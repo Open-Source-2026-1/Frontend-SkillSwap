@@ -1,0 +1,295 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "title": "Cálculo I - Cinemática",
+      "course": "Cálculo",
+      "status": "published",
+      "professorId": 1
+    },
+    {
+      "id": 2,
+      "title": "Física - Óptica",
+      "course": "Física",
+      "status": "published",
+      "professorId": 1
+    },
+    {
+      "id": 3,
+      "title": "Programación - Algoritmos",
+      "course": "Programación",
+      "status": "published",
+      "professorId": 2
+    },
+    {
+      "id": 4,
+      "title": "Química General - Elementos",
+      "course": "Química",
+      "status": "draft",
+      "professorId": 2
+    },
+    {
+      "id": 5,
+      "title": "Estadística - Probabilidad",
+      "course": "Estadística",
+      "status": "published",
+      "professorId": 3
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "quizId": 1,
+      "text": "¿Cuál es la unidad de aceleración?",
+      "optionA": "m/s",
+      "optionB": "m/s²",
+      "optionC": "kg",
+      "optionD": "N",
+      "correctOption": "B"
+    },
+    {
+      "id": 2,
+      "quizId": 1,
+      "text": "¿Qué fórmula representa la velocidad?",
+      "optionA": "v = d/t",
+      "optionB": "v = m*a",
+      "optionC": "v = F/m",
+      "optionD": "v = P/t",
+      "correctOption": "A"
+    },
+    {
+      "id": 3,
+      "quizId": 1,
+      "text": "¿Qué es la derivada de la posición con respecto al tiempo?",
+      "optionA": "Aceleración",
+      "optionB": "Fuerza",
+      "optionC": "Velocidad",
+      "optionD": "Masa",
+      "correctOption": "C"
+    },
+    {
+      "id": 4,
+      "quizId": 1,
+      "text": "¿Cuál de las siguientes es una magnitud vectorial?",
+      "optionA": "Rapidez",
+      "optionB": "Temperatura",
+      "optionC": "Masa",
+      "optionD": "Velocidad",
+      "correctOption": "D"
+    },
+    {
+      "id": 5,
+      "quizId": 1,
+      "text": "¿Qué representa el área bajo una gráfica velocidad-tiempo?",
+      "optionA": "Aceleración",
+      "optionB": "Desplazamiento",
+      "optionC": "Fuerza",
+      "optionD": "Potencia",
+      "correctOption": "B"
+    },
+
+    {
+      "id": 6,
+      "quizId": 2,
+      "text": "¿Cuál es la velocidad de la luz en el vacío?",
+      "optionA": "3x10⁶ m/s",
+      "optionB": "3x10⁸ m/s",
+      "optionC": "3x10¹⁰ m/s",
+      "optionD": "3x10⁴ m/s",
+      "correctOption": "B"
+    },
+    {
+      "id": 7,
+      "quizId": 2,
+      "text": "¿Qué fenómeno explica por qué una pajilla parece doblada en el agua?",
+      "optionA": "Reflexión",
+      "optionB": "Difracción",
+      "optionC": "Refracción",
+      "optionD": "Interferencia",
+      "correctOption": "C"
+    },
+    {
+      "id": 8,
+      "quizId": 2,
+      "text": "¿Qué tipo de lente corrige la miopía?",
+      "optionA": "Convexa",
+      "optionB": "Cóncava",
+      "optionC": "Plana",
+      "optionD": "Bifocal",
+      "correctOption": "B"
+    },
+    {
+      "id": 9,
+      "quizId": 2,
+      "text": "¿Cuál es la unidad de frecuencia?",
+      "optionA": "Metro",
+      "optionB": "Newton",
+      "optionC": "Hertz",
+      "optionD": "Joule",
+      "correctOption": "C"
+    },
+    {
+      "id": 10,
+      "quizId": 2,
+      "text": "¿Qué color tiene la mayor frecuencia en la luz visible?",
+      "optionA": "Rojo",
+      "optionB": "Verde",
+      "optionC": "Amarillo",
+      "optionD": "Violeta",
+      "correctOption": "D"
+    },
+
+    {
+      "id": 11,
+      "quizId": 3,
+      "text": "¿Qué complejidad es O(n log n)?",
+      "optionA": "Lineal",
+      "optionB": "Cuadrática",
+      "optionC": "Linealítmica",
+      "optionD": "Constante",
+      "correctOption": "C"
+    },
+    {
+      "id": 12,
+      "quizId": 3,
+      "text": "¿Qué estructura de datos usa orden LIFO?",
+      "optionA": "Cola",
+      "optionB": "Pila",
+      "optionC": "Árbol",
+      "optionD": "Grafo",
+      "correctOption": "B"
+    },
+    {
+      "id": 13,
+      "quizId": 3,
+      "text": "¿Qué necesita la recursión para evitar bucles infinitos?",
+      "optionA": "Un bucle",
+      "optionB": "Un caso base",
+      "optionC": "Un puntero",
+      "optionD": "Una clase",
+      "correctOption": "B"
+    },
+    {
+      "id": 14,
+      "quizId": 3,
+      "text": "¿Qué algoritmo de ordenamiento tiene peor caso O(n²)?",
+      "optionA": "Merge Sort",
+      "optionB": "Quick Sort",
+      "optionC": "Bubble Sort",
+      "optionD": "Heap Sort",
+      "correctOption": "C"
+    },
+    {
+      "id": 15,
+      "quizId": 3,
+      "text": "¿Cuál es el resultado de 5 % 2 en la mayoría de lenguajes?",
+      "optionA": "2",
+      "optionB": "2.5",
+      "optionC": "0",
+      "optionD": "1",
+      "correctOption": "D"
+    },
+
+    {
+      "id": 16,
+      "quizId": 4,
+      "text": "¿Cuál es el número atómico del Carbono?",
+      "optionA": "6",
+      "optionB": "12",
+      "optionC": "8",
+      "optionD": "4",
+      "correctOption": "A"
+    },
+    {
+      "id": 17,
+      "quizId": 4,
+      "text": "¿Cuál es el elemento más abundante en la corteza terrestre?",
+      "optionA": "Silicio",
+      "optionB": "Hierro",
+      "optionC": "Oxígeno",
+      "optionD": "Aluminio",
+      "correctOption": "C"
+    },
+    {
+      "id": 18,
+      "quizId": 4,
+      "text": "¿Cuál es el símbolo químico del Oro?",
+      "optionA": "Go",
+      "optionB": "Gd",
+      "optionC": "Au",
+      "optionD": "Ag",
+      "correctOption": "C"
+    },
+    {
+      "id": 19,
+      "quizId": 4,
+      "text": "¿Cuántos protones tiene el Hidrógeno?",
+      "optionA": "2",
+      "optionB": "0",
+      "optionC": "3",
+      "optionD": "1",
+      "correctOption": "D"
+    },
+    {
+      "id": 20,
+      "quizId": 4,
+      "text": "¿Qué tipo de enlace comparte electrones entre átomos?",
+      "optionA": "Iónico",
+      "optionB": "Covalente",
+      "optionC": "Metálico",
+      "optionD": "Hidrógeno",
+      "correctOption": "B"
+    },
+
+    {
+      "id": 21,
+      "quizId": 5,
+      "text": "¿Cuál es la probabilidad de sacar un 6 en un dado justo?",
+      "optionA": "1/3",
+      "optionB": "1/4",
+      "optionC": "1/6",
+      "optionD": "1/2",
+      "correctOption": "C"
+    },
+    {
+      "id": 22,
+      "quizId": 5,
+      "text": "¿Qué representa la media en un conjunto de datos?",
+      "optionA": "El valor más frecuente",
+      "optionB": "El valor central",
+      "optionC": "El valor promedio",
+      "optionD": "El rango",
+      "correctOption": "C"
+    },
+    {
+      "id": 23,
+      "quizId": 5,
+      "text": "Si P(A) = 0.4 y P(B) = 0.3 y son independientes, ¿cuánto es P(A y B)?",
+      "optionA": "0.7",
+      "optionB": "0.12",
+      "optionC": "0.1",
+      "optionD": "0.34",
+      "correctOption": "B"
+    },
+    {
+      "id": 24,
+      "quizId": 5,
+      "text": "¿Qué mide la desviación estándar?",
+      "optionA": "Tendencia central",
+      "optionB": "Correlación",
+      "optionC": "Dispersión",
+      "optionD": "Frecuencia",
+      "correctOption": "C"
+    },
+    {
+      "id": 25,
+      "quizId": 5,
+      "text": "¿Cuánto suman todas las probabilidades de un espacio muestral?",
+      "optionA": "0",
+      "optionB": "0.5",
+      "optionC": "Depende de los eventos",
+      "optionD": "1",
+      "correctOption": "D"
+    }
+  ]
+}

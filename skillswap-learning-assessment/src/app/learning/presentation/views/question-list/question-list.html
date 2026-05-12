@@ -1,0 +1,39 @@
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+
+<table mat-table [dataSource]="questions()" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let q">{{ q.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="text">
+    <th mat-header-cell *matHeaderCellDef>Question</th>
+    <td mat-cell *matCellDef="let q">{{ q.text }}</td>
+  </ng-container>
+  <ng-container matColumnDef="correctOption">
+    <th mat-header-cell *matHeaderCellDef>Correct</th>
+    <td mat-cell *matCellDef="let q">{{ q.correctOption }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let q">
+      <button mat-button (click)="editQuestion(q.id)">Edit</button>
+      <button mat-button (click)="deleteQuestion(q.id)">Delete</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button mat-raised-button color="primary"
+        (click)="router.navigate(['learning/quizzes', quizId, 'questions/new'])">
+  Add Question
+</button>
+
+<button mat-button (click)="router.navigate(['learning/quizzes'])">
+  Back to Quizzes
+</button>

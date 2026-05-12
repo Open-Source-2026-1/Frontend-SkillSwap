@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Question Text</mat-label>
+    <input matInput formControlName="text" required>
+    @if (form.get('text')!.touched && form.get('text')!.hasError('required')) {
+      <mat-error>Question text is required</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Option A</mat-label>
+    <input matInput formControlName="optionA" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Option B</mat-label>
+    <input matInput formControlName="optionB" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Option C</mat-label>
+    <input matInput formControlName="optionC" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Option D</mat-label>
+    <input matInput formControlName="optionD" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Correct Option</mat-label>
+    <mat-select formControlName="correctOption">
+      <mat-option value="A">A</mat-option>
+      <mat-option value="B">B</mat-option>
+      <mat-option value="C">C</mat-option>
+      <mat-option value="D">D</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+    {{ isEdit ? 'Update' : 'Add' }} Question
+  </button>
+</form>

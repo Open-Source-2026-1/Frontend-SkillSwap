@@ -1,0 +1,26 @@
+{
+  "option": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "quizzes": "Quizzes",
+    "questions": "Preguntas"
+  },
+  "about": {
+    "title": "Acerca de nosotros",
+    "content": "Módulo de Learning & Assessment de SkillSwap."
+  },
+  "home": {
+    "title": "Bienvenido",
+    "content": "Bienvenido a SkillSwap Learning & Assessment."
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "powered-by": "Desarrollado con",
+    "and": "y"
+  }
+}

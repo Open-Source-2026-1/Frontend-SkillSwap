@@ -1,0 +1,40 @@
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+
+<table mat-table [dataSource]="store.quizzes()" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let quiz">{{ quiz.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let quiz">{{ quiz.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="course">
+    <th mat-header-cell *matHeaderCellDef>Course</th>
+    <td mat-cell *matCellDef="let quiz">{{ quiz.course }}</td>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let quiz">{{ quiz.status }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let quiz">
+      <button mat-button (click)="manageQuestions(quiz.id)">Questions</button>
+      <button mat-button (click)="editQuiz(quiz.id)">Edit</button>
+      <button mat-button (click)="deleteQuiz(quiz.id)">Delete</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button mat-raised-button color="primary"
+        (click)="router.navigate(['learning/quizzes/new'])">
+  Add Quiz
+</button>

@@ -1,0 +1,29 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" required>
+    @if (form.get('title')!.touched && form.get('title')!.hasError('required')) {
+      <mat-error>Title is required</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Course</mat-label>
+    <input matInput formControlName="course" required>
+    @if (form.get('course')!.touched && form.get('course')!.hasError('required')) {
+      <mat-error>Course is required</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="draft">Draft</mat-option>
+      <mat-option value="published">Published</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+    {{ isEdit ? 'Update' : 'Add' }} Quiz
+  </button>
+</form>
