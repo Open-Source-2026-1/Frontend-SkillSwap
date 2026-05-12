@@ -1,0 +1,66 @@
+<div class="chat-page">
+
+  <div class="chat-topbar">
+    <button class="back-btn" (click)="router.navigate(['moderation/reports'])">
+      <span class="material-icons-outlined" style="font-size:16px;">arrow_back</span>
+      {{ 'chat.back' | translate }}
+    </button>
+  </div>
+
+  <!-- SESSION CARD -->
+  <div class="session-card">
+    <div class="session-info">
+      <h2 class="session-title">{{ 'chat.title' | translate }} #{{ userId() }}</h2>
+      <div class="session-meta">
+        <span class="meta-item">
+          <span class="material-icons-outlined" style="font-size:14px;">schedule</span>
+          {{ caseDate() }}
+        </span>
+        <span class="meta-item">
+          <span class="material-icons-outlined" style="font-size:14px;">person</span>
+          {{ 'chat.tutor-id' | translate }}: {{ tutorId() }}
+        </span>
+        <span class="meta-item">
+          <span class="material-icons-outlined" style="font-size:14px;">school</span>
+          {{ 'chat.student-id' | translate }}: {{ studentId() }}
+        </span>
+      </div>
+    </div>
+    <span class="status-badge">{{ 'chat.status-review' | translate }}</span>
+  </div>
+
+  <!-- MESSAGES CARD -->
+  <div class="messages-card">
+    <div class="messages-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="material-icons-outlined" style="font-size:18px; color:#6b7280;">chat_bubble_outline</span>
+        <span class="messages-title">{{ 'chat.messages' | translate }}</span>
+        <span class="msg-count">{{ messages().length }}</span>
+      </div>
+    </div>
+
+    <div class="messages-body">
+      @for (m of messages(); track m.id) {
+        <div class="msg-row">
+          <div class="msg-avatar">
+            <span class="material-icons-outlined" style="font-size:28px; color:#9ca3af;">account_circle</span>
+          </div>
+          <div class="msg-content">
+            <div class="msg-header">
+              <span class="msg-sender">{{ 'chat.user-label' | translate }} #{{ m.senderId }}</span>
+              <span class="msg-time">{{ m.sentAt }}</span>
+            </div>
+            <p class="msg-text">{{ m.message }}</p>
+          </div>
+        </div>
+      }
+      @if (messages().length === 0) {
+        <div class="msg-empty">
+          <span class="material-icons-outlined" style="font-size:32px; color:#d1d5db;">chat_bubble_outline</span>
+          <p>{{ 'chat.no-messages' | translate }}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

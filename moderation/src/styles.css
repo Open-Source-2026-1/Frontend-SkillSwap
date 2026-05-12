@@ -1,0 +1,24 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+  background-color: #f8f9fb;
+  color: #1a1d23;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; }
+
+/* Material overrides */
+.mat-mdc-raised-button     { border-radius: 8px !important; font-weight: 600 !important; letter-spacing: 0 !important; font-family: 'DM Sans', sans-serif !important; }
+.mat-mdc-icon-button       { border-radius: 6px !important; }
+.mat-mdc-table             { border-radius: 0 !important; overflow: hidden !important; width: 100% !important; }
+.mat-mdc-header-row        { background: #f8f9fb !important; }
+.mat-mdc-header-cell       { color: #6b7280 !important; font-size: 11px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 0.6px !important; font-family: 'DM Sans', sans-serif !important; border-bottom: 1px solid #f1f3f5 !important; }
+.mat-mdc-row:hover         { background: #f8f9fb !important; }
+.mat-mdc-cell              { color: #374151 !important; font-size: 14px !important; border-bottom: 1px solid #f1f3f5 !important; font-family: 'DM Sans', sans-serif !important; }
+.mat-mdc-form-field        { font-family: 'DM Sans', sans-serif !important; }
+.mat-mdc-select-value-text { font-family: 'DM Sans', sans-serif !important; }
+.mat-mdc-option            { font-family: 'DM Sans', sans-serif !important; }

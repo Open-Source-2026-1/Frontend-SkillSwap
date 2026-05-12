@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1 class="page-title">{{ 'home.page-title' | translate }}</h1>
+  <p class="page-sub">{{ 'home.page-sub' | translate }}</p>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon-wrap">
+      <span class="material-icons-outlined" style="font-size:20px;">flag</span>
+    </div>
+    <h2>{{ 'home.card-title' | translate }}</h2>
+  </div>
+  <div class="table-header-row">
+    <span>{{ 'home.col-name' | translate }}</span>
+    <span>{{ 'home.col-code' | translate }}</span>
+    <span>{{ 'home.col-date' | translate }}</span>
+  </div>
+  @for (r of store.reports().slice(0,3); track r.id) {
+    <div class="table-data-row">
+      <span>{{ r.reason.split(' ').slice(0,3).join(' ') }}</span>
+      <span class="code">u202016635</span>
+      <span>{{ r.getFormattedCreatedAt() }}</span>
+    </div>
+  }
+  @if (store.reports().length === 0) {
+    <p class="empty">{{ 'home.no-reports' | translate }}</p>
+  }
+  <div class="section-label">
+    <span class="pending-dot"></span>
+    <span>{{ 'home.section-pending' | translate }}</span>
+  </div>
+  @for (r of store.pendingReports().slice(0,3); track r.id) {
+    <div class="table-data-row">
+      <span>User {{ r.reportedUserId }}</span>
+      <span class="code">u202016635</span>
+      <span>{{ r.getFormattedCreatedAt() }}</span>
+      <a [routerLink]="['/moderation/reports']" class="eye-icon">
+        <span class="material-icons-outlined" style="font-size:18px;">visibility</span>
+      </a>
+    </div>
+  }
+  @if (store.pendingReports().length === 0) {
+    <p class="empty">{{ 'home.no-pending' | translate }}</p>
+  }
+  <div class="card-more">
+    <a [routerLink]="['/moderation/reports']">
+      <span class="material-icons-outlined" style="font-size:18px;">expand_more</span>
+    </a>
+  </div>
+</div>

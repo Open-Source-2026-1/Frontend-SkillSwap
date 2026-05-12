@@ -1,0 +1,18 @@
+.lang-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 3px 8px;
+}
+.lang-btn {
+  background: none; border: none;
+  font-size: 13px; font-weight: 600;
+  color: #888; cursor: pointer;
+  padding: 2px 4px; border-radius: 4px;
+  transition: color 0.15s;
+}
+.lang-btn.lang-active { color: #1a3a6b; }
+.lang-check { font-size: 11px; color: #1a3a6b; opacity: 0; transition: opacity 0.15s; }
+.lang-check.visible { opacity: 1; }

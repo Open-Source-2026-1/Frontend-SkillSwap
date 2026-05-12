@@ -1,0 +1,22 @@
+.form-page { max-width: 600px; }
+.page-header { margin-bottom: 24px; }
+.page-title  { font-size: 22px; font-weight: 700; color: #1a1d23; margin: 0 0 4px; }
+.page-sub    { font-size: 13px; color: #9ca3af; margin: 0; }
+.form-card   { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px; }
+.form-wrap   { display: flex; flex-direction: column; gap: 18px; }
+.btn-row     { display: flex; gap: 12px; padding-top: 8px; }
+.btn-primary {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#ef4444; color:#fff; border:none; border-radius:8px;
+  padding:10px 20px; font-size:14px; font-weight:600;
+  cursor:pointer; transition:background 0.15s; font-family:inherit;
+}
+.btn-primary:hover    { background:#dc2626; }
+.btn-primary:disabled { background:#fca5a5; cursor:not-allowed; }
+.btn-secondary {
+  display:inline-flex; align-items:center;
+  background:none; color:#6b7280; border:1px solid #e5e7eb;
+  border-radius:8px; padding:10px 20px; font-size:14px;
+  font-weight:500; cursor:pointer; transition:all 0.15s; font-family:inherit;
+}
+.btn-secondary:hover { border-color:#1e3a5f; color:#1e3a5f; }

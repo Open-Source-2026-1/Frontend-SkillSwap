@@ -1,0 +1,53 @@
+<div class="form-page">
+  <div class="page-header">
+    <h1 class="page-title">{{ isEdit ? ('sanctions.edit-title' | translate) : ('sanctions.new-title' | translate) }}</h1>
+    <p class="page-sub">{{ isEdit ? ('sanctions.edit-sub' | translate) : ('sanctions.new-sub' | translate) }}</p>
+  </div>
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-wrap">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'sanctions.field-report' | translate }}</mat-label>
+        <input matInput type="number" formControlName="reportId">
+        @if (form.get('reportId')!.touched && form.get('reportId')!.invalid) {
+          <mat-error>{{ 'sanctions.err-id' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'sanctions.field-user' | translate }}</mat-label>
+        <input matInput type="number" formControlName="sanctionedUserId">
+        @if (form.get('sanctionedUserId')!.touched && form.get('sanctionedUserId')!.invalid) {
+          <mat-error>{{ 'sanctions.err-id' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'sanctions.field-type' | translate }}</mat-label>
+        <mat-select formControlName="type">
+          @for (t of typeOptions; track t) {
+            <mat-option [value]="t">{{ t }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'sanctions.field-notes' | translate }}</mat-label>
+        <textarea matInput formControlName="description" rows="3"
+                  [placeholder]="'sanctions.field-notes-ph' | translate"></textarea>
+        @if (form.get('description')!.touched && form.get('description')!.hasError('required')) {
+          <mat-error>{{ 'sanctions.err-notes' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'sanctions.field-duration' | translate }}</mat-label>
+        <input matInput type="number" formControlName="durationDays">
+      </mat-form-field>
+      <div class="btn-row">
+        <button class="btn-primary" type="submit" [disabled]="form.invalid">
+          <span class="material-icons-outlined" style="font-size:16px;">gavel</span>
+          {{ isEdit ? ('sanctions.btn-update' | translate) : ('sanctions.btn-create' | translate) }}
+        </button>
+        <button class="btn-secondary" type="button" (click)="router.navigate(['moderation/sanctions'])">
+          {{ 'sanctions.btn-cancel' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

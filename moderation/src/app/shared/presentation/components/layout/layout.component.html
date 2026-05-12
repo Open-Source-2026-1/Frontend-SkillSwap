@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="brand-skill">Skill</span><span class="brand-swap">Swap</span>
+  </div>
+  <div class="navbar-links">
+    <a routerLink="/moderation/reports" routerLinkActive="active">{{ 'nav.reports' | translate }}</a>
+    <a routerLink="/students"           routerLinkActive="active">{{ 'nav.students' | translate }}</a>
+  </div>
+  <div class="navbar-actions">
+    <button class="icon-btn">
+      <span class="material-icons-outlined" style="font-size:20px;">search</span>
+    </button>
+    <button class="icon-btn">
+      <span class="material-icons-outlined" style="font-size:20px;">notifications_none</span>
+    </button>
+    <div class="lang-wrap">
+      <button class="lang-btn" [class.lang-active]="currentLang === 'en'" (click)="setLang('en')">EN</button>
+      <span class="lang-check" [class.visible]="currentLang === 'en'">✓</span>
+      <button class="lang-btn" [class.lang-active]="currentLang === 'es'" (click)="setLang('es')">ES</button>
+      <span class="lang-check" [class.visible]="currentLang === 'es'">✓</span>
+    </div>
+    <div class="avatar">
+      <span class="material-icons-outlined" style="font-size:20px; color:#6b7280;">account_circle</span>
+    </div>
+    <button class="btn-cerrar">{{ 'nav.logout' | translate }}</button>
+  </div>
+</nav>
+<div class="content-area">
+  <router-outlet/>
+</div>
+<app-footer-content/>

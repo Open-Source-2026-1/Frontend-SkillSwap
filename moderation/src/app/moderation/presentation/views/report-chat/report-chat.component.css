@@ -1,0 +1,64 @@
+.chat-page { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none; color: #6b7280;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  padding: 0; transition: color 0.15s; font-family: inherit;
+}
+.back-btn:hover { color: #1a1d23; }
+
+.session-card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+  padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;
+}
+.session-title { font-size: 18px; font-weight: 700; color: #1a1d23; margin: 0 0 8px; }
+.session-meta  { display: flex; align-items: center; gap: 16px; }
+.meta-item {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 13px; color: #6b7280;
+}
+.status-badge {
+  background: #f0fdf4; color: #16a34a;
+  border: 1px solid #bbf7d0; border-radius: 20px;
+  padding: 5px 14px; font-size: 13px; font-weight: 600;
+}
+
+.messages-card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+}
+.messages-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; border-bottom: 1px solid #f1f3f5;
+}
+.messages-title { font-size: 14px; font-weight: 600; color: #1a1d23; }
+.msg-count {
+  background: #ef4444; color: #fff; font-size: 11px; font-weight: 700;
+  border-radius: 50%; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Fix: mensajes más anchos */
+.messages-body { padding: 8px 0; }
+.msg-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 24px; transition: background 0.15s;
+}
+.msg-row:hover { background: #f8f9fb; }
+.msg-avatar    { flex-shrink: 0; margin-top: 2px; }
+.msg-content   { flex: 1; min-width: 0; }
+.msg-header    { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.msg-sender    { font-size: 13px; font-weight: 700; color: #1a1d23; }
+.msg-time      { font-size: 12px; color: #9ca3af; }
+
+/* Fix: texto del mensaje más ancho y legible */
+.msg-text {
+  font-size: 14px; color: #374151;
+  margin: 0; line-height: 1.6;
+  background: #f8f9fb; border-radius: 8px;
+  padding: 10px 14px; border: 1px solid #f1f3f5;
+  width: 100%;
+}
+
+.msg-empty { padding: 48px; text-align: center; color: #9ca3af; }
+.msg-empty p { margin: 8px 0 0; font-size: 14px; }

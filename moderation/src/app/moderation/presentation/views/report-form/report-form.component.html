@@ -1,0 +1,48 @@
+<div class="form-page">
+  <div class="page-header">
+    <h1 class="page-title">{{ isEdit ? ('reports.edit-title' | translate) : ('reports.new-title' | translate) }}</h1>
+    <p class="page-sub">{{ isEdit ? ('reports.edit-sub' | translate) : ('reports.new-sub' | translate) }}</p>
+  </div>
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-wrap">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'reports.field-reporter' | translate }}</mat-label>
+        <input matInput type="number" formControlName="reporterUserId">
+        @if (form.get('reporterUserId')!.touched && form.get('reporterUserId')!.invalid) {
+          <mat-error>{{ 'reports.err-id' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'reports.field-reported' | translate }}</mat-label>
+        <input matInput type="number" formControlName="reportedUserId">
+        @if (form.get('reportedUserId')!.touched && form.get('reportedUserId')!.invalid) {
+          <mat-error>{{ 'reports.err-id' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'reports.field-reason' | translate }}</mat-label>
+        <input matInput formControlName="reason" [placeholder]="'reports.field-reason-ph' | translate">
+        @if (form.get('reason')!.touched && form.get('reason')!.hasError('required')) {
+          <mat-error>{{ 'reports.err-reason' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'reports.field-status' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          @for (s of statusOptions; track s.value) {
+            <mat-option [value]="s.value">{{ s.label | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="btn-row">
+        <button class="btn-primary" type="submit" [disabled]="form.invalid">
+          <span class="material-icons-outlined" style="font-size:16px;">save</span>
+          {{ isEdit ? ('reports.btn-update' | translate) : ('reports.btn-create' | translate) }}
+        </button>
+        <button class="btn-secondary" type="button" (click)="router.navigate(['moderation/reports'])">
+          {{ 'reports.btn-cancel' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

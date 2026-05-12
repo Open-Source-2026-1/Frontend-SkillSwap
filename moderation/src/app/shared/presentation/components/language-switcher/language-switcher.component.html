@@ -1,0 +1,6 @@
+<div class="lang-wrap">
+  <button class="lang-btn" [class.lang-active]="currentLang === 'en'" (click)="setLang('en')">EN</button>
+  <span class="lang-check" [class.visible]="currentLang === 'en'">✓</span>
+  <button class="lang-btn" [class.lang-active]="currentLang === 'es'" (click)="setLang('es')">ES</button>
+  <span class="lang-check" [class.visible]="currentLang === 'es'">✓</span>
+</div>

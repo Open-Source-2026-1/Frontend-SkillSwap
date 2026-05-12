@@ -1,0 +1,292 @@
+{
+  "reports": [
+    {
+      "id": 1,
+      "reportedUserId": 2,
+      "reporterUserId": 1,
+      "reason": "Inappropriate language during session",
+      "status": "dismissed",
+      "closed": false,
+      "createdAt": "2026-05-12T06:34:18.651Z"
+    },
+    {
+      "id": 2,
+      "reportedUserId": 3,
+      "reporterUserId": 4,
+      "reason": "No-show without notice",
+      "status": "warning",
+      "closed": true,
+      "createdAt": "2025-04-12T09:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "reportedUserId": 5,
+      "reporterUserId": 2,
+      "reason": "Sharing inappropriate content",
+      "status": "dismissed",
+      "createdAt": "2025-04-15T11:20:00Z",
+      "closed": false
+    },
+    {
+      "id": 4,
+      "reportedUserId": 6,
+      "reporterUserId": 3,
+      "reason": "Harassment in chat messages",
+      "status": "pending",
+      "createdAt": "2025-04-20T08:45:00Z",
+      "closed": false
+    },
+    {
+      "id": 5,
+      "reportedUserId": 2,
+      "reporterUserId": 5,
+      "reason": "Repeated offensive comments",
+      "status": "pending",
+      "createdAt": "2025-04-22T10:00:00Z",
+      "closed": false
+    },
+    {
+      "id": 6,
+      "reportedUserId": 7,
+      "reporterUserId": 1,
+      "reason": "Did not complete the agreed tutoring session",
+      "status": "pending",
+      "createdAt": "2025-04-25T13:00:00Z",
+      "closed": false
+    },
+    {
+      "id": 7,
+      "reportedUserId": 8,
+      "reporterUserId": 3,
+      "reason": "Shared incorrect academic content",
+      "status": "warning",
+      "createdAt": "2025-04-27T16:00:00Z",
+      "closed": false
+    },
+    {
+      "id": 8,
+      "reportedUserId": 9,
+      "reporterUserId": 6,
+      "reason": "Abusive behavior during video call",
+      "status": "pending",
+      "createdAt": "2025-04-28T09:30:00Z",
+      "closed": false
+    },
+    {
+      "id": 9,
+      "reportedUserId": 10,
+      "reporterUserId": 4,
+      "reason": "Fraud - charged for free session",
+      "status": "dismissed",
+      "createdAt": "2025-04-29T11:00:00Z",
+      "closed": false
+    },
+    {
+      "id": 10,
+      "reportedUserId": 7,
+      "reporterUserId": 2,
+      "reason": "No response after session was accepted",
+      "status": "pending",
+      "createdAt": "2025-04-30T14:00:00Z",
+      "closed": false
+    }
+  ],
+  "sanctions": [
+    {
+      "id": 1,
+      "reportId": 2,
+      "sanctionedUserId": 3,
+      "type": "warning",
+      "description": "First warning for no-show behavior.",
+      "durationDays": 0,
+      "createdAt": "2025-04-13T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "reportId": 3,
+      "sanctionedUserId": 5,
+      "type": "dismissed",
+      "description": "Content was reviewed and found acceptable.",
+      "durationDays": 0,
+      "createdAt": "2025-04-16T08:30:00Z"
+    },
+    {
+      "id": 3,
+      "reportId": 7,
+      "sanctionedUserId": 8,
+      "type": "warning",
+      "description": "Warning for sharing incorrect academic content.",
+      "durationDays": 0,
+      "createdAt": "2025-04-28T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "reportId": 9,
+      "sanctionedUserId": 10,
+      "type": "dismissed",
+      "description": "Report dismissed after investigation.",
+      "durationDays": 0,
+      "createdAt": "2025-04-30T09:00:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Ricardo Torres",
+      "code": "u202016631",
+      "role": "tutor"
+    },
+    {
+      "id": 2,
+      "name": "Stephano Vega",
+      "code": "u202016632",
+      "role": "learner"
+    },
+    {
+      "id": 3,
+      "name": "Julia Ramirez",
+      "code": "u202016633",
+      "role": "tutor"
+    },
+    {
+      "id": 4,
+      "name": "Carlos Mendoza",
+      "code": "u202016634",
+      "role": "learner"
+    },
+    {
+      "id": 5,
+      "name": "Maria Flores",
+      "code": "u202016635",
+      "role": "tutor"
+    },
+    {
+      "id": 6,
+      "name": "Juan Perez",
+      "code": "u202016636",
+      "role": "learner"
+    },
+    {
+      "id": 7,
+      "name": "Luisa Gutierrez",
+      "code": "u202016637",
+      "role": "tutor"
+    },
+    {
+      "id": 8,
+      "name": "Diego Castillo",
+      "code": "u202016638",
+      "role": "learner"
+    },
+    {
+      "id": 9,
+      "name": "Sofia Quispe",
+      "code": "u202016639",
+      "role": "tutor"
+    },
+    {
+      "id": 10,
+      "name": "Aldair Mamani",
+      "code": "u202016640",
+      "role": "learner"
+    },
+    {
+      "id": 11,
+      "name": "Valeria Torres",
+      "code": "u202016641",
+      "role": "tutor"
+    },
+    {
+      "id": 12,
+      "name": "Bruno Salinas",
+      "code": "u202016642",
+      "role": "learner"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "reportedUserId": 2,
+      "senderId": 1,
+      "message": "Hi, I need help with Calculus II.",
+      "sentAt": "10:00 AM"
+    },
+    {
+      "id": 2,
+      "reportedUserId": 2,
+      "senderId": 2,
+      "message": "Sure, but first you need to pay me extra.",
+      "sentAt": "10:02 AM"
+    },
+    {
+      "id": 3,
+      "reportedUserId": 2,
+      "senderId": 1,
+      "message": "That was not agreed. I'm reporting this.",
+      "sentAt": "10:05 AM"
+    },
+    {
+      "id": 4,
+      "reportedUserId": 3,
+      "senderId": 4,
+      "message": "Are you coming to the session?",
+      "sentAt": "09:00 AM"
+    },
+    {
+      "id": 5,
+      "reportedUserId": 3,
+      "senderId": 4,
+      "message": "It's been 20 minutes and you haven't shown up.",
+      "sentAt": "09:20 AM"
+    },
+    {
+      "id": 6,
+      "reportedUserId": 3,
+      "senderId": 3,
+      "message": "Sorry, I forgot about it.",
+      "sentAt": "09:45 AM"
+    },
+    {
+      "id": 7,
+      "reportedUserId": 6,
+      "senderId": 3,
+      "message": "Please stop sending these kinds of messages.",
+      "sentAt": "08:30 AM"
+    },
+    {
+      "id": 8,
+      "reportedUserId": 6,
+      "senderId": 6,
+      "message": "You are so bad at teaching, what a waste.",
+      "sentAt": "08:32 AM"
+    },
+    {
+      "id": 9,
+      "reportedUserId": 6,
+      "senderId": 3,
+      "message": "I'm going to report you for this behavior.",
+      "sentAt": "08:35 AM"
+    },
+    {
+      "id": 10,
+      "reportedUserId": 8,
+      "senderId": 8,
+      "message": "The formula I showed you is Newton's third law applied incorrectly, don't use it.",
+      "sentAt": "14:10 PM"
+    },
+    {
+      "id": 11,
+      "reportedUserId": 8,
+      "senderId": 3,
+      "message": "Wait, that doesn't seem right. Can you clarify?",
+      "sentAt": "14:12 PM"
+    },
+    {
+      "id": 12,
+      "reportedUserId": 8,
+      "senderId": 8,
+      "message": "Trust me, I studied this.",
+      "sentAt": "14:13 PM"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+<div class="page-wrap">
+  <div class="page-header">
+    <h1 class="page-title">{{ 'students.page-title' | translate }}</h1>
+    <p class="page-sub">{{ 'students.page-sub' | translate }}</p>
+  </div>
+  <div class="search-bar-wrap">
+    <div class="search-input-wrap">
+      <span class="material-icons-outlined search-icon" style="font-size:20px;">search</span>
+      <input class="search-input" type="text"
+        [placeholder]="'students.placeholder' | translate"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch()" />
+      @if (searchTerm.length > 0) {
+        <button class="btn-clear" (click)="clearSearch()">
+          <span class="material-icons-outlined" style="font-size:18px;">close</span>
+        </button>
+      }
+    </div>
+    <button class="btn-filter">
+      <span class="material-icons-outlined" style="font-size:20px; color:white;">tune</span>
+    </button>
+  </div>
+
+  <p class="section-title">
+    {{ 'students.results' | translate }}
+    @if (results().length > 0) { ({{ results().length }}) }
+  </p>
+
+  @if (searchTerm.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <span class="material-icons-outlined" style="font-size:40px; color:#d1d5db;">manage_search</span>
+      </div>
+      <p>{{ 'students.write' | translate }}</p>
+    </div>
+  } @else if (results().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <span class="material-icons-outlined" style="font-size:40px; color:#d1d5db;">search_off</span>
+      </div>
+      <p>{{ 'students.no-results' | translate }} "<strong>{{ searchTerm }}</strong>"</p>
+    </div>
+  } @else {
+    @for (user of results(); track user.id) {
+      <div class="result-card">
+        <div class="user-avatar">{{ user.name.charAt(0) }}</div>
+        <div class="user-info">
+          <p class="user-name">{{ user.name }}</p>
+          <p class="user-code">{{ user.code }}</p>
+          <span class="badge"
+            [class.badge-tutor]="user.role === 'tutor'"
+            [class.badge-learner]="user.role === 'learner'">
+            {{ user.role === 'tutor' ? ('students.role-tutor' | translate) : ('students.role-learner' | translate) }}
+          </span>
+        </div>
+      </div>
+    }
+  }
+</div>

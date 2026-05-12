@@ -1,0 +1,35 @@
+.page-header { margin-bottom: 20px; }
+.page-title  { font-size: 24px; font-weight: 700; color: #1a1d23; margin: 0 0 4px; }
+.page-sub    { font-size: 13px; color: #9ca3af; margin: 0; }
+
+.table-card { background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
+.table-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 20px; border-bottom: 1px solid #f1f3f5;
+}
+.table-title { font-size: 15px; font-weight: 600; color: #1a1d23; }
+.badge-count { background: #fef3c7; color: #d97706; font-size:11px; font-weight:700; border-radius:20px; padding:2px 8px; margin-left:8px; }
+
+table { width: 100%; }
+.chip { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+.chip-ban       { background:#fff1f0; color:#ef4444; border:1px solid #fecaca; }
+.chip-warning   { background:#fffbeb; color:#d97706; border:1px solid #fde68a; }
+.chip-dismissed { background:#f3f4f6; color:#6b7280; border:1px solid #e5e7eb; }
+
+.actions-wrap { display:flex; align-items:center; gap:4px; }
+.action-icon {
+  width:32px; height:32px; border:none; background:none; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:#9ca3af; transition:all 0.15s;
+}
+.action-icon:hover       { background:#f3f4f6; color:#1a1d23; }
+.action-icon.delete:hover { background:#fff1f0; color:#ef4444; }
+
+.btn-apply {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#ef4444; color:#fff; border:none; border-radius:8px;
+  padding:8px 16px; font-size:13px; font-weight:600;
+  cursor:pointer; transition:background 0.15s; font-family:inherit;
+}
+.btn-apply:hover { background:#dc2626; }
+.empty-msg { text-align:center; color:#9ca3af; font-size:13px; padding:32px; }
