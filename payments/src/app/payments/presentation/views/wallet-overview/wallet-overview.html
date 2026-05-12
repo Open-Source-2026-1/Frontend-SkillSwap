@@ -1,0 +1,125 @@
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+
+<div class="wallet-container">
+
+  <mat-card class="balance-card">
+    <div class="balance-card-inner">
+
+      <div class="balance-header">
+        <div class="balance-title-area">
+          <mat-icon class="wallet-icon">account_balance_wallet</mat-icon>
+          <div>
+            <h2 class="wallet-title">Mi Billetera Virtual</h2>
+            <p class="wallet-subtitle">Resumen financiero de tus donaciones recibidas</p>
+          </div>
+        </div>
+      </div>
+
+      @if (store.totalBalance() === 0) {
+        <div class="empty-wallet">
+          <mat-icon>sentiment_neutral</mat-icon>
+          <p>Aún no has recibido ninguna donación. Completa sesiones de tutoría para empezar a acumular saldo.</p>
+        </div>
+      } @else {
+        <div class="balance-content">
+
+          <div class="balance-display" aria-label="Saldo disponible">
+            <span class="balance-label">Saldo Disponible</span>
+            <span class="balance-amount">
+              <span class="currency">S/</span> {{ store.totalBalance() | number:'1.2-2' }}
+            </span>
+          </div>
+
+          <div class="vertical-divider" role="separator" aria-hidden="true"></div>
+
+          <div class="summary-breakdown" aria-label="Resumen financiero total">
+            <div class="summary-row">
+              <span class="summary-icon-wrap"><mat-icon aria-hidden="true">payments</mat-icon></span>
+              <span class="summary-label">Monto original total</span>
+              <span class="summary-value neutral">S/ {{ store.totalAmount() | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-icon-wrap"><mat-icon aria-hidden="true">remove_circle_outline</mat-icon></span>
+              <span class="summary-label">Comisión total descontada (5%)</span>
+              <span class="summary-value negative">– S/ {{ store.totalCommission() | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-divider" role="separator"></div>
+            <div class="summary-row net-total-row">
+              <span class="summary-icon-wrap"><mat-icon aria-hidden="true">account_balance_wallet</mat-icon></span>
+              <span class="summary-label">Monto neto (saldo disponible)</span>
+              <span class="summary-value positive">S/ {{ store.totalBalance() | number:'1.2-2' }}</span>
+            </div>
+          </div>
+
+        </div>
+      }
+
+    </div>
+  </mat-card>
+
+  <h3 class="section-title">Historial de Donaciones</h3>
+
+  @if (store.donations().length === 0 && !store.loading()) {
+    <div class="empty-history">
+      <mat-icon>history</mat-icon>
+      <p>Aún no se han recibido donaciones.</p>
+    </div>
+  }
+
+  <div class="history-cards">
+    @for (donation of store.donations(); track donation.id) {
+      <mat-card class="history-card">
+
+        <div class="card-section header-section">
+          <div class="icon-circle">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <div class="header-text">
+            <h3>Donación #{{ donation.id }}</h3>
+            <span class="amount">S/ {{ donation.amount | number:'1.2-2' }}</span>
+            <div class="tx-badge">
+              Stripe ID: {{ donation.stripeTransactionId | slice:0:10 }}...
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="card-section details-section">
+          <div class="financial-breakdown">
+            <div class="finance-row">
+              <span>Comisión (5%):</span>
+              <span class="negative">- S/ {{ donation.commissionFee | number:'1.2-2' }}</span>
+            </div>
+            <div class="finance-row net-row">
+              <span>Monto Neto:</span>
+              <span class="positive">S/ {{ donation.netAmount | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="card-section footer-section">
+          <div class="participants">
+            <div class="user-item">
+              <mat-icon>person</mat-icon>
+              <span>Tutor ID: <strong>{{ donation.tutorId }}</strong></span>
+            </div>
+            <div class="user-item">
+              <mat-icon>book</mat-icon>
+              <span>Sesión ID: <strong>{{ donation.sessionId }}</strong></span>
+            </div>
+          </div>
+        </div>
+
+      </mat-card>
+    }
+  </div>
+
+</div>
