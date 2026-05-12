@@ -1,0 +1,139 @@
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (session(); as s) {
+
+<!-- Back -->
+<button mat-button class="btn-back" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+  Volver a sesiones
+</button>
+
+<!-- Session info card -->
+<div class="session-info-card">
+  <div class="session-info-top">
+    <div>
+      <h2 class="session-info-topic">{{ s.topic }}</h2>
+      <p class="session-info-meta">
+        <mat-icon class="meta-icon">schedule</mat-icon>
+        {{ s.scheduledAt | slice:0:16 }}
+        &nbsp;·&nbsp;
+        <mat-icon class="meta-icon">person</mat-icon>
+        Tutor ID: {{ s.tutorId }}
+        &nbsp;·&nbsp;
+        <mat-icon class="meta-icon">school</mat-icon>
+        Estudiante ID: {{ s.learnerId }}
+      </p>
+    </div>
+    <span class="status-chip {{ statusClass(s.status) }}">
+        {{ statusLabel(s.status) }}
+      </span>
+  </div>
+
+  <!-- US09 — Aceptar / Rechazar (solo si pending) -->
+  @if (isPending()) {
+  <div class="session-actions">
+    <p class="actions-hint">
+      <mat-icon>info</mat-icon>
+      Esta solicitud está pendiente de confirmación.
+    </p>
+    <div class="actions-row">
+      <button mat-raised-button class="btn-accept" (click)="acceptSession()">
+        <mat-icon>check_circle</mat-icon>
+        Aceptar solicitud
+      </button>
+      <button mat-raised-button class="btn-reject" (click)="rejectSession()">
+        <mat-icon>cancel</mat-icon>
+        Rechazar
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- US21 — Cancelar (solo si pending o scheduled) -->
+  @if (canCancel()) {
+  <div class="cancel-wrap">
+    <button mat-button class="btn-cancel-session" (click)="cancelSession()">
+      <mat-icon>block</mat-icon>
+      Cancelar reserva
+    </button>
+  </div>
+  }
+
+  <!-- US21 — Aviso si ya está cancelada -->
+  @if (s.status === 'cancelled') {
+  <div class="cancelled-notice">
+    <mat-icon>block</mat-icon>
+    Esta reserva fue cancelada.
+  </div>
+  }
+
+</div>
+
+<!-- US10 — Chat: solo si está en 'scheduled' -->
+@if (canChat()) {
+<div class="messages-section">
+  <div class="messages-header">
+    <h3 class="messages-title">
+      <mat-icon>chat</mat-icon>
+      Mensajes
+      <span class="msg-count">{{ sessionMessages().length }}</span>
+    </h3>
+    <button mat-raised-button class="btn-add-msg" (click)="addMessage()">
+      <mat-icon>add</mat-icon>
+      Nuevo mensaje
+    </button>
+  </div>
+
+  <div class="messages-list">
+    @for (msg of sessionMessages(); track msg.id) {
+    <div class="message-bubble">
+      <div class="bubble-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="bubble-body">
+        <div class="bubble-meta">
+          <span class="bubble-sender">Usuario #{{ msg.senderId }}</span>
+          <span class="bubble-time">{{ msg.sentAt | slice:0:16 }}</span>
+        </div>
+        <p class="bubble-content">{{ msg.content }}</p>
+      </div>
+      <div class="bubble-actions">
+        <button mat-icon-button class="icon-delete"
+                (click)="deleteMessage(msg.id)" title="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    }
+
+    @if (sessionMessages().length === 0 && !store.loading()) {
+    <div class="empty-messages">
+      <mat-icon class="empty-icon">chat_bubble_outline</mat-icon>
+      <p>Esta sesión no tiene mensajes aún.</p>
+      <button mat-raised-button class="btn-add-msg" (click)="addMessage()">
+        Agregar primer mensaje
+      </button>
+    </div>
+    }
+  </div>
+</div>
+
+} @else if (s.status !== 'cancelled') {
+<!-- Aviso: sesión no agendada aún -->
+<div class="chat-locked">
+  <mat-icon class="locked-icon">lock</mat-icon>
+  <p>El chat se habilitará cuando la sesión sea <strong>aceptada y agendada</strong>.</p>
+</div>
+}
+
+} @else {
+@if (!store.loading()) {
+<div class="not-found">
+  <mat-icon>search_off</mat-icon>
+  <p>Sesión no encontrada.</p>
+  <button mat-raised-button (click)="goBack()">Volver</button>
+</div>
+}
+}

@@ -1,0 +1,59 @@
+/* Loading */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Error */
+.error-message {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Contenedor */
+.table-container {
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Tabla */
+.custom-table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Header */
+.mat-header-cell {
+  background-color: #1e1e2f;
+  color: white;
+  font-weight: 600;
+}
+
+/* Filas */
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Celdas */
+.mat-cell {
+  padding: 10px;
+}
+
+/* Botones */
+button[mat-button] {
+  margin-right: 5px;
+}
+
+/* Botón inferior */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+}

@@ -1,0 +1,155 @@
+<!-- Header -->
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Mis Tutores</h2>
+    <p class="page-subtitle">Encuentra y solicita tutorías con los mejores tutores</p>
+  </div>
+</div>
+
+<!-- US05 — Search bar -->
+<div class="search-bar-wrap">
+  <span class="search-icon-wrap">
+    <mat-icon>search</mat-icon>
+  </span>
+  <input class="search-input"
+         type="text"
+         placeholder="Busca por nombre, especialidad o habilidad (ej: Física, SQL...)"
+         (input)="onSearch($event)">
+</div>
+
+<!-- No results -->
+@if (filteredTutors().length === 0) {
+<div class="empty-search">
+  <mat-icon>search_off</mat-icon>
+  <p>No se encontraron tutores para tu búsqueda. Intenta con otros términos.</p>
+</div>
+}
+
+<!-- Tutor cards grid -->
+<div class="tutors-grid">
+  @for (tutor of filteredTutors(); track tutor.id) {
+  <div class="tutor-card">
+
+    <!-- Avatar + rating -->
+    <div class="tutor-avatar-wrap">
+      <img [src]="tutor.avatar" [alt]="tutor.name" class="tutor-avatar">
+      <span class="tutor-rating">
+          <mat-icon class="star-icon">star</mat-icon>
+          {{ tutor.rating }}
+        </span>
+    </div>
+
+    <!-- Info -->
+    <div class="tutor-info">
+      <h3 class="tutor-name">{{ tutor.name }}</h3>
+      <p class="tutor-specialty">{{ tutor.specialty }}</p>
+      <p class="tutor-university">
+        <mat-icon class="meta-icon">school</mat-icon>
+        {{ tutor.university }}
+      </p>
+    </div>
+
+    <!-- Skills -->
+    <div class="skills-row">
+      @for (skill of tutor.skills; track skill) {
+      <span class="skill-tag">{{ skill }}</span>
+      }
+    </div>
+
+    <!-- Stats -->
+    <div class="tutor-stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ tutor.sessionCount }}</span>
+        <span class="stat-label">Sesiones</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number completed">{{ tutor.completedCount }}</span>
+        <span class="stat-label">Completadas</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number pending">{{ tutor.pendingCount }}</span>
+        <span class="stat-label">Pendientes</span>
+      </div>
+    </div>
+
+    <!-- Stars -->
+    <div class="stars-row">
+      @for (star of stars(tutor.rating); track star) {
+      <mat-icon class="star" [class.filled]="star <= tutor.rating">star</mat-icon>
+      }
+    </div>
+
+    <!-- US08 — Botón solicitar tutoría -->
+    <button mat-raised-button class="btn-request"
+            (click)="openRequestModal(tutor.id, tutor.name)">
+      <mat-icon>send</mat-icon>
+      Solicitar tutoría
+    </button>
+
+  </div>
+  }
+</div>
+
+<!-- US08 — Modal de solicitud -->
+@if (selectedTutorId() !== null) {
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+
+    @if (!requestSent()) {
+    <h3 class="modal-title">
+      <mat-icon>event</mat-icon>
+      Solicitar tutoría con {{ selectedTutorName() }}
+    </h3>
+
+    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+
+      <div class="modal-field">
+        <label class="modal-label">Tema a tratar</label>
+        <input class="modal-input"
+               formControlName="topic"
+               placeholder="Ej: Integrales dobles, POO en Java...">
+        @if (requestForm.get('topic')!.touched && requestForm.get('topic')!.hasError('required')) {
+        <span class="modal-error">El tema es requerido</span>
+        }
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label">Fecha y hora propuesta</label>
+        <input class="modal-input"
+               type="datetime-local"
+               formControlName="scheduledAt">
+        @if (requestForm.get('scheduledAt')!.touched && requestForm.get('scheduledAt')!.hasError('required')) {
+        <span class="modal-error">La fecha es requerida</span>
+        }
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" mat-button class="btn-cancel-modal" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" mat-raised-button class="btn-send"
+                [disabled]="requestForm.invalid">
+          <mat-icon>send</mat-icon>
+          Enviar solicitud
+        </button>
+      </div>
+
+    </form>
+
+    } @else {
+    <!-- Confirmación -->
+    <div class="modal-success">
+      <mat-icon class="success-icon">check_circle</mat-icon>
+      <h3>¡Solicitud enviada!</h3>
+      <p>Tu solicitud fue enviada a <strong>{{ selectedTutorName() }}</strong> y queda en estado <strong>Pendiente</strong> hasta que el tutor la confirme.</p>
+      <button mat-raised-button class="btn-send" (click)="closeModal()">
+        Cerrar
+      </button>
+    </div>
+    }
+
+  </div>
+</div>
+}
