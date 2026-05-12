@@ -1,0 +1,171 @@
+{
+  "tutoring-sessions": [
+    {
+      "id": 1,
+      "topic": "Cálculo II - Integrales",
+      "status": "scheduled",
+      "learnerId": 101,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-10T10:00:00"
+    },
+    {
+      "id": 2,
+      "topic": "Programación Orientada a Objetos",
+      "status": "pending",
+      "learnerId": 102,
+      "tutorId": 202,
+      "scheduledAt": "2026-06-11T14:00:00"
+    },
+    {
+      "id": 3,
+      "topic": "Álgebra Lineal - Matrices",
+      "status": "completed",
+      "learnerId": 103,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-05T09:00:00"
+    },
+    {
+      "id": 4,
+      "topic": "Física - Dinámica",
+      "status": "scheduled",
+      "learnerId": 104,
+      "tutorId": 203,
+      "scheduledAt": "2026-06-12T16:00:00"
+    },
+    {
+      "id": 5,
+      "topic": "Base de Datos - SQL",
+      "status": "pending",
+      "learnerId": 105,
+      "tutorId": 204,
+      "scheduledAt": "2026-06-13T11:00:00"
+    },
+    {
+      "id": 6,
+      "topic": "Química Orgánica - Nomenclatura",
+      "status": "rejected",
+      "learnerId": 106,
+      "tutorId": 205,
+      "scheduledAt": "2026-06-08T15:30:00"
+    },
+    {
+      "id": 7,
+      "topic": "Inglés Avanzado - Phrasal Verbs",
+      "status": "completed",
+      "learnerId": 107,
+      "tutorId": 206,
+      "scheduledAt": "2026-06-02T18:00:00"
+    },
+    {
+      "id": 8,
+      "topic": "Estadística - Distribución Normal",
+      "status": "scheduled",
+      "learnerId": 108,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-15T08:00:00"
+    },
+    {
+      "id": 9,
+      "topic": "Estructura de Datos - Árboles",
+      "status": "pending",
+      "learnerId": 109,
+      "tutorId": 202,
+      "scheduledAt": "2026-06-16T19:00:00"
+    },
+    {
+      "id": 10,
+      "topic": "Termodinámica - Leyes",
+      "status": "completed",
+      "learnerId": 110,
+      "tutorId": 203,
+      "scheduledAt": "2026-06-07T10:00:00"
+    },
+    {
+      "id": 11,
+      "topic": "sql",
+      "status": "rejected",
+      "learnerId": 101,
+      "tutorId": 204,
+      "scheduledAt": "2026-05-12T12:30"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "content": "Hola, ¿puedes explicarme las integrales por partes?",
+      "senderId": 101,
+      "sessionId": 1,
+      "sentAt": "2026-06-09T18:00:00"
+    },
+    {
+      "id": 2,
+      "content": "Claro, nos vemos mañana a las 10am. Te mando los ejercicios.",
+      "senderId": 201,
+      "sessionId": 1,
+      "sentAt": "2026-06-09T18:05:00"
+    },
+    {
+      "id": 3,
+      "content": "¿Podemos adelantar la sesión 30 minutos?",
+      "senderId": 102,
+      "sessionId": 2,
+      "sentAt": "2026-06-10T09:00:00"
+    },
+    {
+      "id": 4,
+      "content": "Sí, sin problema. A las 1:30pm entonces.",
+      "senderId": 202,
+      "sessionId": 2,
+      "sentAt": "2026-06-10T09:10:00"
+    },
+    {
+      "id": 5,
+      "content": "Gracias por la sesión, quedó muy clara la dinámica.",
+      "senderId": 103,
+      "sessionId": 3,
+      "sentAt": "2026-06-05T11:00:00"
+    },
+    {
+      "id": 6,
+      "content": "Profe, tuve un problema y no podré asistir.",
+      "senderId": 106,
+      "sessionId": 6,
+      "sentAt": "2026-06-07T14:00:00"
+    },
+    {
+      "id": 7,
+      "content": "Entendido, procedo a cancelar la sesión. Saludos.",
+      "senderId": 205,
+      "sessionId": 6,
+      "sentAt": "2026-06-07T14:30:00"
+    },
+    {
+      "id": 8,
+      "content": "Can we practice speaking tomorrow?",
+      "senderId": 107,
+      "sessionId": 7,
+      "sentAt": "2026-06-01T20:00:00"
+    },
+    {
+      "id": 9,
+      "content": "Sure! I'll prepare some topics for our conversation.",
+      "senderId": 206,
+      "sessionId": 7,
+      "sentAt": "2026-06-01T20:15:00"
+    },
+    {
+      "id": 10,
+      "content": "¿Me puedes recomendar un libro para árboles binarios?",
+      "senderId": 109,
+      "sessionId": 9,
+      "sentAt": "2026-06-14T10:00:00"
+    },
+    {
+      "id": 12,
+      "content": "hola como comenzamos?",
+      "senderId": 101,
+      "sessionId": 4,
+      "sentAt": "2026-05-11T23:50"
+    }
+  ]
+}

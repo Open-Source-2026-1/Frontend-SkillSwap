@@ -1,0 +1,38 @@
+<div class="message-container">
+  <button mat-button class="btn-back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Volver a la sesión</span>
+  </button>
+
+  <div class="form-card">
+    <h2 class="form-title">
+      <div class="title-icon-wrapper">
+        <mat-icon>chat</mat-icon>
+      </div>
+      Nuevo mensaje
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full-width custom-field">
+        <mat-label>Escribe tu mensaje</mat-label>
+        <textarea matInput
+                  formControlName="content"
+                  rows="5"
+                  placeholder="Escribe aquí tu mensaje..."></textarea>
+        @if (form.get('content')!.touched && form.get('content')!.hasError('required')) {
+        <mat-error>El mensaje no puede estar vacío</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button type="button" mat-button class="btn-cancel" (click)="goBack()">
+          Cancelar
+        </button>
+        <button type="submit" mat-raised-button class="btn-send" [disabled]="form.invalid">
+          <mat-icon>send</mat-icon>
+          <span>Enviar mensaje</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

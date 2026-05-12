@@ -1,0 +1,79 @@
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Mis Sesiones</h2>
+    <p class="page-subtitle">Gestiona todas tus sesiones de tutoría</p>
+  </div>
+  <button mat-raised-button class="btn-add"
+          (click)="router.navigate(['workspace/tutoring-sessions/new'])">
+    <mat-icon>add</mat-icon>
+    Nueva sesión
+  </button>
+</div>
+
+<div class="filter-bar">
+  @for (f of statusFilters; track f.value) {
+  <button class="filter-chip"
+          [class.filter-active]="activeFilter() === f.value"
+          (click)="setFilter(f.value)">
+    {{ f.label }}
+  </button>
+  }
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+@if (store.error()) {
+<mat-error class="error-msg">{{ store.error() }}</mat-error>
+}
+
+<div class="table-container">
+  <table class="modern-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tópico</th>
+      <th>Estado</th>
+      <th>Estudiante ID</th>
+      <th>Tutor ID</th>
+      <th>Fecha Programada</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (session of filteredSessions; track session.id) {
+    <tr class="session-row" (click)="openSession(session.id)">
+      <td class="td-id">#{{ session.id }}</td>
+      <td class="td-topic">{{ session.topic }}</td>
+      <td>
+          <span class="status-chip {{ statusClass(session.status) }}">
+            {{ statusLabel(session.status) }}
+          </span>
+      </td>
+      <td>{{ session.learnerId }}</td>
+      <td>{{ session.tutorId }}</td>
+      <td>
+        <div class="date-wrapper">
+          <mat-icon class="sm-icon">schedule</mat-icon>
+          <span>{{ session.scheduledAt | slice:0:16 }}</span>
+        </div>
+      </td>
+      <td class="td-actions">
+        <div class="actions-wrapper">
+          <button mat-icon-button class="btn-delete" (click)="deleteSession($event, session.id)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+    }
+    </tbody>
+  </table>
+
+  @if (filteredSessions.length === 0 && !store.loading()) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">event_busy</mat-icon>
+    <p>No hay sesiones en este estado.</p>
+  </div>
+  }
+</div>

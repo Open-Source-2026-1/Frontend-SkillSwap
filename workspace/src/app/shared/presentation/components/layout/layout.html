@@ -1,0 +1,58 @@
+<mat-toolbar class="skillswap-toolbar">
+  <mat-toolbar-row class="toolbar-row">
+
+    <span class="brand-logo">
+      <span class="brand-skill">Skill</span><span class="brand-swap">Swap</span>
+    </span>
+
+    <div class="nav-spacer"></div>
+
+    <nav class="nav-links">
+      @for (option of options; track option.label) {
+      <a class="nav-link"
+         mat-button
+         [routerLink]="option.link"
+         routerLinkActive="active-link">
+        {{ option.label | translate }}
+      </a>
+      }
+    </nav>
+
+    <div class="toolbar-actions">
+
+      <button mat-icon-button aria-label="Search" class="icon-btn">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button mat-icon-button aria-label="Notifications" class="icon-btn">
+        <mat-icon [matBadge]="notificationCount()"
+                  matBadgeColor="warn"
+                  matBadgeSize="small">
+          notifications
+        </mat-icon>
+      </button>
+
+      <app-language-switcher/>
+
+      <div class="avatar-wrapper">
+        <img [src]="currentUser().avatar"
+             [alt]="currentUser().name"
+             class="user-avatar"
+             title="{{ currentUser().name }} — {{ currentUser().university }}">
+      </div>
+
+      <button mat-raised-button
+              class="logout-btn"
+              (click)="logout()">
+        Cerrar Sesión
+      </button>
+
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<main class="main-content">
+  <router-outlet/>
+</main>
+
+<app-footer-content/>

@@ -1,0 +1,24 @@
+{
+  "option": {
+    "my-tutors": "Mis Tutores",
+    "sessions": "Sesiones"
+  },
+  "about": {
+    "title": "Acerca de nosotros",
+    "content": "SkillSwap es una plataforma de tutorías colaborativas para estudiantes universitarios, parte de Innovify."
+  },
+  "home": {
+    "title": "Bienvenido",
+    "content": "Bienvenido a SkillSwap Workspace."
+  },
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalidPath }}</strong> es inválida.",
+    "go-home": "Ir a Inicio"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "powered-by": "Desarrollado con",
+    "and": "y"
+  }
+}
