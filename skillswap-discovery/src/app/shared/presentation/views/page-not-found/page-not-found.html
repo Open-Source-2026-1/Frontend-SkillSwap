@@ -1,0 +1,5 @@
+<div style="margin: 16px">
+  <h2>{{ 'page-not-found.title' | translate }}</h2>
+  <p [innerHTML]="'page-not-found.content' | translate: { invalid_path: currentPath }"></p>
+  <a mat-button routerLink="/home">{{ 'page-not-found.go-home' | translate }}</a>
+</div>

@@ -1,0 +1,52 @@
+{
+  "tutors": [
+    {
+      "id": 1,
+      "name": "Ana García",
+      "university": "PUCP",
+      "course": "Cálculo",
+      "rating": 5,
+      "biography": "Estudiante de Ingeniería con 2 años de experiencia como tutora de matemáticas."
+    },
+    {
+      "id": 2,
+      "name": "Carlos López",
+      "university": "UPC",
+      "course": "Física",
+      "rating": 4,
+      "biography": "Apasionado por la enseñanza de ciencias exactas y laboratorios."
+    },
+    {
+      "id": 3,
+      "name": "María Torres",
+      "university": "UNMSM",
+      "course": "Programación",
+      "rating": 5,
+      "biography": "Tutora especializada en algoritmos y estructuras de datos en Python y Java."
+    },
+    {
+      "id": 4,
+      "name": "Luis Ramos",
+      "university": "ULima",
+      "course": "Química",
+      "rating": 3,
+      "biography": "Especializado en Química General y Orgánica para estudiantes de primer ciclo."
+    },
+    {
+      "id": 5,
+      "name": "Sofía Mendez",
+      "university": "PUCP",
+      "course": "Estadística",
+      "rating": 4,
+      "biography": "Tutora de Estadística e Investigación de Operaciones con enfoque práctico."
+    },
+    {
+      "id": 6,
+      "name": "Diego Castillo",
+      "university": "UPC",
+      "course": "Álgebra Lineal",
+      "rating": 5,
+      "biography": "Ingeniero de Sistemas con dominio de matrices, vectores y transformaciones lineales."
+    }
+  ]
+}

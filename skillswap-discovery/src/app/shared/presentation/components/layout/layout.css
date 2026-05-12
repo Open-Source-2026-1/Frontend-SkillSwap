@@ -1,0 +1,103 @@
+.mat-spacer {
+  flex: 1 1 auto;
+}
+
+.skillswap-toolbar {
+  background-color: #ffffff !important;
+  color: #1565C0 !important;
+  border-bottom: 3px solid #1565C0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1565C0;
+  letter-spacing: 1px;
+}
+
+a.mat-button {
+  color: #1565C0 !important;
+  font-weight: 500;
+}
+
+a.active-link {
+  color: #1565C0 !important;
+  border-bottom: 2px solid #1565C0;
+  font-weight: bold;
+}
+
+.icon-btn {
+  color: #1565C0 !important;
+  margin-left: 4px;
+}
+
+.logout-btn {
+  background-color: #D32F2F !important;
+  color: white !important;
+  margin-left: 16px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: #B71C1C !important;
+}
+
+.logout-btn mat-icon {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+::ng-deep .skillswap-toolbar a.mat-button .mat-mdc-button-persistent-ripple::before,
+::ng-deep .skillswap-toolbar a.mat-button:hover .mat-mdc-button-persistent-ripple::before {
+  background-color: #FFF9C4 !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .skillswap-toolbar a.mat-button:hover {
+  background-color: #FFF9C4 !important;
+}
+
+::ng-deep .skillswap-toolbar .icon-btn:hover {
+  background-color: #FFF9C4 !important;
+}
+
+::ng-deep .skillswap-toolbar mat-button-toggle:hover {
+  background-color: #FFF9C4 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle-checked {
+  background-color: #FFF9C4 !important;
+  color: #1565C0 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-mdc-button:not(.logout-btn):hover .mat-mdc-button-ripple {
+  background-color: #FFF9C4 !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle-checked {
+  background-color: transparent !important;
+  color: #1565C0 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle-group {
+  border: 1px solid #1565C0 !important;
+  border-radius: 4px;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle {
+  background-color: transparent !important;
+  color: #1565C0 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle:hover {
+  background-color: #FFF9C4 !important;
+}
+
+::ng-deep .skillswap-toolbar .mat-button-toggle-checked .mat-button-toggle-button {
+  background-color: transparent !important;
+  color: #1565C0 !important;
+  font-weight: bold;
+}
