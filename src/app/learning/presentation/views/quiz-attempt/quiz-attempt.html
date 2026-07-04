@@ -1,0 +1,126 @@
+<div class="attempt-container">
+
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver
+    </button>
+
+    @if (store.loading() && !submitted()) {
+    <div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+    }
+
+    @if (alreadyAttempted() && !submitted()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">check_circle</mat-icon>
+        <p>Ya completaste el quiz de esta sesión.</p>
+        <button mat-stroked-button (click)="goBack()">Volver</button>
+    </div>
+    } @else if (quiz(); as q) {
+
+    <!-- Cabecera -->
+    <div class="quiz-header">
+        <div>
+            <span class="course-badge">{{ q.course }}</span>
+            <h2 class="quiz-title">{{ q.title }}</h2>
+            <p class="quiz-meta">{{ q.questions.length }} preguntas · Creado por {{ creatorName(q.createdBy) }}</p>
+        </div>
+        @if (!submitted()) {
+        <div class="progress-info">
+            <span class="progress-val">{{ answeredCount() }} / {{ q.questions.length }}</span>
+            <span class="progress-label">respondidas</span>
+        </div>
+        }
+    </div>
+
+    <!-- Resultado final -->
+    @if (submitted()) {
+    <div class="result-card"
+         [class.result-pass]="scorePercent() >= 60"
+         [class.result-fail]="scorePercent() < 60">
+        <mat-icon class="result-icon">
+            {{ scorePercent() >= 60 ? 'emoji_events' : 'sentiment_dissatisfied' }}
+        </mat-icon>
+        <div class="result-score">{{ localCorrectCount() }} / {{ q.questions.length }}</div>
+        <div class="result-percent">{{ scorePercent() }}% correcto</div>
+
+        @if (officialAttempt(); as attempt) {
+        <p class="official-score">
+            <mat-icon class="sm-icon">verified</mat-icon>
+            Nota oficial: {{ attempt.score.toFixed(1) }} / 10
+        </p>
+        } @else {
+        <p class="official-score saving">
+            <mat-icon class="sm-icon spinning">sync</mat-icon>
+            Guardando tu resultado...
+        </p>
+        }
+
+        <p class="result-msg">
+            {{ scorePercent() >= 60 ? '¡Muy bien! Aprobaste el quiz.' : 'Sigue practicando, puedes mejorar.' }}
+        </p>
+        <button mat-raised-button class="btn-finish" (click)="goBack()">
+            <mat-icon>check</mat-icon>
+            Finalizar
+        </button>
+    </div>
+    }
+
+    <!-- Preguntas -->
+    <div class="questions-list">
+        @for (question of q.questions; track qi; let qi = $index) {
+        <div class="question-card"
+             [class.question-answered]="selectedAnswers()[qi] !== undefined">
+
+            <div class="question-header">
+                <span class="question-num">{{ qi + 1 }}</span>
+                <p class="question-text">{{ question.text }}</p>
+            </div>
+
+            <div class="options-list">
+                @for (option of question.options; track $index; let oi = $index) {
+                <button class="option-btn"
+                        [class.option-selected]="selectedAnswers()[qi] === oi && !submitted()"
+                        [class.option-correct]="submitted() && oi === question.correctIndex"
+                        [class.option-wrong]="submitted() && selectedAnswers()[qi] === oi && oi !== question.correctIndex"
+                        [disabled]="submitted()"
+                        (click)="selectAnswer(qi, oi)">
+                    <span class="option-letter">{{ ['A','B','C','D'][oi] }}</span>
+                    {{ option }}
+                    @if (submitted() && oi === question.correctIndex) {
+                    <mat-icon class="opt-icon-correct">check_circle</mat-icon>
+                    }
+                    @if (submitted() && selectedAnswers()[qi] === oi && oi !== question.correctIndex) {
+                    <mat-icon class="opt-icon-wrong">cancel</mat-icon>
+                    }
+                </button>
+                }
+            </div>
+
+        </div>
+        }
+    </div>
+
+    <!-- Botón de enviar -->
+    @if (!submitted()) {
+    <div class="submit-section">
+        @if (!allAnswered()) {
+        <p class="submit-hint">Responde todas las preguntas para poder enviar.</p>
+        }
+        <button mat-raised-button class="btn-submit"
+                [disabled]="!allAnswered()"
+                (click)="submit()">
+            <mat-icon>send</mat-icon>
+            Enviar respuestas
+        </button>
+    </div>
+    }
+
+    } @else if (!store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">quiz</mat-icon>
+        <p>Quiz no encontrado.</p>
+        <button mat-stroked-button (click)="goBack()">Volver</button>
+    </div>
+    }
+
+</div>

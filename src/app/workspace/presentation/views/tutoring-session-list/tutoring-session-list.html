@@ -1,0 +1,91 @@
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Mis Sesiones</h2>
+    <p class="page-subtitle">Gestiona tus sesiones de tutoría</p>
+  </div>
+  <button mat-raised-button class="btn-add"
+          (click)="router.navigate(['workspace/tutoring-sessions/new'])">
+    <mat-icon>add</mat-icon>
+    Nueva solicitud
+  </button>
+</div>
+
+<!-- Toggle de rol: Valeria tiene un perfil híbrido (Aprendiz / Tutor) -->
+<div class="role-toggle">
+  <button class="role-btn" [class.role-active]="roleFilter() === 'learner'" (click)="setRole('learner')">
+    <mat-icon>school</mat-icon> Como Aprendiz
+  </button>
+  <button class="role-btn" [class.role-active]="roleFilter() === 'tutor'" (click)="setRole('tutor')">
+    <mat-icon>person</mat-icon> Como Tutor
+  </button>
+</div>
+
+<div class="filter-bar">
+  @for (f of statusFilters; track f.value) {
+  <button class="filter-chip"
+          [class.filter-active]="statusFilter() === f.value"
+          (click)="setStatusFilter(f.value)">
+    {{ f.label }}
+  </button>
+  }
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+@if (store.error()) {
+<mat-error class="error-msg">{{ store.error() }}</mat-error>
+}
+
+<div class="table-container">
+  <table class="modern-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tópico</th>
+      <th>Estado</th>
+      <th>Estudiante</th>
+      <th>Tutor</th>
+      <th>Fecha Programada</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (session of filteredSessions(); track session.id) {
+    <tr class="session-row" (click)="openSession(session.id)">
+      <td class="td-id">#{{ session.id }}</td>
+      <td class="td-topic">{{ session.topic }}</td>
+      <td>
+            <span class="status-chip {{ statusClass(session.status) }}">
+              {{ statusLabel(session.status) }}
+            </span>
+      </td>
+      <td>
+        <div class="user-cell">
+          <span class="user-cell-name">{{ getLearnerName(session.learnerId) }}</span>
+          <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+        </div>
+      </td>
+      <td>
+        <div class="user-cell">
+          <span class="user-cell-name">{{ getTutorName(session.tutorId) }}</span>
+          <span class="user-role-badge badge-tutor">Tutor</span>
+        </div>
+      </td>
+      <td>
+        <div class="date-wrapper">
+          <mat-icon class="sm-icon">schedule</mat-icon>
+          <span>{{ session.scheduledAt | date:'dd/MM/yyyy, hh:mm a' }}</span>
+        </div>
+      </td>
+    </tr>
+    }
+    </tbody>
+  </table>
+
+  @if (filteredSessions().length === 0 && !store.loading()) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">event_busy</mat-icon>
+    <p>No hay sesiones en este estado.</p>
+  </div>
+  }
+</div>

@@ -1,0 +1,190 @@
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    border: 1px solid #ffe0b2;
+}
+
+.admin-badge mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.page-subtitle {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-back {
+    color: #555;
+}
+
+.btn-create {
+    background-color: #005a9c !important;
+    color: #fff !important;
+}
+
+/* Filtros */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    padding: 6px 20px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #666;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-chip:hover {
+    border-color: #005a9c;
+    color: #005a9c;
+}
+
+.filter-active {
+    background: #005a9c !important;
+    color: #fff !important;
+    border-color: #005a9c !important;
+}
+
+/* Loading */
+.loading-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Tabla */
+.table-container {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.modern-table thead tr {
+    background: #f8f9fa;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.modern-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.modern-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s ease;
+}
+
+.modern-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.td-id {
+    font-weight: 600;
+    color: #aaa;
+    font-size: 0.82rem;
+}
+
+.td-title {
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.td-center {
+    text-align: center;
+    font-weight: 600;
+    color: #005a9c;
+}
+
+.course-chip {
+    background: #e3f2fd;
+    color: #1565c0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.td-actions {
+    text-align: center;
+}
+
+.btn-delete {
+    color: #e53935 !important;
+}
+
+/* Empty */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 8px;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 56px;
+    width: 56px;
+    height: 56px;
+    color: #ccc;
+}
+
+.empty-title {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 8px;
+}

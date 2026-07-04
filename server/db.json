@@ -1,0 +1,680 @@
+{
+  "tutoring-sessions": [
+    {
+      "id": 1,
+      "topic": "Cálculo II - Integrales",
+      "status": "scheduled",
+      "learnerId": 101,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-10T10:00:00"
+    },
+    {
+      "id": 2,
+      "topic": "Programación Orientada a Objetos",
+      "status": "pending",
+      "learnerId": 102,
+      "tutorId": 202,
+      "scheduledAt": "2026-06-11T14:00:00"
+    },
+    {
+      "id": 3,
+      "topic": "Álgebra Lineal - Matrices",
+      "status": "completed",
+      "learnerId": 103,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-05T09:00:00"
+    },
+    {
+      "id": 4,
+      "topic": "Física - Dinámica",
+      "status": "scheduled",
+      "learnerId": 104,
+      "tutorId": 203,
+      "scheduledAt": "2026-06-12T16:00:00"
+    },
+    {
+      "id": 5,
+      "topic": "Base de Datos - SQL",
+      "status": "pending",
+      "learnerId": 105,
+      "tutorId": 204,
+      "scheduledAt": "2026-06-13T11:00:00"
+    },
+    {
+      "id": 6,
+      "topic": "Química Orgánica - Nomenclatura",
+      "status": "rejected",
+      "learnerId": 106,
+      "tutorId": 205,
+      "scheduledAt": "2026-06-08T15:30:00"
+    },
+    {
+      "id": 7,
+      "topic": "Inglés Avanzado - Phrasal Verbs",
+      "status": "completed",
+      "learnerId": 107,
+      "tutorId": 206,
+      "scheduledAt": "2026-06-02T18:00:00"
+    },
+    {
+      "id": 8,
+      "topic": "Estadística - Distribución Normal",
+      "status": "scheduled",
+      "learnerId": 108,
+      "tutorId": 201,
+      "scheduledAt": "2026-06-15T08:00:00"
+    },
+    {
+      "id": 9,
+      "topic": "Estructura de Datos - Árboles",
+      "status": "pending",
+      "learnerId": 109,
+      "tutorId": 202,
+      "scheduledAt": "2026-06-16T19:00:00"
+    },
+    {
+      "id": 10,
+      "topic": "Termodinámica - Leyes",
+      "status": "completed",
+      "learnerId": 110,
+      "tutorId": 203,
+      "scheduledAt": "2026-06-07T10:00:00"
+    },
+    {
+      "id": 11,
+      "topic": "sql",
+      "status": "rejected",
+      "learnerId": 101,
+      "tutorId": 204,
+      "scheduledAt": "2026-05-12T12:30"
+    },
+    {
+      "id": 12,
+      "topic": "calculo 5",
+      "status": "scheduled",
+      "learnerId": 101,
+      "tutorId": 205,
+      "scheduledAt": "2026-05-28T15:00"
+    },
+    {
+      "id": 13,
+      "topic": "SQL",
+      "status": "scheduled",
+      "learnerId": 101,
+      "tutorId": 204,
+      "scheduledAt": "2026-06-16T12:30",
+      "message": "",
+      "studentLevel": ""
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "content": "Hola, ¿puedes explicarme las integrales por partes?",
+      "senderId": 101,
+      "sessionId": 1,
+      "sentAt": "2026-06-09T18:00:00"
+    },
+    {
+      "id": 2,
+      "content": "Claro, nos vemos mañana a las 10am. Te mando los ejercicios.",
+      "senderId": 201,
+      "sessionId": 1,
+      "sentAt": "2026-06-09T18:05:00"
+    },
+    {
+      "id": 3,
+      "content": "¿Podemos adelantar la sesión 30 minutos?",
+      "senderId": 102,
+      "sessionId": 2,
+      "sentAt": "2026-06-10T09:00:00"
+    },
+    {
+      "id": 4,
+      "content": "Sí, sin problema. A las 1:30pm entonces.",
+      "senderId": 202,
+      "sessionId": 2,
+      "sentAt": "2026-06-10T09:10:00"
+    },
+    {
+      "id": 5,
+      "content": "Gracias por la sesión, quedó muy clara la dinámica.",
+      "senderId": 103,
+      "sessionId": 3,
+      "sentAt": "2026-06-05T11:00:00"
+    },
+    {
+      "id": 6,
+      "content": "Profe, tuve un problema y no podré asistir.",
+      "senderId": 106,
+      "sessionId": 6,
+      "sentAt": "2026-06-07T14:00:00"
+    },
+    {
+      "id": 7,
+      "content": "Entendido, procedo a cancelar la sesión. Saludos.",
+      "senderId": 205,
+      "sessionId": 6,
+      "sentAt": "2026-06-07T14:30:00"
+    },
+    {
+      "id": 8,
+      "content": "Can we practice speaking tomorrow?",
+      "senderId": 107,
+      "sessionId": 7,
+      "sentAt": "2026-06-01T20:00:00"
+    },
+    {
+      "id": 9,
+      "content": "Sure! I'll prepare some topics for our conversation.",
+      "senderId": 206,
+      "sessionId": 7,
+      "sentAt": "2026-06-01T20:15:00"
+    },
+    {
+      "id": 10,
+      "content": "¿Me puedes recomendar un libro para árboles binarios?",
+      "senderId": 109,
+      "sessionId": 9,
+      "sentAt": "2026-06-14T10:00:00"
+    },
+    {
+      "id": 12,
+      "content": "hola como comenzamos?",
+      "senderId": 101,
+      "sessionId": 4,
+      "sentAt": "2026-05-11T23:50"
+    },
+    {
+      "id": 13,
+      "content": "hola si",
+      "senderId": 101,
+      "sessionId": 12,
+      "sentAt": "2026-05-27T20:16"
+    },
+    {
+      "id": 14,
+      "content": "hey hola. vas a entrar?",
+      "senderId": 101,
+      "sessionId": 1,
+      "sentAt": "2026-06-08T12:04",
+      "apiId": "v1"
+    }
+  ],
+  "tutors": [
+    {
+      "id": 201,
+      "name": "Carlos Mendoza",
+      "university": "UPC",
+      "bio": "Estudiante de Ing. de Sistemas, 8vo ciclo. Especialista en matemáticas y estadística aplicada.",
+      "rating": 4.8,
+      "skills": [
+        "Cálculo",
+        "Álgebra",
+        "Estadística"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=12",
+      "specialty": "Matemáticas aplicadas",
+      "portfolioUrl": "https://github.com/carlosmendoza",
+      "yearsExperience": 2
+    },
+    {
+      "id": 202,
+      "name": "Ana Lucía Ríos",
+      "university": "PUCP",
+      "bio": "Ing. Informática 6to ciclo. Apasionada por la POO y el desarrollo de software de calidad.",
+      "rating": 4.6,
+      "skills": [
+        "Python",
+        "Java",
+        "POO"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=25",
+      "specialty": "Programación Orientada a Objetos",
+      "portfolioUrl": "https://github.com/analuciarios",
+      "yearsExperience": 1
+    },
+    {
+      "id": 203,
+      "name": "Diego Salazar",
+      "university": "UNI",
+      "bio": "Ing. Física, 7mo ciclo. Experto en mecánica clásica y termodinámica avanzada.",
+      "rating": 4.9,
+      "skills": [
+        "Dinámica",
+        "Termodinámica",
+        "Óptica"
+      ],
+      "available": false,
+      "avatarUrl": "https://i.pravatar.cc/150?img=33",
+      "portfolioUrl": "",
+      "yearsExperience": 3
+    },
+    {
+      "id": 204,
+      "name": "Sofía Paredes",
+      "university": "UP",
+      "bio": "Ing. de Sistemas, 9no ciclo. Especialista en bases de datos relacionales y NoSQL.",
+      "rating": 4.7,
+      "skills": [
+        "SQL",
+        "PostgreSQL",
+        "MongoDB"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=47",
+      "specialty": "Bases de datos y modelado",
+      "portfolioUrl": "https://github.com/sofiaparedes",
+      "yearsExperience": 2
+    },
+    {
+      "id": 205,
+      "name": "Miguel Torres",
+      "university": "UPC",
+      "bio": "Ing. de Software, 8vo ciclo. Frontend developer con experiencia en Angular y React.",
+      "rating": 4.5,
+      "skills": [
+        "Angular",
+        "TypeScript",
+        "CSS"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=51",
+      "specialty": "Desarrollo frontend",
+      "portfolioUrl": "https://github.com/migueltorres",
+      "yearsExperience": 2
+    },
+    {
+      "id": 206,
+      "name": "Valeria López",
+      "university": "USIL",
+      "bio": "Filología Inglesa, 6to ciclo. Clases de inglés avanzado con enfoque en conversación.",
+      "rating": 4.8,
+      "skills": [
+        "Inglés Avanzado",
+        "Phrasal Verbs",
+        "Writing"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=44",
+      "specialty": "Inglés avanzado y TOEFL",
+      "portfolioUrl": "",
+      "yearsExperience": 4
+    },
+    {
+      "id": 207,
+      "name": "Camila Ortega",
+      "university": "UPCH",
+      "bio": "Estudiante de Enfermería, 6to ciclo. Especialista en anatomía, farmacología y cuidados clínicos.",
+      "rating": 4.7,
+      "skills": [
+        "Anatomía",
+        "Farmacología",
+        "Enfermería Clínica"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=32",
+      "specialty": "Enfermería clínica",
+      "portfolioUrl": "",
+      "yearsExperience": 1
+    },
+    {
+      "id": 208,
+      "name": "Rodrigo Fuentes",
+      "university": "PUCP",
+      "bio": "Comunicación Audiovisual, 7mo ciclo. Experto en producción de contenido, guión y edición.",
+      "rating": 4.6,
+      "skills": [
+        "Producción Audiovisual",
+        "Guión",
+        "Edición de Video"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=55",
+      "specialty": "Producción audiovisual",
+      "portfolioUrl": "https://behance.net/rodrigofuentes",
+      "yearsExperience": 2
+    },
+    {
+      "id": 209,
+      "name": "Fernanda Quispe",
+      "university": "UP",
+      "bio": "Ing. Empresarial, 8vo ciclo. Especialista en finanzas corporativas, macroeconomía y análisis financiero.",
+      "rating": 4.9,
+      "skills": [
+        "Finanzas",
+        "Macroeconomía",
+        "Contabilidad"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=16",
+      "specialty": "Finanzas corporativas",
+      "portfolioUrl": "",
+      "yearsExperience": 3
+    },
+    {
+      "id": 210,
+      "name": "Sebastián Mora",
+      "university": "USMP",
+      "bio": "Derecho, 9no ciclo. Especialista en derecho civil, constitucional y contratos mercantiles.",
+      "rating": 4.5,
+      "skills": [
+        "Derecho Civil",
+        "Derecho Constitucional",
+        "Contratos"
+      ],
+      "available": false,
+      "avatarUrl": "https://i.pravatar.cc/150?img=60",
+      "specialty": "Derecho civil y mercantil",
+      "portfolioUrl": "",
+      "yearsExperience": 2
+    },
+    {
+      "id": 211,
+      "name": "Lucía Vargas",
+      "university": "UNI",
+      "bio": "Arquitectura, 7mo ciclo. Especialista en diseño arquitectónico, AutoCAD y modelado 3D.",
+      "rating": 4.8,
+      "skills": [
+        "Diseño Arquitectónico",
+        "AutoCAD",
+        "SketchUp"
+      ],
+      "available": true,
+      "avatarUrl": "https://i.pravatar.cc/150?img=23",
+      "specialty": "Diseño y modelado 3D",
+      "portfolioUrl": "https://behance.net/luciavargas",
+      "yearsExperience": 3
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "tutorId": 201,
+      "learnerId": 101,
+      "learnerName": "Jazmín Rosas",
+      "rating": 5,
+      "comment": "Excelente tutor, explicó el tema de integrales de forma muy clara y paciente.",
+      "sessionId": 1,
+      "createdAt": "2026-06-10T12:00:00",
+      "tutorReply": ""
+    },
+    {
+      "id": 2,
+      "tutorId": 201,
+      "learnerId": 103,
+      "learnerName": "Luis Becerra",
+      "rating": 4,
+      "comment": "Muy buen manejo del tema, solo mejoraría la puntualidad.",
+      "sessionId": 3,
+      "createdAt": "2026-06-05T11:30:00",
+      "tutorReply": ""
+    },
+    {
+      "id": 3,
+      "tutorId": 202,
+      "learnerId": 102,
+      "learnerName": "Mireya Perales",
+      "rating": 5,
+      "comment": "Ana explicó POO de una forma que nunca había entendido tan bien. 100% recomendada.",
+      "sessionId": 2,
+      "createdAt": "2026-06-11T15:00:00",
+      "tutorReply": ""
+    },
+    {
+      "id": 4,
+      "tutorId": 203,
+      "learnerId": 104,
+      "learnerName": "Rafael Pacheco",
+      "rating": 5,
+      "comment": "Diego domina la física completamente, la clase de termodinámica fue increíble.",
+      "sessionId": 4,
+      "createdAt": "2026-06-12T17:00:00",
+      "tutorReply": ""
+    },
+    {
+      "id": 5,
+      "tutorId": 201,
+      "learnerId": 108,
+      "learnerName": "Santiago Vargas",
+      "rating": 4,
+      "comment": "Buena clase de estadística, los ejemplos prácticos ayudaron mucho.",
+      "sessionId": 8,
+      "createdAt": "2026-06-15T09:00:00",
+      "tutorReply": ""
+    }
+  ],
+  "quizzes": [
+    {
+      "id": 1,
+      "title": "Evaluación de Integrales Definidas",
+      "course": "Cálculo",
+      "createdBy": "Prof. Flores Moroco",
+      "createdAt": "2026-05-01",
+      "questions": [
+        {
+          "id": 1,
+          "text": "¿Cuál es la integral de 2x dx?",
+          "options": [
+            "x² + C",
+            "2x² + C",
+            "x + C",
+            "2 + C"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": 2,
+          "text": "¿Qué representa el Teorema Fundamental del Cálculo?",
+          "options": [
+            "La derivada de una integral es la función original",
+            "La integral de una derivada es cero",
+            "Toda función continua tiene derivada",
+            "La integral siempre es positiva"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": 3,
+          "text": "¿Cuál es la integral de cos(x) dx?",
+          "options": [
+            "-sin(x) + C",
+            "sin(x) + C",
+            "tan(x) + C",
+            "-cos(x) + C"
+          ],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Dinámica y Leyes de Newton",
+      "course": "Física",
+      "createdBy": "Prof. Flores Moroco",
+      "createdAt": "2026-05-05",
+      "questions": [
+        {
+          "id": 1,
+          "text": "¿Qué establece la Segunda Ley de Newton?",
+          "options": [
+            "F = ma",
+            "F = mv",
+            "a = F/v",
+            "m = Fa"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": 2,
+          "text": "¿Cuál es la unidad de fuerza en el SI?",
+          "options": [
+            "Joule",
+            "Newton",
+            "Pascal",
+            "Watt"
+          ],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Fundamentos de POO",
+      "course": "Programación",
+      "createdBy": "Prof. Flores Moroco",
+      "createdAt": "2026-05-10",
+      "questions": [
+        {
+          "id": 1,
+          "text": "¿Qué es la encapsulación en POO?",
+          "options": [
+            "Ocultar los datos internos de un objeto",
+            "Heredar métodos de otra clase",
+            "Crear múltiples instancias",
+            "Sobrecargar operadores"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": 2,
+          "text": "¿Qué permite la herencia?",
+          "options": [
+            "Reutilizar código de una clase padre",
+            "Ocultar atributos privados",
+            "Crear interfaces",
+            "Eliminar objetos de memoria"
+          ],
+          "correctIndex": 0
+        }
+      ]
+    }
+  ],
+  "quiz-attempts": [],
+  "reports": [
+    {
+      "id": 1,
+      "reporterId": 101,
+      "reporterName": "Valeria Torres",
+      "reportedUserId": 202,
+      "reportedUserName": "Tutor #202",
+      "sessionId": 2,
+      "reason": "Lenguaje ofensivo",
+      "description": "Durante la sesión el tutor usó lenguaje inapropiado y me faltó el respeto.",
+      "status": "pending",
+      "createdAt": "2026-05-20T10:30:00",
+      "resolvedAt": ""
+    },
+    {
+      "id": 2,
+      "reporterId": 103,
+      "reporterName": "Luis Becerra",
+      "reportedUserId": 205,
+      "reportedUserName": "Tutor #205",
+      "sessionId": 5,
+      "reason": "No se presentó a la sesión",
+      "description": "El tutor confirmó la sesión pero nunca se conectó al chat.",
+      "status": "resolved",
+      "createdAt": "2026-05-18T14:00:00",
+      "resolvedAt": "2026-05-19T09:00:00"
+    },
+    {
+      "id": 3,
+      "reporterId": 101,
+      "reporterName": "Valeria Torres",
+      "reportedUserId": 203,
+      "reportedUserName": "Diego Salazar",
+      "sessionId": 4,
+      "reason": "Acoso o intimidación",
+      "description": "me dijo que quiere dinero",
+      "status": "pending",
+      "createdAt": "2026-06-08T12:00:53",
+      "resolvedAt": "",
+      "apiId": "v1"
+    },
+    {
+      "id": 4,
+      "reporterId": 101,
+      "reporterName": "Valeria Torres",
+      "reportedUserId": 201,
+      "reportedUserName": "Carlos Mendoza",
+      "sessionId": 1,
+      "reason": "No se presentó a la sesión",
+      "description": "No se presentó",
+      "status": "pending",
+      "createdAt": "2026-06-08T12:04:29",
+      "resolvedAt": "",
+      "apiId": "v1"
+    },
+    {
+      "id": 5,
+      "reporterId": 101,
+      "reporterName": "Valeria Torres",
+      "reportedUserId": 205,
+      "reportedUserName": "Miguel Torres",
+      "sessionId": 12,
+      "reason": "Otro",
+      "description": "Me dijo que soy muy malo",
+      "status": "pending",
+      "createdAt": "2026-06-08T12:05:04",
+      "resolvedAt": "",
+      "apiId": "v1"
+    }
+  ],
+  "donations": [
+    {
+      "id": 1,
+      "donorId": 101,
+      "donorName": "Valeria Torres",
+      "tutorId": 201,
+      "tutorName": "Carlos Mendoza",
+      "sessionId": 1,
+      "amount": 15,
+      "netAmount": 14.25,
+      "commission": 0.75,
+      "currency": "PEN",
+      "status": "completed",
+      "createdAt": "2026-05-20T11:00:00"
+    },
+    {
+      "id": 2,
+      "donorId": 103,
+      "donorName": "Luis Becerra",
+      "tutorId": 201,
+      "tutorName": "Carlos Mendoza",
+      "sessionId": 3,
+      "amount": 10,
+      "netAmount": 9.5,
+      "commission": 0.5,
+      "currency": "PEN",
+      "status": "completed",
+      "createdAt": "2026-05-22T16:00:00"
+    }
+  ],
+  "wallets": [
+    {
+      "id": 1,
+      "tutorId": 201,
+      "tutorName": "Carlos Mendoza",
+      "balance": 23.75,
+      "currency": "PEN",
+      "bankName": "",
+      "accountNumber": "",
+      "cci": ""
+    }
+  ],
+  "sanctions": [
+    {
+      "id": 1,
+      "userId": 205,
+      "userName": "Miguel Torres",
+      "type": "warning",
+      "reason": "Lenguaje ofensivo",
+      "reportId": 1,
+      "appliedAt": "2026-05-21T10:00:00",
+      "expiresAt": ""
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <mat-icon class="auth-logo-icon">school</mat-icon>
+            <span class="auth-logo-text">SkillSwap</span>
+        </div>
+
+        <h2 class="auth-title">Crear cuenta</h2>
+        <p class="auth-subtitle">Únete como aprendiz, tutor, o ambos a la vez</p>
+
+        @if (store.error()) {
+        <div class="auth-error">
+            <mat-icon>error</mat-icon>
+            {{ store.error() }}
+        </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Usuario</mat-label>
+                <input matInput formControlName="username" autocomplete="username">
+                @if (form.get('username')!.touched && form.get('username')!.hasError('minlength')) {
+                <mat-error>Mínimo 3 caracteres</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Correo institucional</mat-label>
+                <input matInput formControlName="email" autocomplete="email" placeholder="tu.nombre@upc.edu.pe">
+                @if (form.get('email')!.touched && form.get('email')!.hasError('required')) {
+                <mat-error>El correo es obligatorio</mat-error>
+                }
+                @if (form.get('email')!.touched && (form.get('email')!.hasError('email') || form.get('email')!.hasError('pattern'))) {
+                <mat-error>Debe ser un correo institucional válido (termina en .edu.pe)</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="name-row">
+                <mat-form-field appearance="outline" class="field-half">
+                    <mat-label>Nombre (opcional)</mat-label>
+                    <input matInput formControlName="firstName">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field-half">
+                    <mat-label>Apellido (opcional)</mat-label>
+                    <input matInput formControlName="lastName">
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" formControlName="password" autocomplete="new-password">
+                @if (form.get('password')!.touched && form.get('password')!.hasError('minlength')) {
+                <mat-error>Mínimo 8 caracteres</mat-error>
+                }
+            </mat-form-field>
+
+            <label class="roles-label">¿Cómo quieres usar SkillSwap?</label>
+            <div class="roles-row">
+                <mat-checkbox [checked]="wantsLearner()" (change)="toggleLearner($event.checked)">
+                    <mat-icon class="role-icon">school</mat-icon>
+                    Como Aprendiz
+                </mat-checkbox>
+                <mat-checkbox [checked]="wantsTutor()" (change)="toggleTutor($event.checked)">
+                    <mat-icon class="role-icon">person</mat-icon>
+                    Como Tutor
+                </mat-checkbox>
+            </div>
+            @if (noRoleSelected()) {
+            <span class="roles-error">Elige al menos un rol</span>
+            }
+            @if (wantsTutor()) {
+            <p class="tutor-hint">
+                <mat-icon class="sm-icon">info</mat-icon>
+                Al terminar te vamos a pedir completar tu perfil de tutor (universidad, especialidad, etc.)
+            </p>
+            }
+
+            <button mat-raised-button color="primary" type="submit" class="btn-submit"
+                    [disabled]="form.invalid || store.loading()">
+                <mat-icon>person_add</mat-icon>
+                Crear cuenta
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            ¿Ya tienes cuenta? <a routerLink="/iam/sign-in">Inicia sesión</a>
+        </p>
+    </div>
+</div>

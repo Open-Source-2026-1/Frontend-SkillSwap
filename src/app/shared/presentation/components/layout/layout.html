@@ -1,0 +1,84 @@
+<mat-toolbar class="skillswap-toolbar">
+  <mat-toolbar-row class="toolbar-row">
+
+<span class="brand-logo" (click)="goHome()" style="cursor:pointer">
+  <span class="brand-skill">Skill</span><span class="brand-swap">Swap</span>
+</span>
+
+    <div class="nav-spacer"></div>
+
+    <nav class="nav-links">
+      @for (option of options; track option.label) {
+      <a class="nav-link"
+         mat-button
+         [routerLink]="option.link"
+         routerLinkActive="active-link">
+        {{ option.label | translate }}
+      </a>
+      }
+    </nav>
+
+    <div class="toolbar-actions">
+
+      <button mat-icon-button aria-label="Search" class="icon-btn"
+              (click)="navigateToDiscovery()">
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button mat-icon-button aria-label="Notifications" class="icon-btn"
+              (click)="navigateToModeration()">
+        <mat-icon [matBadge]="moderationStore.pendingCount() > 0 ? moderationStore.pendingCount() : null"
+                  matBadgeColor="warn"
+                  matBadgeSize="small">
+          notifications
+        </mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Wallet" class="icon-btn"
+              (click)="navigateToWallet()"
+              title="Mi wallet">
+        <mat-icon>account_balance_wallet</mat-icon>
+      </button>
+
+      <app-language-switcher/>
+
+      @if (canBecomeTutor()) {
+      <button mat-button class="become-tutor-btn" (click)="navigateToBecomeTutor()"
+              title="Agregar el rol de Tutor a tu cuenta">
+        <mat-icon>person_add</mat-icon>
+        Ser tutor también
+      </button>
+      }
+
+      @if (canBecomeLearner()) {
+      <button mat-button class="become-tutor-btn" (click)="navigateToBecomeLearner()"
+              title="Agregar el rol de Aprendiz a tu cuenta">
+        <mat-icon>school</mat-icon>
+        Ser aprendiz también
+      </button>
+      }
+
+      <div class="avatar-wrapper" (click)="navigateToProfile()" style="cursor:pointer"
+           title="Ver mi perfil de tutor">
+        <img [src]="currentUser().avatar"
+             [alt]="currentUser().name"
+             class="user-avatar"
+             title="{{ currentUser().name }} — {{ currentUser().subtitle }}">
+        @if (currentUser().verified) {
+        <mat-icon class="verified-badge" title="Correo institucional verificado">verified</mat-icon>
+        }
+      </div>
+      <button mat-raised-button
+              class="logout-btn"
+              (click)="logout()">
+        Cerrar Sesión
+      </button>
+
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<main class="main-content">
+  <router-outlet/>
+</main>
+
+<app-footer-content/>

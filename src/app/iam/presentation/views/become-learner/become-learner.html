@@ -1,0 +1,28 @@
+<div class="become-container">
+    <div class="become-card">
+        <mat-icon class="become-icon">school</mat-icon>
+        <h2 class="become-title">Conviértete también en aprendiz</h2>
+        <p class="become-text">
+            Vas a agregar el rol de Aprendiz a tu misma cuenta ({{ store.currentUser()?.username }}) —
+            no vas a perder tu perfil ni tu historial como tutor. Vas a poder solicitar tutorías
+            con otros tutores desde ahora.
+        </p>
+
+        @if (store.error()) {
+        <div class="become-error">
+            <mat-icon>error</mat-icon>
+            {{ store.error() }}
+        </div>
+        }
+
+        <div class="become-actions">
+            <button mat-button (click)="cancel()">Cancelar</button>
+            <button mat-raised-button color="primary" class="btn-confirm"
+                    [disabled]="store.loading()"
+                    (click)="confirm()">
+                <mat-icon>check</mat-icon>
+                Sí, quiero ser aprendiz también
+            </button>
+        </div>
+    </div>
+</div>

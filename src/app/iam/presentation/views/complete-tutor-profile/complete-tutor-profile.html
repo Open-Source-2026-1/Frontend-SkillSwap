@@ -1,0 +1,79 @@
+<div class="profile-container">
+    <div class="profile-card">
+        <h2 class="profile-title">
+            <mat-icon>person</mat-icon>
+            Completa tu perfil de tutor
+        </h2>
+        <p class="profile-subtitle">
+            Esta información la van a ver los aprendices que busquen un tutor como tú.
+        </p>
+
+        @if (error()) {
+        <div class="profile-error">
+            <mat-icon>error</mat-icon>
+            {{ error() }}
+        </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="profile-form">
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Universidad</mat-label>
+                <input matInput formControlName="university">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Especialidad principal</mat-label>
+                <input matInput formControlName="specialty" placeholder="Ej: Matemáticas, Bases de Datos...">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Sobre ti</mat-label>
+                <textarea matInput formControlName="bio" rows="3"
+                          placeholder="Cuéntales a los aprendices cómo enseñas..."></textarea>
+                @if (form.get('bio')!.touched && form.get('bio')!.hasError('minlength')) {
+                <mat-error>Al menos 20 caracteres</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="skills-field">
+                <label class="skills-label">Cursos / habilidades que enseñas</label>
+                <div class="skills-input-row">
+                    <input class="skill-input" [formControl]="skillInput"
+                           placeholder="Ej: Cálculo 2" (keydown.enter)="$event.preventDefault(); addSkill()">
+                    <button mat-stroked-button type="button" (click)="addSkill()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div class="skills-chips">
+                    @for (skill of skills(); track skill) {
+                    <span class="skill-chip">
+                        {{ skill }}
+                        <mat-icon class="chip-remove" (click)="removeSkill(skill)">close</mat-icon>
+                    </span>
+                    }
+                </div>
+                @if (skills().length === 0) {
+                <span class="skills-hint">Agrega al menos una habilidad</span>
+                }
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Años de experiencia</mat-label>
+                <input matInput type="number" min="0" formControlName="yearsExperience">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Portafolio / trabajos (opcional)</mat-label>
+                <input matInput formControlName="portfolioUrl" placeholder="https://...">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" class="btn-submit"
+                    [disabled]="form.invalid || skills().length === 0 || saving()">
+                <mat-icon>check_circle</mat-icon>
+                Crear mi perfil de tutor
+            </button>
+
+        </form>
+    </div>
+</div>

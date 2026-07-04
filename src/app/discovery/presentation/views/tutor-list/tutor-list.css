@@ -1,0 +1,339 @@
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #1a1a2e;
+}
+
+.page-subtitle {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Filtros */
+.filter-section {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.search-field {
+    width: 100%;
+}
+
+.filter-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-field {
+    flex: 1;
+    min-width: 160px;
+}
+
+.btn-clear {
+    height: 56px;
+    white-space: nowrap;
+}
+
+/* Loading / Error */
+.loading-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.error-msg {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+/* Grid de tarjetas */
+.tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjeta individual */
+.tutor-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tutor-card:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Header de la tarjeta */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.favorite-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.favorite-toggle-btn mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #999;
+}
+
+.favorite-toggle-btn.favorite-toggle-active {
+    border-color: #f9a825;
+}
+
+.favorite-toggle-btn.favorite-toggle-active mat-icon {
+    color: #f9a825;
+}
+
+.tutor-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.tutor-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.tutor-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 2px;
+    color: #1a1a2e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tutor-university {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.82rem;
+    color: #555;
+}
+
+.sm-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Badge de disponibilidad */
+.availability-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-available {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-unavailable {
+    background: #f5f5f5;
+    color: #757575;
+}
+
+/* Rating */
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #ccc;
+}
+
+.star-filled {
+    color: #f9a825;
+}
+
+.rating-value {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #333;
+    margin-left: 4px;
+}
+.no-reviews-yet {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Bio */
+.tutor-bio {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Skills */
+.skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill-chip {
+    background: #e8eaf6;
+    color: #3949ab;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+/* Footer con botón */
+.card-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-view {
+    width: 100%;
+    background-color: #005a9c;
+    color: #fff;
+}
+
+.btn-view:hover {
+    background-color: #004880;
+}
+
+/* Empty state */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #888;
+    gap: 8px;
+}
+
+.empty-icon {
+    font-size: 56px;
+    width: 56px;
+    height: 56px;
+    color: #ccc;
+}
+
+.empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #444;
+    margin: 8px 0 0;
+}
+
+.empty-hint {
+    font-size: 0.88rem;
+    color: #888;
+    margin: 0 0 12px;
+}
+.user-role-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    width: fit-content;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+.badge-tutor { background: #e3f2fd; color: #1565c0; }
+.badge-aprendiz { background: #f3e5f5; color: #6a1b9a; }
+
+.availability-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    height: 56px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.availability-toggle mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #ccc;
+}
+
+.toggle-active {
+    border-color: #2e7d32 !important;
+    background: #e8f5e9 !important;
+    color: #2e7d32 !important;
+}
+
+.toggle-active mat-icon {
+    color: #2e7d32 !important;
+}
+.specialty-chip {
+    background: #fff8e1 !important;
+    color: #f57f17 !important;
+    border: 1px solid #ffe082;
+}

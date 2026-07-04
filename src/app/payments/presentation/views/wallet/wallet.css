@@ -1,0 +1,294 @@
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.page-title { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; margin: 0 0 4px; }
+.page-subtitle { color: #666; margin: 0; font-size: 0.9rem; }
+.btn-back { color: #555; }
+.loading-wrap { display: flex; justify-content: center; padding: 40px; }
+
+/* Tarjeta de saldo */
+.balance-card {
+    background: linear-gradient(135deg, #005a9c, #003f6e);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    color: #fff;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.balance-left { display: flex; align-items: center; gap: 16px; }
+
+.wallet-icon { font-size: 48px; width: 48px; height: 48px; color: rgba(255,255,255,0.85); }
+
+.balance-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); display: block; }
+
+.balance-amount { font-size: 2.2rem; font-weight: 700; display: block; line-height: 1.1; }
+
+.balance-currency { font-size: 0.75rem; color: rgba(255,255,255,0.6); display: block; margin-top: 2px; }
+
+.balance-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn-withdraw {
+    background-color: #fff !important;
+    color: #005a9c !important;
+    font-weight: 600;
+}
+
+.btn-withdraw:disabled { opacity: 0.5; }
+
+.btn-bank { border-color: rgba(255,255,255,0.5) !important; color: #fff !important; }
+
+.withdrawal-success {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #a5d6a7;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+/* Formulario banco */
+.bank-form-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bank-form-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.bank-form-title mat-icon { font-size: 18px; width: 18px; height: 18px; color: #005a9c; }
+.onboarding-hint {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0;
+}
+
+.wallet-error-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #fdecea;
+    border-radius: 8px;
+    color: #c62828;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.bank-readonly-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    color: #555;
+}
+
+.bank-readonly-label {
+    display: block;
+    font-size: 0.78rem;
+    color: #999;
+}
+
+.bank-readonly-value {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+.full-width { width: 100%; }
+
+.bank-form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+
+.btn-save-bank { background-color: #005a9c !important; color: #fff !important; }
+
+/* Sección de historial */
+.section-header { margin-bottom: 16px; }
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.section-title mat-icon { font-size: 20px; width: 20px; height: 20px; color: #005a9c; }
+
+/* Lista de donaciones */
+.donations-list { display: flex; flex-direction: column; gap: 12px; }
+
+.donation-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px 18px;
+}
+
+.donor-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #005a9c;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.donation-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+.donor-name { font-size: 0.9rem; font-weight: 600; color: #1a1a2e; }
+.donation-date { font-size: 0.75rem; color: #aaa; }
+
+.donation-amounts { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+
+.gross-amount { font-size: 0.82rem; color: #888; }
+.commission-text { font-size: 0.75rem; color: #e53935; }
+.net-amount { font-size: 1rem; font-weight: 700; color: #2e7d32; }
+
+/* Empty */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    gap: 8px;
+    text-align: center;
+    color: #888;
+}
+
+.empty-icon { font-size: 56px; width: 56px; height: 56px; color: #ccc; }
+.empty-title { font-size: 1.1rem; font-weight: 600; color: #444; margin: 8px 0 0; }
+.empty-hint { font-size: 0.88rem; color: #888; margin: 0; }
+/* Banner informativo */
+.wallet-info-banner {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.info-banner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+}
+
+.info-banner-header:hover {
+    background: #f8f9fa;
+}
+
+.info-banner-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #005a9c;
+}
+
+.info-banner-title mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #005a9c;
+}
+
+.info-toggle {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #888;
+}
+
+.info-banner-body {
+    padding: 4px 20px 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #f0f0f0;
+}
+
+.info-step-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-step-icon mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.info-step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.info-step-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.info-step-desc {
+    font-size: 0.78rem;
+    color: #666;
+    line-height: 1.5;
+}

@@ -1,0 +1,400 @@
+<div class="page-header">
+    <div>
+        <div class="admin-badge">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Modo Administrador
+        </div>
+        <h2 class="page-title">Panel de Moderación</h2>
+        <p class="page-subtitle">Revisa y gestiona los reportes enviados por los estudiantes</p>
+    </div>
+    <div class="header-actions">
+        <button mat-stroked-button class="btn-export" (click)="exportToPDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            Exportar PDF
+        </button>
+        <button mat-button class="btn-back" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Salir
+        </button>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs-row">
+    <button class="tab-btn"
+            [class.tab-active]="activeTab() === 'pending'"
+            (click)="setTab('pending')">
+        <mat-icon>pending</mat-icon>
+        Pendientes
+        @if (store.pendingCount() > 0) {
+        <span class="tab-badge">{{ store.pendingCount() }}</span>
+        }
+    </button>
+    <button class="tab-btn"
+            [class.tab-active]="activeTab() === 'resolved'"
+            (click)="setTab('resolved')">
+        <mat-icon>check_circle</mat-icon>
+        Resueltos
+        <span class="tab-count">{{ store.resolvedReports().length }}</span>
+    </button>
+    <button class="tab-btn"
+            [class.tab-active]="activeTab() === 'sanctions'"
+            (click)="setTab('sanctions')">
+        <mat-icon>gavel</mat-icon>
+        Sanciones
+        <span class="tab-count">{{ store.sanctions().length }}</span>
+    </button>
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+<!-- Pendientes -->
+@if (activeTab() === 'pending') {
+<div class="reports-list">
+    @for (report of store.pendingReports(); track report.id) {
+    <div class="report-card report-pending">
+
+        <div class="report-header">
+            <div class="report-id-wrap">
+                <span class="report-id">#{{ report.id }}</span>
+                <span class="status-chip chip-pending">
+              <mat-icon>schedule</mat-icon>
+              Pendiente
+            </span>
+            </div>
+            <span class="report-date">{{ report.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="report-body">
+            <div class="user-row">
+                <div class="user-info">
+                    <span class="user-label">Reportado por</span>
+                    <span class="user-name">{{ resolveUserName(report.reporterUserId) }}</span>
+                    <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                    <span class="user-id">ID: {{ report.reporterUserId }}</span>
+                </div>
+                <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                <div class="user-info">
+                    <span class="user-label">Usuario reportado</span>
+                    <span class="user-name reported">{{ resolveUserName(report.reportedUserId) }}</span>
+                    <span class="user-role-badge badge-tutor">Tutor</span>
+                    <span class="user-id">ID: {{ report.reportedUserId }}</span>
+                </div>
+            </div>
+
+            <div class="reason-row">
+                <mat-icon class="reason-icon">flag</mat-icon>
+                <span class="reason-text">{{ report.reason }}</span>
+            </div>
+
+            <div class="session-ref">
+                <mat-icon class="sm-icon">link</mat-icon>
+                Sesión #{{ report.sessionId }}
+            </div>
+        </div>
+
+        <div class="report-footer">
+            <button mat-stroked-button class="btn-view-chat"
+                    (click)="openChatModal(report)">
+                <mat-icon>chat</mat-icon>
+                Ver chat
+            </button>
+            <button mat-stroked-button class="btn-sanction"
+                    (click)="openSanctionModal(report)">
+                <mat-icon>gavel</mat-icon>
+                Sancionar
+            </button>
+            <button mat-raised-button class="btn-resolve"
+                    (click)="resolveReport($event, report.id)">
+                <mat-icon>check_circle</mat-icon>
+                Resolver
+            </button>
+        </div>
+
+    </div>
+    }
+
+    @if (store.pendingReports().length === 0 && !store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">check_circle</mat-icon>
+        <p class="empty-title">No hay reportes pendientes</p>
+        <p class="empty-hint">¡Todo está bajo control por ahora!</p>
+    </div>
+    }
+</div>
+}
+
+<!-- Resueltos -->
+@if (activeTab() === 'resolved') {
+<div class="reports-list">
+    @for (report of store.resolvedReports(); track report.id) {
+    <div class="report-card report-resolved">
+
+        <div class="report-header">
+            <div class="report-id-wrap">
+                <span class="report-id">#{{ report.id }}</span>
+                <span class="status-chip chip-resolved">
+              <mat-icon>check_circle</mat-icon>
+              Resuelto
+            </span>
+            </div>
+            <span class="report-date">{{ report.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="report-body">
+            <div class="user-row">
+                <div class="user-info">
+                    <span class="user-label">Reportado por</span>
+                    <span class="user-name">{{ resolveUserName(report.reporterUserId) }}</span>
+                    <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                </div>
+                <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                <div class="user-info">
+                    <span class="user-label">Usuario reportado</span>
+                    <span class="user-name">{{ resolveUserName(report.reportedUserId) }}</span>
+                    <span class="user-role-badge badge-tutor">Tutor</span>
+                </div>
+            </div>
+
+            <div class="reason-row">
+                <mat-icon class="reason-icon">flag</mat-icon>
+                <span class="reason-text">{{ report.reason }}</span>
+            </div>
+
+            @if (report.closed) {
+            <div class="resolved-at">
+                <mat-icon class="sm-icon">event_available</mat-icon>
+                Resuelto el {{ report.updatedAt | date:'dd/MM/yyyy' }}
+            </div>
+            }
+        </div>
+
+        <div class="report-footer">
+            <button mat-stroked-button class="btn-view-chat"
+                    (click)="openChatModal(report)">
+                <mat-icon>chat</mat-icon>
+                Ver chat de la sesión
+            </button>
+        </div>
+
+    </div>
+    }
+
+    @if (store.resolvedReports().length === 0 && !store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">inbox</mat-icon>
+        <p class="empty-title">No hay reportes resueltos aún</p>
+    </div>
+    }
+</div>
+}
+
+<!-- Sanciones -->
+@if (activeTab() === 'sanctions') {
+<div class="reports-list">
+    @for (sanction of store.sanctions(); track sanction.id) {
+    <div class="sanction-card {{ sanctionTypeClass(sanction.type) }}">
+
+        <div class="sanction-header">
+            <div class="sanction-type-row">
+                <mat-icon class="sanction-icon">
+                    {{ sanction.type === 'warning' ? 'warning' : sanction.type === 'block' ? 'block' : 'gavel' }}
+                </mat-icon>
+                <span class="sanction-type-label">{{ sanctionTypeLabel(sanction.type) }}</span>
+            </div>
+            <span class="sanction-date">{{ sanction.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="sanction-body">
+            <div class="sanction-user">
+                <mat-icon class="sm-icon">person</mat-icon>
+                <span class="sanction-username">{{ resolveUserName(sanction.sanctionedUserId) }}</span>
+                <span class="user-role-badge badge-tutor">ID: {{ sanction.sanctionedUserId }}</span>
+            </div>
+            <p class="sanction-reason">Motivo: {{ sanction.description }}</p>
+            @if (sanction.expiresAt) {
+            <div class="sanction-expires">
+                <mat-icon class="sm-icon">event</mat-icon>
+                Expira: {{ sanction.expiresAt }}
+            </div>
+            }
+            <div class="sanction-report-ref">
+                <mat-icon class="sm-icon">link</mat-icon>
+                Reporte #{{ sanction.reportId }}
+            </div>
+        </div>
+
+    </div>
+    }
+
+    @if (store.sanctions().length === 0 && !store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">gavel</mat-icon>
+        <p class="empty-title">No hay sanciones aplicadas</p>
+        <p class="empty-hint">Las sanciones aparecerán aquí cuando se apliquen desde los reportes.</p>
+    </div>
+    }
+</div>
+}
+
+<!-- MODAL DE CHAT -->
+@if (showChatModal()) {
+<div class="modal-overlay" (click)="closeChatModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <div>
+                <h3 class="modal-title">
+                    <mat-icon>chat</mat-icon>
+                    Chat de la Sesión #{{ selectedReport()?.sessionId }}
+                </h3>
+                <p class="modal-subtitle">
+                    Tema: {{ selectedSession()?.topic ?? 'Sin tema' }}
+                </p>
+            </div>
+            <button mat-icon-button (click)="closeChatModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <div class="participation-row">
+            <div class="participation-item"
+                 [class.participated]="tutorParticipated()"
+                 [class.not-participated]="!tutorParticipated()">
+                <mat-icon>{{ tutorParticipated() ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span class="user-role-badge badge-tutor">Tutor</span>
+                <span>{{ tutorParticipated() ? 'Ingresó al chat' : 'No ingresó al chat' }}</span>
+            </div>
+            <div class="participation-item"
+                 [class.participated]="learnerParticipated()"
+                 [class.not-participated]="!learnerParticipated()">
+                <mat-icon>{{ learnerParticipated() ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                <span>{{ learnerParticipated() ? 'Ingresó al chat' : 'No ingresó al chat' }}</span>
+            </div>
+        </div>
+
+        <div class="chat-messages">
+            @if (sessionMessages().length === 0) {
+            <div class="chat-empty">
+                <mat-icon>chat_bubble_outline</mat-icon>
+                <p>No hay mensajes en esta sesión.</p>
+                <p class="chat-empty-hint">
+                    Esto puede indicar que ninguno de los participantes ingresó al chat.
+                </p>
+            </div>
+            }
+            @for (msg of sessionMessages(); track msg.id) {
+
+            @if (isQuizMessage(msg.content)) {
+            <div class="mod-quiz-card">
+                <mat-icon>quiz</mat-icon>
+                <span>📝 Quiz enviado: {{ quizTitleFromMessage(msg.content) }}</span>
+            </div>
+            } @else if (isQuizResultMessage(msg.content)) {
+            <div class="mod-quiz-result-card">
+                <mat-icon>emoji_events</mat-icon>
+                <span>{{ quizResultTextFromMessage(msg.content) }}</span>
+            </div>
+            } @else if (isFileMessage(msg.content)) {
+            <div class="mod-file-card">
+                @if (parseFile(msg.content); as file) {
+                @if (file.fileType === 'image') {
+                <img [src]="file.url" [alt]="file.fileName" class="mod-file-image">
+                } @else {
+                <a [href]="file.url" target="_blank" rel="noopener" class="mod-file-doc-link">
+                    <mat-icon>description</mat-icon>
+                    {{ file.fileName }}
+                </a>
+                }
+                }
+            </div>
+            } @else {
+            <div class="message-row"
+                 [class.message-tutor]="isTutorMessage(msg.senderId)"
+                 [class.message-learner]="!isTutorMessage(msg.senderId)">
+                <div class="message-bubble">
+                    <div class="message-sender">
+                        <span class="sender-name">{{ getSenderName(msg.senderId) }}</span>
+                        <span class="user-role-badge"
+                              [class.badge-tutor]="isTutorMessage(msg.senderId)"
+                              [class.badge-aprendiz]="!isTutorMessage(msg.senderId)">
+                      {{ isTutorMessage(msg.senderId) ? 'Tutor' : 'Aprendiz' }}
+                    </span>
+                    </div>
+                    <p class="message-content">{{ msg.content }}</p>
+                    <span class="message-time">{{ msg.sentAt | date:'hh:mm a' }}</span>
+                </div>
+            </div>
+            }
+
+            }
+        </div>
+
+        <div class="modal-footer">
+            <button mat-raised-button class="btn-close-modal" (click)="closeChatModal()">
+                Cerrar
+            </button>
+        </div>
+
+    </div>
+</div>
+}
+
+<!-- MODAL DE SANCIÓN -->
+@if (showSanctionModal()) {
+<div class="modal-overlay" (click)="closeSanctionModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <mat-icon>gavel</mat-icon>
+                Aplicar sanción
+            </h3>
+            <button mat-icon-button (click)="closeSanctionModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        <!-- Usuario a sancionar -->
+        <div class="sanction-user-card">
+            <mat-icon class="reported-icon">person</mat-icon>
+            <div>
+                <span class="reported-label">Usuario a sancionar</span>
+                <span class="reported-name">{{ resolveUserName(reportToSanction()?.reportedUserId ?? 0) }}</span>
+                <span class="reported-id">ID: {{ reportToSanction()?.reportedUserId }}</span>
+            </div>
+        </div>
+
+        <!-- Opciones -->
+        <div class="sanction-options">
+            @for (opt of sanctionOptions; track opt.type) {
+            <div class="sanction-option"
+                 [class.sanction-option-selected]="selectedSanctionType() === opt.type"
+                 (click)="selectedSanctionType.set(opt.type)">
+                <mat-icon [style.color]="opt.color">{{ opt.icon }}</mat-icon>
+                <div class="sanction-option-info">
+                    <span class="sanction-option-label" [style.color]="opt.color">{{ opt.label }}</span>
+                    <span class="sanction-option-desc">{{ opt.desc }}</span>
+                </div>
+                @if (selectedSanctionType() === opt.type) {
+                <mat-icon class="selected-check">check_circle</mat-icon>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="modal-footer">
+            <button mat-button (click)="closeSanctionModal()">Cancelar</button>
+            <button mat-raised-button class="btn-confirm-sanction"
+                    (click)="confirmSanction()">
+                <mat-icon>gavel</mat-icon>
+                Confirmar sanción
+            </button>
+        </div>
+
+    </div>
+</div>
+}

@@ -1,0 +1,1 @@
+var i="[FILE:";function n(t,e,r){return`${i}${t}] ${e}|${r}`}function s(t){return t.startsWith(i)}function l(t){let e=t.match(/^\[FILE:(image|pdf|other)]\s*([^|]*)\|(.+)$/);return e?{fileType:e[1],fileName:e[2],url:e[3]}:null}export{n as a,s as b,l as c};

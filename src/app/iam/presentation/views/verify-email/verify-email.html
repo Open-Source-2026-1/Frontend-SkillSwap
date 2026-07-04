@@ -1,0 +1,30 @@
+<div class="verify-container">
+    <div class="verify-card">
+        <mat-icon class="verify-icon">mark_email_unread</mat-icon>
+        <h2 class="verify-title">Verifica tu correo institucional</h2>
+        <p class="verify-text">
+            Te enviamos un enlace de confirmación a
+            <strong>{{ store.currentUser()?.email }}</strong>
+            (simulado para esta demo — en un entorno real llegaría a tu bandeja de entrada).
+        </p>
+
+        @if (store.error()) {
+        <div class="verify-error">
+            <mat-icon>error</mat-icon>
+            {{ store.error() }}
+        </div>
+        }
+
+        <button mat-raised-button color="primary" class="btn-verify"
+                [disabled]="store.loading()"
+                (click)="simulateEmailClick()">
+            <mat-icon>touch_app</mat-icon>
+            Simular clic en el enlace
+        </button>
+
+        <p class="verify-hint">
+            Sin verificar tu correo institucional no puedes usar la plataforma —
+            esto garantiza que todos los usuarios son estudiantes reales.
+        </p>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+<div class="donate-container">
+
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        {{ step() === 'card' ? 'Cambiar monto' : 'Volver' }}
+    </button>
+
+    <!-- PASO 1 — Selección de monto -->
+    @if (step() === 'amount') {
+    <div class="form-card">
+        <h2 class="form-title">
+            <div class="title-icon-wrapper">
+                <mat-icon>volunteer_activism</mat-icon>
+            </div>
+            Donar a {{ tutorName }}
+        </h2>
+
+        <p class="subtitle">
+            Selecciona un monto de donación voluntaria.
+            SkillSwap retiene un <strong>5% de comisión</strong>.
+        </p>
+
+        <!-- Explicación del modelo de donación -->
+        <div class="donation-model-info">
+            <div class="model-info-row">
+                <div class="model-info-item">
+                    <mat-icon style="color:#005a9c">volunteer_activism</mat-icon>
+                    <div>
+                        <span class="model-info-title">Donación voluntaria</span>
+                        <span class="model-info-desc">
+          No es un pago obligatorio. Es un reconocimiento libre al esfuerzo del tutor.
+        </span>
+                    </div>
+                </div>
+                <div class="model-info-item">
+                    <mat-icon style="color:#f57f17">percent</mat-icon>
+                    <div>
+                        <span class="model-info-title">Comisión del 5%</span>
+                        <span class="model-info-desc">
+          Se destina al mantenimiento de SkillSwap para seguir conectando estudiantes.
+        </span>
+                    </div>
+                </div>
+                <div class="model-info-item">
+                    <mat-icon style="color:#2e7d32">account_balance_wallet</mat-icon>
+                    <div>
+                        <span class="model-info-title">El tutor recibe el 95%</span>
+                        <span class="model-info-desc">
+          El monto neto llega directo al wallet del tutor y puede retirarlo cuando quiera.
+        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Montos predefinidos -->
+        <div class="preset-grid">
+            @for (amt of presetAmounts; track amt) {
+            <button class="preset-btn"
+                    [class.preset-selected]="selectedAmount() === amt"
+                    (click)="selectPreset(amt)">
+                S/ {{ amt }}
+            </button>
+            }
+        </div>
+
+        <div class="divider-text">o ingresa un monto personalizado</div>
+
+        <mat-form-field appearance="outline" class="full-width" [formGroup]="amountForm">
+            <mat-label>Monto personalizado (S/)</mat-label>
+            <input matInput type="number" formControlName="customAmount"
+                   min="1" placeholder="Ej: 25"
+                   (focus)="selectedAmount.set(0)">
+            <mat-icon matPrefix>attach_money</mat-icon>
+        </mat-form-field>
+
+        <!-- Resumen -->
+        @if (finalAmount > 0) {
+        <div class="summary-card">
+            <div class="summary-row">
+                <span>Monto de donación</span>
+                <span class="summary-val">S/ {{ finalAmount.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row commission">
+                <span>Comisión SkillSwap (5%)</span>
+                <span class="summary-val">- S/ {{ commissionAmount.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row net">
+                <span>El tutor recibe</span>
+                <span class="summary-val net-val">S/ {{ netAmount.toFixed(2) }}</span>
+            </div>
+        </div>
+        }
+
+        <button mat-raised-button class="btn-pay"
+                [disabled]="finalAmount <= 0"
+                (click)="proceedToCard()">
+            <mat-icon>credit_card</mat-icon>
+            Continuar al pago
+        </button>
+    </div>
+    }
+
+    <!-- PASO 2 — Datos de tarjeta (simulación Stripe) -->
+    @if (step() === 'card') {
+    <div class="form-card">
+        <div class="stripe-header">
+            <mat-icon class="lock-icon">lock</mat-icon>
+            <div>
+                <h2 class="form-title-sm">Pago seguro</h2>
+                <p class="stripe-sub">Simulación de pasarela Stripe · S/ {{ finalAmount.toFixed(2) }}</p>
+            </div>
+        </div>
+
+        <!-- Desglose antes de confirmar -->
+        <div class="pre-confirm-summary">
+            <div class="pre-confirm-row">
+                <span>Donación a {{ tutorName }}</span>
+                <span class="fw">S/ {{ finalAmount.toFixed(2) }}</span>
+            </div>
+            <div class="pre-confirm-row commission-row">
+                <span>Comisión plataforma (5%)</span>
+                <span>- S/ {{ commissionAmount.toFixed(2) }}</span>
+            </div>
+            <div class="pre-confirm-row net-row">
+                <span>Recibe el tutor</span>
+                <span class="net-highlight">S/ {{ netAmount.toFixed(2) }}</span>
+            </div>
+        </div>
+
+        <form [formGroup]="cardForm">
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Número de tarjeta</mat-label>
+                <input matInput formControlName="cardNumber"
+                       (input)="formatCardNumber($event)"
+                       placeholder="1234 5678 9012 3456" maxlength="19">
+                <mat-icon matSuffix>credit_card</mat-icon>
+                @if (cardForm.get('cardNumber')!.touched && cardForm.get('cardNumber')!.hasError('pattern')) {
+                <mat-error>Ingresa los 16 dígitos de tu tarjeta</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre en la tarjeta</mat-label>
+                <input matInput formControlName="cardName" placeholder="Como aparece en la tarjeta">
+                @if (cardForm.get('cardName')!.touched && cardForm.get('cardName')!.hasError('required')) {
+                <mat-error>El nombre es obligatorio</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="card-row">
+                <mat-form-field appearance="outline" class="field-half">
+                    <mat-label>Vencimiento (MM/AA)</mat-label>
+                    <input matInput formControlName="expiry" placeholder="12/27" maxlength="5">
+                    @if (cardForm.get('expiry')!.touched && cardForm.get('expiry')!.hasError('pattern')) {
+                    <mat-error>Formato: MM/AA</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="field-half">
+                    <mat-label>CVV</mat-label>
+                    <input matInput formControlName="cvv" placeholder="123" maxlength="4" type="password">
+                    @if (cardForm.get('cvv')!.touched && cardForm.get('cvv')!.hasError('pattern')) {
+                    <mat-error>3 o 4 dígitos</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="stripe-badge">
+                <mat-icon>verified_user</mat-icon>
+                Pago cifrado · Simulación de Stripe Payments
+            </div>
+
+            <button mat-raised-button class="btn-pay"
+                    [disabled]="cardForm.invalid || store.loading()"
+                    (click)="confirmPayment()">
+                <mat-icon>check_circle</mat-icon>
+                Confirmar donación de S/ {{ finalAmount.toFixed(2) }}
+            </button>
+
+        </form>
+    </div>
+    }
+
+    <!-- PASO 3 — Procesando de verdad contra el backend -->
+    @if (step() === 'processing') {
+    <div class="form-card success-card">
+        <mat-icon class="success-icon spinning">sync</mat-icon>
+        <h2 class="success-title">Procesando tu donación...</h2>
+        <p class="success-msg">Confirmando el pago y abonando a la wallet del tutor.</p>
+
+        @if (store.error()) {
+        <div class="donation-error-notice">
+            <mat-icon>error</mat-icon>
+            <p>{{ store.error() }}</p>
+            <button mat-raised-button (click)="step.set('card')">Reintentar</button>
+        </div>
+        }
+    </div>
+    }
+
+    <!-- PASO 4 — Éxito -->
+    @if (step() === 'success') {
+    <div class="form-card success-card">
+        <mat-icon class="success-icon">check_circle</mat-icon>
+        <h2 class="success-title">¡Donación enviada!</h2>
+        <p class="success-msg">
+            Donaste <strong>S/ {{ finalAmount.toFixed(2) }}</strong> a <strong>{{ tutorName }}</strong>.
+        </p>
+
+        <div class="success-breakdown">
+            <div class="summary-row">
+                <span>Monto donado</span>
+                <span>S/ {{ finalAmount.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row commission">
+                <span>Comisión SkillSwap (5%)</span>
+                <span>- S/ {{ commissionAmount.toFixed(2) }}</span>
+            </div>
+            <div class="summary-row net">
+                <span>Tutor recibió</span>
+                <span class="net-val">S/ {{ netAmount.toFixed(2) }}</span>
+            </div>
+        </div>
+
+        <div class="success-actions">
+            <button mat-stroked-button (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+                Volver
+            </button>
+            <button mat-raised-button class="btn-wallet" (click)="goToWallet()">
+                <mat-icon>account_balance_wallet</mat-icon>
+                Ver mi wallet
+            </button>
+        </div>
+    </div>
+    }
+
+</div>

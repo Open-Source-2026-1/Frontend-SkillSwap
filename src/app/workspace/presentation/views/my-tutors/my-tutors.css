@@ -1,0 +1,398 @@
+/* ── Page header ─────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 4px 0 0;
+}
+
+/* ── Search bar ──────────────────────────────────────────── */
+.search-bar-wrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0 16px;
+  margin-bottom: 24px;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: border-color 0.2s;
+}
+
+.search-bar-wrap:focus-within {
+  border-color: #e63946;
+}
+
+.search-icon-wrap mat-icon {
+  color: #aaa;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  padding: 14px 0;
+  background: transparent;
+  color: #333;
+}
+
+/* ── Empty search ────────────────────────────────────────── */
+.empty-search {
+  text-align: center;
+  padding: 48px 0;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty-search mat-icon {
+  font-size: 48px !important;
+  width: 48px !important;
+  height: 48px !important;
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+.tutors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ── Tutor card ──────────────────────────────────────────── */
+.tutor-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tutor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+}
+
+/* ── Avatar ──────────────────────────────────────────────── */
+.tutor-avatar-wrap {
+  position: relative;
+}
+
+.tutor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e63946;
+}
+
+.tutor-rating {
+  position: absolute;
+  bottom: -4px;
+  right: -8px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.favorite-btn mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #999;
+}
+
+.favorite-btn.favorite-active {
+  border-color: #f9a825;
+}
+
+.favorite-btn.favorite-active mat-icon {
+  color: #f9a825;
+}
+
+.favorites-note {
+  font-size: 0.78rem;
+  color: #999;
+  font-style: italic;
+}
+
+.no-reviews-note {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  margin: 4px 0;
+}
+.star-icon {
+  font-size: 12px !important;
+  width: 12px !important;
+  height: 12px !important;
+  color: #ffc107;
+}
+
+/* ── Info ────────────────────────────────────────────────── */
+.tutor-info { display: flex; flex-direction: column; gap: 4px; }
+
+.tutor-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.tutor-specialty {
+  font-size: 0.88rem;
+  color: #e63946;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tutor-university {
+  font-size: 0.82rem;
+  color: #888;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.meta-icon {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  color: #aaa;
+}
+
+/* ── Skills ──────────────────────────────────────────────── */
+.skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.skill-tag {
+  background: #f0f4ff;
+  color: #084298;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── Stats ───────────────────────────────────────────────── */
+.tutor-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fc;
+  border-radius: 12px;
+  padding: 12px 16px;
+  width: 100%;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 2px;
+}
+
+.stat-number { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; }
+.stat-number.completed { color: #0a3622; }
+.stat-number.pending   { color: #856404; }
+
+.stat-label { font-size: 0.72rem; color: #999; font-weight: 500; }
+
+.stat-divider { width: 1px; height: 32px; background: #e0e0e0; }
+
+/* ── Stars ───────────────────────────────────────────────── */
+.stars-row { display: flex; gap: 2px; }
+
+.star {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #ddd;
+}
+
+.star.filled { color: #ffc107; }
+
+/* ── Request button ──────────────────────────────────────── */
+.btn-request {
+  width: 100%;
+  background: #e63946 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  font-weight: 600;
+  text-transform: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ── Modal overlay ───────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Modal fields ────────────────────────────────────────── */
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.modal-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-input {
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  outline: none;
+  color: #333;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: #e63946;
+}
+
+.modal-error {
+  font-size: 0.78rem;
+  color: #e63946;
+}
+
+/* ── Modal actions ───────────────────────────────────────── */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn-cancel-modal {
+  color: #888 !important;
+  font-weight: 600;
+  text-transform: none !important;
+}
+
+.btn-send {
+  background: #e63946 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  font-weight: 600;
+  text-transform: none !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Success state ───────────────────────────────────────── */
+.modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 56px !important;
+  width: 56px !important;
+  height: 56px !important;
+  color: #198754;
+}
+
+.modal-success h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.modal-success p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}

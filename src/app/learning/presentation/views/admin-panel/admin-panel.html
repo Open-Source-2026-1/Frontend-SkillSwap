@@ -1,0 +1,83 @@
+<div class="page-header">
+    <div>
+        <div class="admin-badge">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Modo Administrador
+        </div>
+        <h2 class="page-title">Banco de Quizzes</h2>
+        <p class="page-subtitle">Crea y gestiona los quizzes oficiales para los tutores</p>
+    </div>
+    <div class="header-actions">
+        <button mat-button class="btn-back" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Salir
+        </button>
+        <button mat-raised-button class="btn-create" (click)="createQuiz()">
+            <mat-icon>add</mat-icon>
+            Nuevo quiz
+        </button>
+    </div>
+</div>
+
+<!-- Filtros por curso -->
+<div class="filter-bar">
+    @for (f of courseFilters(); track f.value) {
+    <button class="filter-chip"
+            [class.filter-active]="selectedCourse() === f.value"
+            (click)="setFilter(f.value)">
+        {{ f.label }}
+    </button>
+    }
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+<!-- Tabla de quizzes -->
+<div class="table-container">
+    <table class="modern-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Curso</th>
+            <th>Creado por</th>
+            <th>Preguntas</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (quiz of filteredQuizzes; track quiz.id) {
+        <tr class="quiz-row">
+            <td class="td-id">#{{ quiz.id }}</td>
+            <td class="td-title">{{ quiz.title }}</td>
+            <td>
+                <span class="course-chip">{{ quiz.course }}</span>
+            </td>
+            <td>{{ creatorName(quiz.createdBy) }}</td>
+            <td class="td-center">{{ quiz.questions.length }}</td>
+            <td>{{ quiz.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td class="td-actions">
+                <button mat-icon-button class="btn-delete"
+                        (click)="deleteQuiz($event, quiz.id)"
+                        title="Eliminar">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+
+    @if (filteredQuizzes.length === 0 && !store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">quiz</mat-icon>
+        <p class="empty-title">No hay quizzes en este curso.</p>
+        <button mat-raised-button class="btn-create" (click)="createQuiz()">
+            Crear el primero
+        </button>
+    </div>
+    }
+</div>

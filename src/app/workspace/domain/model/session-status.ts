@@ -1,0 +1,1 @@
+export type SessionStatus = 'PENDING' | 'SCHEDULED' | 'COMPLETED' | 'REJECTED' | 'CANCELLED';

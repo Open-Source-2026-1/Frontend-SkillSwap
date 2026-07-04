@@ -1,0 +1,194 @@
+<div class="page-header">
+    <!-- Banner explicativo del wallet -->
+    <div class="wallet-info-banner">
+        <div class="info-banner-header" (click)="showWalletInfo.set(!showWalletInfo())">
+            <div class="info-banner-title">
+                <mat-icon>info</mat-icon>
+                ¿Cómo funciona el Wallet?
+            </div>
+            <mat-icon class="info-toggle">
+                {{ showWalletInfo() ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+        </div>
+
+        @if (showWalletInfo()) {
+        <div class="info-banner-body">
+            <div class="info-step">
+                <div class="info-step-icon" style="background:#e3f2fd">
+                    <mat-icon style="color:#005a9c">volunteer_activism</mat-icon>
+                </div>
+                <div class="info-step-content">
+                    <span class="info-step-title">1. Recibes donaciones</span>
+                    <span class="info-step-desc">
+            Los aprendices que toman tus tutorías pueden hacerte donaciones voluntarias como reconocimiento por tu ayuda.
+          </span>
+                </div>
+            </div>
+
+            <div class="info-step">
+                <div class="info-step-icon" style="background:#fff8e1">
+                    <mat-icon style="color:#f57f17">percent</mat-icon>
+                </div>
+                <div class="info-step-content">
+                    <span class="info-step-title">2. SkillSwap retiene el 5%</span>
+                    <span class="info-step-desc">
+            De cada donación, el 5% se destina al mantenimiento y mejora de la plataforma.
+            El 95% restante es tuyo.
+          </span>
+                </div>
+            </div>
+
+            <div class="info-step">
+                <div class="info-step-icon" style="background:#e8f5e9">
+                    <mat-icon style="color:#2e7d32">account_balance</mat-icon>
+                </div>
+                <div class="info-step-content">
+                    <span class="info-step-title">3. Registra tu cuenta bancaria</span>
+                    <span class="info-step-desc">
+            Se registra una sola vez — actualmente no se puede editar después, así que verifica bien los datos antes de guardar.
+          </span>
+                </div>
+            </div>
+
+            <div class="info-step">
+                <div class="info-step-icon" style="background:#f3e5f5">
+                    <mat-icon style="color:#6a1b9a">south</mat-icon>
+                </div>
+                <div class="info-step-content">
+                    <span class="info-step-title">4. Solicita tu retiro</span>
+                    <span class="info-step-desc">
+            Con tu cuenta registrada, usa el botón "Solicitar retiro" para mover todo tu saldo disponible a tu cuenta bancaria.
+          </span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div>
+        <h2 class="page-title">Mi Wallet</h2>
+        <p class="page-subtitle">Historial de donaciones recibidas y gestión de retiros</p>
+    </div>
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Salir
+    </button>
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (store.error()) {
+<div class="wallet-error-notice">
+    <mat-icon>error</mat-icon>
+    {{ store.error() }}
+</div>
+}
+
+@if (!store.hasWallet()) {
+
+<!-- Onboarding: todavía no existe wallet para este tutor -->
+<div class="bank-form-card">
+    <h3 class="bank-form-title">
+        <mat-icon>account_balance</mat-icon>
+        Registra tu cuenta bancaria para empezar a recibir donaciones
+    </h3>
+    <p class="onboarding-hint">
+        Esto se registra <strong>una sola vez</strong>: por ahora no existe forma de editarlo después, así que revisa bien los datos.
+    </p>
+    <form [formGroup]="bankForm">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Banco</mat-label>
+            <mat-icon matPrefix>business</mat-icon>
+            <input matInput formControlName="bankName" placeholder="Ej: BCP, Interbank, BBVA">
+            @if (bankForm.get('bankName')!.touched && bankForm.get('bankName')!.hasError('required')) {
+            <mat-error>El banco es obligatorio</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Número de cuenta</mat-label>
+            <input matInput formControlName="accountNumber" placeholder="10-20 dígitos">
+            @if (bankForm.get('accountNumber')!.touched && bankForm.get('accountNumber')!.hasError('pattern')) {
+            <mat-error>Entre 10 y 20 dígitos</mat-error>
+            }
+        </mat-form-field>
+
+        <div class="bank-form-actions">
+            <button mat-raised-button class="btn-save-bank"
+                    [disabled]="bankForm.invalid || store.loading()"
+                    (click)="createWallet()">
+                <mat-icon>save</mat-icon>
+                Registrar cuenta y crear wallet
+            </button>
+        </div>
+    </form>
+</div>
+
+} @else {
+
+<!-- Tarjeta de saldo -->
+<div class="balance-card">
+    <div class="balance-left">
+        <mat-icon class="wallet-icon">account_balance_wallet</mat-icon>
+        <div>
+            <span class="balance-label">Saldo disponible</span>
+            <span class="balance-amount">S/ {{ store.totalBalance().toFixed(2) }}</span>
+            <span class="balance-currency">Soles peruanos · {{ store.myDonations().length }} donación{{ store.myDonations().length !== 1 ? 'es' : '' }} recibida{{ store.myDonations().length !== 1 ? 's' : '' }}</span>
+        </div>
+    </div>
+
+    <div class="balance-actions">
+        <button mat-raised-button class="btn-withdraw"
+                [disabled]="store.totalBalance() <= 0 || store.loading()"
+                (click)="requestWithdrawal()">
+            <mat-icon>south</mat-icon>
+            Solicitar retiro
+        </button>
+    </div>
+</div>
+
+<!-- Datos bancarios registrados (solo lectura — no hay endpoint para editarlos) -->
+<div class="bank-readonly-card">
+    <mat-icon>account_balance</mat-icon>
+    <div>
+        <span class="bank-readonly-label">Cuenta registrada</span>
+        <span class="bank-readonly-value">{{ store.myWallet()!.bankName }} · {{ store.myWallet()!.accountNumber }}</span>
+    </div>
+</div>
+
+<!-- Historial de donaciones -->
+<div class="section-header">
+    <h3 class="section-title">
+        <mat-icon>history</mat-icon>
+        Historial de donaciones
+    </h3>
+</div>
+
+<div class="donations-list">
+    @for (donation of store.myDonations(); track donation.id) {
+    <div class="donation-card">
+        <div class="donor-avatar">D</div>
+        <div class="donation-info">
+            <span class="donor-name">Aprendiz #{{ donation.donorId }}</span>
+            <span class="donation-date">{{ donation.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="donation-amounts">
+            <span class="gross-amount">S/ {{ donation.amount.toFixed(2) }}</span>
+            <span class="commission-text">- S/ {{ donation.commissionAmount.toFixed(2) }} ({{ donation.commission }}%)</span>
+            <span class="net-amount">= S/ {{ donation.netAmount.toFixed(2) }}</span>
+        </div>
+    </div>
+    }
+</div>
+
+@if (store.myDonations().length === 0 && !store.loading()) {
+<div class="empty-state">
+    <mat-icon class="empty-icon">volunteer_activism</mat-icon>
+    <p class="empty-title">Aún no has recibido donaciones</p>
+    <p class="empty-hint">Completa sesiones de tutoría para comenzar a acumular saldo.</p>
+</div>
+}
+
+}

@@ -1,0 +1,58 @@
+<div class="form-container">
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="custom-form">
+
+    <h2 class="form-title">Nueva solicitud de tutoría</h2>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tutor</mat-label>
+      <mat-select formControlName="tutorId" required>
+        @for (tutor of discoveryStore.tutors(); track tutor.id) {
+        <mat-option [value]="tutor.id">{{ tutor.name }} — {{ tutor.specialty }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('tutorId')!.touched && form.get('tutorId')!.hasError('required')) {
+      <mat-error>Debes elegir un tutor</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tema</mat-label>
+      <input matInput formControlName="topic" required>
+      @if (form.get('topic')!.touched && form.get('topic')!.hasError('required')) {
+      <mat-error>El tema es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tu nivel en el tema</mat-label>
+      <mat-select formControlName="studentLevel" required>
+        @for (level of levelOptions; track level.value) {
+        <mat-option [value]="level.value">{{ level.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mensaje para el tutor (opcional)</mat-label>
+      <textarea matInput formControlName="message" rows="3"
+                placeholder="Cuéntale al tutor qué necesitas reforzar..."></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha y hora propuesta</mat-label>
+      <input matInput type="datetime-local" formControlName="scheduledAt" required>
+      @if (form.get('scheduledAt')!.touched && form.get('scheduledAt')!.hasError('required')) {
+      <mat-error>La fecha es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Enviar solicitud
+      </button>
+    </div>
+
+  </form>
+
+</div>

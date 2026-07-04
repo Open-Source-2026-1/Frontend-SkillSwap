@@ -1,0 +1,459 @@
+.home-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Saludo */
+.greeting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.greeting {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.name-highlight { color: #005a9c; }
+
+.greeting-sub { font-size: 0.88rem; color: #888; margin: 0; }
+
+.btn-discover {
+    background-color: #f9a825 !important;
+    color: #1a1a2e !important;
+    font-weight: 600;
+}
+
+/* Stats */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    transition: box-shadow 0.2s;
+}
+
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+.stat-icon { font-size: 26px; width: 26px; height: 26px; }
+
+.icon-total { color: #005a9c; }
+.icon-scheduled { color: #2e7d32; }
+.icon-pending { color: #f9a825; }
+.icon-completed { color: #00897b; }
+
+.stat-num { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; line-height: 1; }
+.stat-lbl { font-size: 0.75rem; color: #888; }
+
+/* Grid principal */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    align-items: start;
+}
+
+.col-left, .col-right { display: flex; flex-direction: column; gap: 20px; }
+
+/* Tarjeta de sección */
+.section-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.section-title mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #005a9c;
+}
+
+.btn-ver-todas { color: #005a9c; font-size: 0.82rem; }
+
+.count-badge {
+    background: #e53935;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 20px;
+}
+
+.mini-loading { display: flex; justify-content: center; padding: 20px; }
+
+/* Lista de sesiones */
+.sessions-list { display: flex; flex-direction: column; gap: 10px; }
+
+.session-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.session-item:hover { background: #f8f9fa; }
+
+.session-icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e3f2fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.request-icon-wrap { background: #fff3e0; }
+
+.session-icon { font-size: 20px; width: 20px; height: 20px; color: #005a9c; }
+.request-icon-wrap .session-icon { color: #e65100; }
+
+.session-info { flex: 1; min-width: 0; }
+
+.session-topic {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.session-meta { font-size: 0.75rem; color: #aaa; display: block; margin-top: 2px; }
+
+/* Status chips */
+.status-chip {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.chip-pending { background: #fff8e1; color: #f57f17; }
+.chip-scheduled { background: #e8f5e9; color: #2e7d32; }
+.chip-completed { background: #e0f2f1; color: #00695c; }
+.chip-rejected { background: #ffebee; color: #c62828; }
+.chip-cancelled { background: #f5f5f5; color: #757575; }
+
+/* Empty mini */
+.empty-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    gap: 8px;
+    text-align: center;
+    color: #aaa;
+}
+
+.empty-mini mat-icon { font-size: 36px; width: 36px; height: 36px; color: #ddd; }
+.empty-mini p { font-size: 0.85rem; color: #888; margin: 0; }
+.btn-go { font-size: 0.82rem; }
+
+/* Tutores disponibles */
+.tutors-mini-list { display: flex; flex-direction: column; gap: 10px; }
+
+.tutor-mini-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.tutor-mini-card:hover { background: #f8f9fa; }
+
+.tutor-mini-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.tutor-mini-info { flex: 1; min-width: 0; }
+
+.tutor-mini-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    display: block;
+}
+
+.tutor-mini-uni { font-size: 0.75rem; color: #888; display: block; }
+
+.tutor-mini-skills {
+    display: flex;
+    gap: 4px;
+    margin-top: 3px;
+    flex-wrap: wrap;
+}
+
+.skill-mini {
+    background: #e8eaf6;
+    color: #3949ab;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 1px 7px;
+    border-radius: 20px;
+}
+
+.tutor-mini-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.tutor-mini-rating { font-size: 0.78rem; color: #555; font-weight: 600; }
+
+.available-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2e7d32;
+}
+
+/* Accesos rápidos */
+.quick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.quick-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 8px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fafafa;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #333;
+    transition: all 0.15s;
+}
+
+.quick-btn mat-icon { font-size: 22px; width: 22px; height: 22px; color: #005a9c; }
+
+.quick-btn:hover {
+    border-color: #005a9c;
+    background: #e3f2fd;
+    color: #005a9c;
+}
+
+/* Balance mini */
+.balance-mini-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #005a9c, #003f6e);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: #fff;
+}
+
+.balance-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: rgba(255,255,255,0.85);
+}
+
+.balance-info { flex: 1; }
+
+.balance-label { font-size: 0.75rem; color: rgba(255,255,255,0.7); display: block; }
+
+.balance-val { font-size: 1.3rem; font-weight: 700; display: block; }
+
+.btn-wallet-mini { border-color: rgba(255,255,255,0.5) !important; color: #fff !important; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .greeting { font-size: 1.2rem; }
+}
+.search-cta-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1565c0, #005a9c);
+    border-radius: 14px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.search-cta-banner:hover {
+    box-shadow: 0 6px 24px rgba(0, 90, 156, 0.3);
+}
+
+.search-cta-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.search-cta-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: rgba(255,255,255,0.9);
+    flex-shrink: 0;
+}
+
+.search-cta-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+}
+
+.search-cta-sub {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 3px;
+}
+
+.btn-cta-big {
+    background-color: #f9a825 !important;
+    color: #1a1a2e !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    padding: 8px 20px !important;
+    white-space: nowrap;
+}
+/* Banner interuniversitario */
+.inter-uni-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    border-radius: 14px;
+    padding: 18px 24px;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.inter-uni-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.inter-uni-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    color: rgba(255,255,255,0.9);
+    flex-shrink: 0;
+}
+
+.inter-uni-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+}
+
+.inter-uni-sub {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+.uni-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.uni-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Nivel en solicitudes */
+.level-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+/* Especialidad del tutor */
+.tutor-mini-specialty {
+    font-size: 0.72rem;
+    color: #005a9c;
+    font-style: italic;
+    display: block;
+}

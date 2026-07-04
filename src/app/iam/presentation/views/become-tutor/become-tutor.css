@@ -1,0 +1,60 @@
+.become-container {
+    display: flex;
+    justify-content: center;
+    padding: 48px 16px;
+}
+
+.become-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+}
+
+.become-icon {
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
+    color: #005a9c;
+    margin-bottom: 8px;
+}
+
+.become-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 8px;
+}
+
+.become-text {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0 0 20px;
+}
+
+.become-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fdecea;
+    color: #c62828;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.become-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.btn-confirm {
+    background-color: #005a9c !important;
+    color: #fff !important;
+}

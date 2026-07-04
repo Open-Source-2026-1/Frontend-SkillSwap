@@ -1,0 +1,65 @@
+.verify-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 24px;
+}
+
+.verify-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    padding: 36px 32px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.verify-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #005a9c;
+    margin-bottom: 8px;
+}
+
+.verify-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 12px;
+}
+
+.verify-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.verify-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fdecea;
+    color: #c62828;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.btn-verify {
+    background-color: #005a9c !important;
+    color: #fff !important;
+    height: 44px;
+    width: 100%;
+}
+
+.verify-hint {
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 16px;
+}

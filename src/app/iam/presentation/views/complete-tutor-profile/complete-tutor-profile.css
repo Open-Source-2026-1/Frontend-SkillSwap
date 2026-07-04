@@ -1,0 +1,114 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+}
+
+.profile-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.profile-subtitle {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0 0 20px;
+}
+
+.profile-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fdecea;
+    color: #c62828;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.full-width { width: 100%; }
+
+.skills-field {
+    margin-bottom: 12px;
+}
+
+.skills-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.skills-input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.skill-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f3f8ff;
+    color: #005a9c;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 16px;
+}
+
+.chip-remove {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.skills-hint {
+    font-size: 0.78rem;
+    color: #999;
+    font-style: italic;
+}
+
+.btn-submit {
+    background-color: #005a9c !important;
+    color: #fff !important;
+    margin-top: 12px;
+    height: 44px;
+}

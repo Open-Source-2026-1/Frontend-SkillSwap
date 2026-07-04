@@ -1,0 +1,485 @@
+<div class="coord-wrap">
+
+    <!-- HEADER -->
+    <div class="coord-header">
+        <div>
+            <div class="admin-badge">
+                <mat-icon>admin_panel_settings</mat-icon>
+                Panel Coordinador Institucional
+            </div>
+            <h2 class="coord-title">Panel Coordinador</h2>
+            <p class="coord-sub">Vista general de la plataforma — reportes, sesiones y estudiantes</p>
+        </div>
+        <button mat-button class="btn-exit" (click)="goHome()">
+            <mat-icon>arrow_back</mat-icon>
+            Salir
+        </button>
+    </div>
+
+    <!-- STATS RÁPIDAS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <mat-icon class="stat-icon" style="color:#005a9c">event_note</mat-icon>
+            <span class="stat-num">{{ stats().totalSessions }}</span>
+            <span class="stat-lbl">Sesiones totales</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon" style="color:#2e7d32">check_circle</mat-icon>
+            <span class="stat-num">{{ stats().completed }}</span>
+            <span class="stat-lbl">Completadas</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon" style="color:#e53935">flag</mat-icon>
+            <span class="stat-num">{{ stats().pendingReports }}</span>
+            <span class="stat-lbl">Reportes pendientes</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon" style="color:#f9a825">people</mat-icon>
+            <span class="stat-num">{{ stats().totalTutors }}</span>
+            <span class="stat-lbl">Tutores activos</span>
+        </div>
+    </div>
+
+    <!-- GRID PRINCIPAL: 3 columnas -->
+    <div class="main-grid">
+
+        <!-- COL 1 — Reportes -->
+        <div class="panel-card">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <mat-icon>gavel</mat-icon>
+                    Reportes
+                </h3>
+                <button mat-button class="btn-ver" (click)="goToModeration()">
+                    Ver todos <mat-icon>chevron_right</mat-icon>
+                </button>
+            </div>
+
+            <p class="subsection-label">Resueltos</p>
+            <div class="report-list">
+                @for (r of moderationStore.resolvedReports() | slice:0:3; track r.id) {
+                <div class="report-item resolved-item">
+                    <div class="report-avatar resolved-avatar">{{ resolveReporterName(r.reporterUserId) | slice:0:1 }}</div>
+                    <div class="report-info">
+                        <span class="report-name">{{ resolveReporterName(r.reporterUserId) }}</span>
+                        <span class="report-code">{{ r.reason | slice:0:28 }}</span>
+                        <span class="report-date">{{ r.createdAt | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    <mat-icon class="resolved-check">check_circle</mat-icon>
+                </div>
+                }
+                @if (moderationStore.resolvedReports().length === 0) {
+                <p class="empty-mini-txt">No hay reportes resueltos aún.</p>
+                }
+            </div>
+
+            <p class="subsection-label pending-label">
+                Reportes pendientes
+                @if (moderationStore.pendingCount() > 0) {
+                <span class="notif-dot">{{ moderationStore.pendingCount() }}</span>
+                }
+            </p>
+            <div class="report-list">
+                @for (r of moderationStore.pendingReports() | slice:0:3; track r.id) {
+                <div class="report-item pending-item">
+                    <div class="report-avatar pending-avatar">{{ resolveReporterName(r.reporterUserId) | slice:0:1 }}</div>
+                    <div class="report-info">
+                        <span class="report-name">{{ resolveReporterName(r.reporterUserId) }}</span>
+                        <span class="report-code">{{ r.reason | slice:0:28 }}</span>
+                        <span class="report-date">{{ r.createdAt | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    <button mat-icon-button class="btn-resolve-mini"
+                            title="Resolver"
+                            (click)="resolveReport($event, r.id)">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                </div>
+                }
+                @if (moderationStore.pendingReports().length === 0) {
+                <p class="empty-mini-txt">✅ Sin reportes pendientes.</p>
+                }
+            </div>
+        </div>
+
+        <!-- COL 2 — Sesiones recientes -->
+        <div class="panel-card">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <mat-icon>assignment</mat-icon>
+                    Sesiones recientes
+                </h3>
+            </div>
+
+            <div class="sessions-table">
+                <div class="table-head">
+                    <span>Tema</span>
+                    <span>Tutor</span>
+                    <span>Rol</span>
+                    <span>Estado</span>
+                </div>
+                @for (s of workspaceStore.tutoringSessions() | slice:0:6; track s.id) {
+                <div class="table-row">
+                    <span class="td-topic">{{ s.topic | slice:0:20 }}</span>
+                    <span class="td-tutor">#{{ s.tutorId }}</span>
+                    <span><span class="user-role-badge badge-tutor">Tutor</span></span>
+                    <span class="status-chip {{ statusClass(s.status) }}">
+              {{ statusLabel(s.status) }}
+            </span>
+                </div>
+                }
+            </div>
+
+            <!-- Desempeño de tutores -->
+            <div class="tutor-enriched-section">
+                <p class="subsection-label-coord">Desempeño de tutores</p>
+                @for (tutor of discoveryStore.tutors() | slice:0:4; track tutor.id) {
+                <div class="tutor-enriched-row">
+                    <img [src]="tutor.avatarUrl" [alt]="tutor.name" class="tutor-enriched-avatar">
+                    <div class="tutor-enriched-info">
+                        <span class="tutor-enriched-name">{{ tutor.name }}</span>
+                        <span class="user-role-badge badge-tutor">Tutor</span>
+                    </div>
+                    <div class="tutor-enriched-stats">
+              <span class="enriched-stat">
+                <mat-icon style="font-size:13px;width:13px;height:13px;color:#005a9c">event_available</mat-icon>
+                {{ getTutorSessionCount(tutor.id) }} sesiones
+              </span>
+                        <span class="enriched-stat">
+                <mat-icon style="font-size:13px;width:13px;height:13px;color:#f9a825">star</mat-icon>
+                {{ getTutorAverageRating(tutor.id) || tutor.rating }}
+              </span>
+                        <span class="enriched-stat">
+                <mat-icon style="font-size:13px;width:13px;height:13px;color:#6a1b9a">rate_review</mat-icon>
+                {{ getTutorReviewCount(tutor.id) }} reseñas
+              </span>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="admin-links-row">
+                <button mat-stroked-button class="btn-admin-link" (click)="goToQuizzes()">
+                    <mat-icon>quiz</mat-icon>
+                    Panel Quizzes
+                </button>
+                <button mat-stroked-button class="btn-admin-link" (click)="goToModeration()">
+                    <mat-icon>shield</mat-icon>
+                    Panel Moderación
+                </button>
+            </div>
+        </div>
+
+        <!-- COL 3 — Estudiantes -->
+        <div class="panel-card">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <mat-icon>manage_accounts</mat-icon>
+                    Estudiantes
+                </h3>
+            </div>
+
+            <div class="search-fields">
+                <div class="search-field-wrap">
+                    <label class="search-lbl">Nombre</label>
+                    <input class="search-input"
+                           [value]="searchName()"
+                           (input)="onSearchName($event)"
+                           placeholder="Ingrese el nombre del estudiante">
+                </div>
+                <div class="search-field-wrap">
+                    <label class="search-lbl">Código estudiante</label>
+                    <input class="search-input"
+                           [value]="searchCode()"
+                           (input)="onSearchCode($event)"
+                           placeholder="Ingrese el código del estudiante">
+                </div>
+                <button mat-raised-button class="btn-search" (click)="search()">
+                    <mat-icon>search</mat-icon>
+                    Buscar
+                </button>
+            </div>
+
+            @if (searchDone()) {
+            <div class="search-results">
+                @for (student of searchResults(); track student.id) {
+                <div class="student-item" (click)="openHistoryModal(student)">
+                    <img [src]="student.avatar" [alt]="student.name" class="student-avatar">
+                    <div class="student-info">
+                        <div class="student-name-row">
+                            <span class="student-name">{{ student.name }}</span>
+                            <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                        </div>
+                        <span class="student-code">{{ student.code }}</span>
+                        <span class="student-uni">{{ student.university }}</span>
+                    </div>
+                    <button mat-icon-button class="btn-history" title="Ver historial">
+                        <mat-icon>history</mat-icon>
+                    </button>
+                </div>
+                }
+                @if (searchResults().length === 0) {
+                <div class="empty-search">
+                    <mat-icon>search_off</mat-icon>
+                    <p>No se encontró ningún estudiante.</p>
+                    <button mat-button (click)="clearSearch()">Limpiar</button>
+                </div>
+                }
+            </div>
+            } @else {
+            <div class="search-results">
+                @for (student of mockStudents; track student.id) {
+                <div class="student-item" (click)="openHistoryModal(student)">
+                    <img [src]="student.avatar" [alt]="student.name" class="student-avatar">
+                    <div class="student-info">
+                        <div class="student-name-row">
+                            <span class="student-name">{{ student.name }}</span>
+                            <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                        </div>
+                        <span class="student-code">{{ student.code }}</span>
+                        <span class="student-uni">{{ student.university }}</span>
+                    </div>
+                    <button mat-icon-button class="btn-history" title="Ver historial">
+                        <mat-icon>history</mat-icon>
+                    </button>
+                </div>
+                }
+            </div>
+            }
+
+        </div>
+
+        <!-- GUÍA RÁPIDA DEL MODERADOR -->
+        <div class="guide-section">
+            <div class="guide-header" (click)="toggleGuide()">
+                <div class="guide-title">
+                    <mat-icon>help_outline</mat-icon>
+                    Guía rápida para moderadores
+                </div>
+                <mat-icon class="guide-toggle-icon">
+                    {{ showGuide() ? 'expand_less' : 'expand_more' }}
+                </mat-icon>
+            </div>
+
+            @if (showGuide()) {
+            <div class="guide-body">
+
+                <div class="guide-step">
+                    <div class="guide-step-num">1</div>
+                    <div class="guide-step-content">
+                        <span class="guide-step-title">Revisar reportes pendientes</span>
+                        <span class="guide-step-desc">
+            Accede al Panel de Moderación desde la campana del navbar o el footer.
+            Los reportes pendientes aparecen en el primer tab con badge rojo.
+          </span>
+                    </div>
+                    <mat-icon class="guide-step-icon" style="color:#f57f17">notifications_active</mat-icon>
+                </div>
+
+                <div class="guide-step">
+                    <div class="guide-step-num">2</div>
+                    <div class="guide-step-content">
+                        <span class="guide-step-title">Verificar el chat de la sesión</span>
+                        <span class="guide-step-desc">
+            Haz clic en "Ver chat" para revisar los mensajes intercambiados
+            y confirmar si ambos participantes ingresaron a la sesión.
+          </span>
+                    </div>
+                    <mat-icon class="guide-step-icon" style="color:#005a9c">chat</mat-icon>
+                </div>
+
+                <div class="guide-step">
+                    <div class="guide-step-num">3</div>
+                    <div class="guide-step-content">
+                        <span class="guide-step-title">Revisar el historial del usuario</span>
+                        <span class="guide-step-desc">
+            Busca al estudiante en la columna "Estudiantes" y haz clic para ver
+            su historial de sesiones, reportes previos y reseñas recibidas.
+          </span>
+                    </div>
+                    <mat-icon class="guide-step-icon" style="color:#6a1b9a">history</mat-icon>
+                </div>
+
+                <div class="guide-step">
+                    <div class="guide-step-num">4</div>
+                    <div class="guide-step-content">
+                        <span class="guide-step-title">Aplicar sanción si corresponde</span>
+                        <span class="guide-step-desc">
+            Usa el botón "Sancionar" para aplicar una advertencia, bloqueo
+            temporal (7 días) o suspensión (30 días). La sanción resuelve
+            el reporte automáticamente.
+          </span>
+                    </div>
+                    <mat-icon class="guide-step-icon" style="color:#e65100">gavel</mat-icon>
+                </div>
+
+                <div class="guide-step">
+                    <div class="guide-step-num">5</div>
+                    <div class="guide-step-content">
+                        <span class="guide-step-title">Exportar evidencia en PDF</span>
+                        <span class="guide-step-desc">
+            Desde el Panel de Moderación usa el botón "Exportar PDF" para
+            generar un documento con el historial de reportes del tab activo.
+          </span>
+                    </div>
+                    <mat-icon class="guide-step-icon" style="color:#2e7d32">picture_as_pdf</mat-icon>
+                </div>
+
+            </div>
+            }
+        </div>
+
+    </div>
+    <!-- FIN main-grid -->
+
+    <!-- MODAL DE HISTORIAL — fuera del main-grid, dentro de coord-wrap -->
+    @if (showHistoryModal()) {
+    <div class="modal-overlay" (click)="closeHistoryModal()">
+        <div class="modal-card" (click)="$event.stopPropagation()">
+
+            <div class="modal-header">
+                <div class="modal-user-info">
+                    <img [src]="selectedStudent()!.avatar"
+                         [alt]="selectedStudent()!.name"
+                         class="modal-avatar">
+                    <div>
+                        <div class="modal-name-row">
+                            <h3 class="modal-title">{{ selectedStudent()!.name }}</h3>
+                            <span class="user-role-badge badge-aprendiz">Aprendiz</span>
+                        </div>
+                        <span class="modal-code">{{ selectedStudent()!.code }}</span>
+                        <span class="modal-uni">{{ selectedStudent()!.university }}</span>
+                    </div>
+                </div>
+                <button mat-icon-button (click)="closeHistoryModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="modal-tab"
+                        [class.modal-tab-active]="historyTab() === 'sessions'"
+                        (click)="setHistoryTab('sessions')">
+                    <mat-icon>event_note</mat-icon>
+                    Sesiones
+                    <span class="tab-count-sm">{{ studentSessions().length }}</span>
+                </button>
+                <button class="modal-tab"
+                        [class.modal-tab-active]="historyTab() === 'reports'"
+                        (click)="setHistoryTab('reports')">
+                    <mat-icon>flag</mat-icon>
+                    Reportes
+                    <span class="tab-count-sm" [class.tab-count-red]="studentReports().length > 0">
+              {{ studentReports().length }}
+            </span>
+                </button>
+                <button class="modal-tab"
+                        [class.modal-tab-active]="historyTab() === 'reviews'"
+                        (click)="setHistoryTab('reviews')">
+                    <mat-icon>rate_review</mat-icon>
+                    Reseñas
+                    <span class="tab-count-sm">{{ studentReviews().length }}</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                @if (historyTab() === 'sessions') {
+                @if (studentSessions().length === 0) {
+                <div class="modal-empty">
+                    <mat-icon>event_busy</mat-icon>
+                    <p>No tiene sesiones registradas.</p>
+                </div>
+                }
+                @for (session of studentSessions(); track session.id) {
+                <div class="history-item">
+                    <div class="history-item-left">
+                        <div class="history-icon-wrap" style="background:#e3f2fd">
+                            <mat-icon style="color:#005a9c">menu_book</mat-icon>
+                        </div>
+                        <div class="history-item-info">
+                            <span class="history-item-title">{{ session.topic }}</span>
+                            <span class="history-item-meta">
+                      {{ session.scheduledAt | date:'dd/MM/yyyy' }} ·
+                      {{ session.learnerId === selectedStudent()!.id ? 'Como Aprendiz' : 'Como Tutor' }}
+                    </span>
+                        </div>
+                    </div>
+                    <span class="status-chip {{ statusClass(session.status) }}">
+                  {{ statusLabel(session.status) }}
+                </span>
+                </div>
+                }
+                }
+
+                @if (historyTab() === 'reports') {
+                @if (studentReports().length === 0) {
+                <div class="modal-empty">
+                    <mat-icon>verified_user</mat-icon>
+                    <p>Sin reportes registrados. ✅</p>
+                </div>
+                }
+                @for (report of studentReports(); track report.id) {
+                <div class="history-item">
+                    <div class="history-item-left">
+                        <div class="history-icon-wrap"
+                             [style.background]="report.status === 'pending' ? '#fff8e1' : '#e8f5e9'">
+                            <mat-icon [style.color]="report.status === 'pending' ? '#f57f17' : '#2e7d32'">
+                                flag
+                            </mat-icon>
+                        </div>
+                        <div class="history-item-info">
+                            <span class="history-item-title">{{ report.reason }}</span>
+                            <span class="history-item-meta">
+                      {{ report.createdAt | date:'dd/MM/yyyy' }} ·
+                      {{ report.reporterUserId === selectedStudent()!.id ? 'Emitió el reporte' : 'Fue reportado' }}
+                    </span>
+                        </div>
+                    </div>
+                    <span class="status-chip"
+                          [class.chip-pending]="report.status === 'pending'"
+                          [class.chip-resolved]="report.status === 'resolved'">
+                  {{ report.status === 'pending' ? 'Pendiente' : 'Resuelto' }}
+                </span>
+                </div>
+                }
+                }
+
+                @if (historyTab() === 'reviews') {
+                @if (studentReviews().length === 0) {
+                <div class="modal-empty">
+                    <mat-icon>rate_review</mat-icon>
+                    <p>Sin reseñas registradas.</p>
+                </div>
+                }
+                @for (review of studentReviews(); track review.id) {
+                <div class="history-item">
+                    <div class="history-item-left">
+                        <div class="history-icon-wrap" style="background:#f3e5f5">
+                            <mat-icon style="color:#6a1b9a">star</mat-icon>
+                        </div>
+                        <div class="history-item-info">
+                            <span class="history-item-title">{{ review.comment | slice:0:50 }}</span>
+                            <span class="history-item-meta">
+                      {{ review.createdAt | date:'dd/MM/yyyy' }} ·
+                      {{ review.tutorId === selectedStudent()!.id ? 'Reseña recibida' : 'Reseña emitida' }}
+                    </span>
+                        </div>
+                    </div>
+                    <span class="rating-badge">⭐ {{ review.rating }}.0</span>
+                </div>
+                }
+                }
+
+            </div>
+
+            <div class="modal-footer">
+                <button mat-raised-button class="btn-close-modal" (click)="closeHistoryModal()">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
+    }
+
+</div>

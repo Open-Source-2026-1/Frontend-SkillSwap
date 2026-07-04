@@ -1,0 +1,267 @@
+/* ── Page header ─────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 4px 0 0;
+}
+
+.btn-add {
+  background: #e63946 !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  text-transform: none !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 20px !important;
+}
+/* ── Role toggle (Aprendiz / Tutor) ──────────────────────── */
+.role-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.role-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 22px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: #555;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-btn:hover {
+  border-color: #e63946;
+  color: #e63946;
+}
+
+.role-active {
+  background: #1d3557 !important;
+  color: #fff !important;
+  border-color: #1d3557 !important;
+}
+
+/* ── Filter bar ──────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: #666;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-chip:hover {
+  border-color: #e63946;
+  color: #e63946;
+}
+
+.filter-active {
+  background: #e63946 !important;
+  color: #fff !important;
+  border-color: #e63946 !important;
+}
+
+/* ── Modern Table Container ──────────────────────────────── */
+.table-container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f0f0f0;
+  width: 100%;
+  overflow-x: auto; /* Scroll horizontal si la pantalla es pequeña */
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* ── Cabeceras de Tabla ──────────────────────────────────── */
+.modern-table th {
+  background-color: #ffffff;
+  color: #888;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 20px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+/* ── Celdas de Tabla ─────────────────────────────────────── */
+.modern-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f4f4f4;
+  color: #555;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.modern-table tr.session-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modern-table tr.session-row:hover {
+  background-color: #f8f9fa;
+}
+
+.modern-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Tipografía específica ───────────────────────────────── */
+.td-id {
+  color: #bbb !important;
+  font-weight: 700;
+  font-size: 0.9rem !important;
+}
+
+.td-topic {
+  font-weight: 700;
+  color: #2c3e50 !important;
+}
+
+/* ── Wrappers (Fecha y Acciones) ─────────────────────────── */
+.date-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+}
+
+.sm-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #888;
+}
+
+.td-actions {
+  /* Evitar que la celda de acciones se haga clickeable si no se desea */
+}
+
+.actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Botones de Tabla ────────────────────────────────────── */
+.btn-delete {
+  color: #c92a2a !important; /* Rojo como en la imagen */
+}
+
+/* ── Status chips ────────────────────────────────────────── */
+.status-chip {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Colores basados en tu imagen */
+.chip-pending {
+  background: #fdf3c6;
+  color: #b58105;
+}
+
+.chip-scheduled {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.chip-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.chip-rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ── Loading / Empty ─────────────────────────────────────── */
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.error-msg {
+  display: block;
+  margin-bottom: 16px;
+  color: #e63946;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 0;
+  color: #aaa;
+}
+
+.empty-icon {
+  font-size: 48px !important;
+  width: 48px !important;
+  height: 48px !important;
+  margin-bottom: 12px;
+}
+.user-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-cell-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.user-role-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.badge-tutor { background: #e3f2fd; color: #1565c0; }
+.badge-aprendiz { background: #f3e5f5; color: #6a1b9a; }

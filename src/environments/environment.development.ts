@@ -1,0 +1,22 @@
+export const environment = {
+  production: false,
+
+  platformProviderBackendApiBaseUrl: 'https://backend-skillswap-production-746f.up.railway.app/api/v1',
+  platformProviderApiBaseUrl: 'http://localhost:3000',
+  platformProviderSecondaryApiBaseUrl: 'http://localhost:3000',
+  platformProviderTertiaryApiBaseUrl: 'http://localhost:3000',
+  platformProviderTutoringSessionsEndpointPath: '/tutoring-sessions',
+  platformProviderMessagesEndpointPath: '/messages',
+  platformProviderTutorsEndpointPath: '/tutors',
+  platformProviderReviewsEndpointPath: '/reviews',
+  platformProviderQuizzesEndpointPath: '/quizzes',
+  platformProviderQuizAttemptsEndpointPath: '/quiz-attempts',
+  platformProviderReportsEndpointPath: '/reports',
+  platformProviderDonationsEndpointPath: '/donations',
+  platformProviderWalletsEndpointPath: '/wallets',
+  platformProviderSanctionsEndpointPath: '/sanctions',
+  platformProviderFavoritesEndpointPath: '/favorites',
+  platformProviderAuthenticationEndpointPath: '/authentication',
+  platformProviderUsersEndpointPath: '/users',
+  platformProviderRolesEndpointPath: '/roles',
+};

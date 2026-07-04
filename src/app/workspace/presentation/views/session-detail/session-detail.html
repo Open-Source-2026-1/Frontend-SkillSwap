@@ -1,0 +1,331 @@
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+@if (session(); as s) {
+
+<!-- Back -->
+<button mat-button class="btn-back" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+  Volver a sesiones
+</button>
+
+<!-- Session info card -->
+<div class="session-info-card">
+  <div class="session-info-top">
+    <div>
+      <h2 class="session-info-topic">{{ s.topic }}</h2>
+      <p class="session-info-meta">
+        <mat-icon class="meta-icon">schedule</mat-icon>
+        {{ s.scheduledAt | date:'dd/MM/yyyy, hh:mm a' }}
+        &nbsp;·&nbsp;
+        <mat-icon class="meta-icon">person</mat-icon>
+        Tutor ID: {{ s.tutorId }}
+        &nbsp;·&nbsp;
+        <mat-icon class="meta-icon">school</mat-icon>
+        Estudiante ID: {{ s.learnerId }}
+      </p>
+    </div>
+    <span class="status-chip {{ statusClass(s.status) }}">
+        {{ statusLabel(s.status) }}
+      </span>
+  </div>
+
+  <!-- US09 — Aceptar / Rechazar (solo si pending) -->
+  @if (isPending()) {
+  <div class="session-actions">
+
+    @if (s.message || s.studentLevel) {
+    <div class="student-context-card">
+      <h4 class="context-title">
+        <mat-icon>person_search</mat-icon>
+        Información del estudiante
+      </h4>
+
+      @if (s.studentLevel) {
+      <div class="context-row">
+        <mat-icon class="context-icon">signal_cellular_alt</mat-icon>
+        <div>
+          <span class="context-label">Nivel en el tema</span>
+          <span class="context-value level-{{ s.studentLevel }}">
+                @if (s.studentLevel === 'basico') { 🟢 Básico }
+                @if (s.studentLevel === 'intermedio') { 🟡 Intermedio }
+                @if (s.studentLevel === 'avanzado') { 🔴 Avanzado }
+              </span>
+        </div>
+      </div>
+      }
+
+      @if (s.message) {
+      <div class="context-row">
+        <mat-icon class="context-icon">chat_bubble_outline</mat-icon>
+        <div>
+          <span class="context-label">Mensaje del estudiante</span>
+          <span class="context-value">{{ s.message }}</span>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <p class="actions-hint">
+      <mat-icon>info</mat-icon>
+      Esta solicitud está pendiente de confirmación.
+    </p>
+    <div class="actions-row">
+      <button mat-raised-button class="btn-accept" (click)="acceptSession()">
+        <mat-icon>check_circle</mat-icon>
+        Aceptar solicitud
+      </button>
+      <button mat-raised-button class="btn-reject" (click)="rejectSession()">
+        <mat-icon>cancel</mat-icon>
+        Rechazar
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- US21 — Cancelar (solo si pending o scheduled) -->
+  @if (canCancel()) {
+  <div class="cancel-wrap">
+    <button mat-button class="btn-cancel-session" (click)="cancelSession()">
+      <mat-icon>block</mat-icon>
+      Cancelar reserva
+    </button>
+  </div>
+  }
+
+  <!-- US21 — Aviso si ya está cancelada -->
+  @if (s.status === 'CANCELLED') {
+  <div class="cancelled-notice">
+    <mat-icon>block</mat-icon>
+    Esta reserva fue cancelada.
+  </div>
+  }
+
+</div>
+
+<!-- US10 — Chat: solo si está en 'SCHEDULED' -->
+<!-- US12 — Videollamada (simulada) -->
+@if (canChat()) {
+<div class="video-call-section">
+  @if (!callStarted()) {
+  <div class="video-call-preview">
+    <mat-icon class="video-call-icon">videocam</mat-icon>
+    <div>
+      <h3 class="video-call-title">Videollamada de la sesión</h3>
+      <p class="video-call-hint">Inicia la videollamada cuando ambos estén listos para comenzar.</p>
+    </div>
+    <button mat-raised-button class="btn-start-call" (click)="startVideoCall()">
+      <mat-icon>videocam</mat-icon>
+      Iniciar Videollamada
+    </button>
+  </div>
+  } @else {
+  <div class="video-call-active">
+    <div class="video-call-room">
+      <mat-icon class="video-room-icon">videocam</mat-icon>
+      <p>Videollamada en curso (simulada)</p>
+      <div class="video-call-controls">
+        <button mat-icon-button class="call-control-btn" title="Micrófono">
+          <mat-icon>mic</mat-icon>
+        </button>
+        <button mat-icon-button class="call-control-btn" title="Cámara">
+          <mat-icon>videocam</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button mat-raised-button class="btn-end-call" (click)="endVideoCall()">
+      <mat-icon>call_end</mat-icon>
+      Finalizar sesión
+    </button>
+  </div>
+  }
+</div>
+}
+
+@if (canChat()) {
+
+<div class="messages-section">
+  <div class="messages-header">
+    <h3 class="messages-title">
+      <mat-icon>chat</mat-icon>
+      Mensajes
+      <span class="msg-count">{{ sessionMessages().length }}</span>
+    </h3>
+  </div>
+
+  <div class="messages-list">
+    @for (msg of sessionMessages(); track msg.id) {
+
+    @if (isQuizMessage(msg.content)) {
+    <!-- US15 — tarjeta de quiz enviado por el chat -->
+    <div class="chat-quiz-card">
+      <mat-icon class="chat-quiz-icon">quiz</mat-icon>
+      <div class="chat-quiz-info">
+        <span class="chat-quiz-label">📝 Quiz enviado</span>
+        <span class="chat-quiz-title">{{ quizTitleFromMessage(msg.content) }}</span>
+      </div>
+      @if (!sessionHasQuizAttempt() && !iamStore.isTutor()) {
+      <button mat-raised-button class="btn-take-quiz-chat"
+              (click)="openQuizById(quizIdFromMessage(msg.content))">
+        <mat-icon>play_arrow</mat-icon>
+        Tomar quiz
+      </button>
+      } @else if (sessionHasQuizAttempt()) {
+      <span class="quiz-done-badge">
+          <mat-icon>check_circle</mat-icon>
+          Completado
+        </span>
+      }
+    </div>
+    } @else if (isQuizResultMessage(msg.content)) {
+    <!-- US16 — resultado del quiz, visible también para el moderador -->
+    <div class="chat-quiz-result-card">
+      <mat-icon class="chat-quiz-result-icon">emoji_events</mat-icon>
+      <span>{{ quizResultTextFromMessage(msg.content) }}</span>
+    </div>
+    } @else if (isFileMessage(msg.content)) {
+    <!-- US11 — archivo compartido (imagen o PDF) -->
+    <div class="chat-file-card">
+      @if (parseFile(msg.content); as file) {
+      @if (file.fileType === 'image') {
+      <a [href]="file.url" target="_blank" rel="noopener" class="chat-file-image-link">
+        <img [src]="file.url" [alt]="file.fileName" class="chat-file-image">
+      </a>
+      } @else {
+      <a [href]="file.url" target="_blank" rel="noopener" class="chat-file-doc-link">
+        <mat-icon class="chat-file-icon">description</mat-icon>
+        <span class="chat-file-name">{{ file.fileName }}</span>
+        <mat-icon class="chat-file-download">open_in_new</mat-icon>
+      </a>
+      }
+      }
+    </div>
+    } @else {
+    <div class="message-bubble">
+      <div class="bubble-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="bubble-body">
+        <div class="bubble-meta">
+          <span class="bubble-sender">Usuario #{{ msg.senderId }}</span>
+          <span class="bubble-time">{{ msg.sentAt | date:'hh:mm a' }}</span>
+        </div>
+        <p class="bubble-content">{{ msg.content }}</p>
+      </div>
+    </div>
+    }
+
+    }
+
+    @if (sessionMessages().length === 0 && !store.loading()) {
+    <div class="empty-messages">
+      <mat-icon class="empty-icon">chat_bubble_outline</mat-icon>
+      <p>Esta sesión no tiene mensajes aún. ¡Envía el primero!</p>
+    </div>
+    }
+  </div>
+
+  <!-- US11 — estado de subida / error de archivo -->
+  @if (uploadingFile()) {
+  <p class="upload-status">
+    <mat-icon class="sm-icon spinning">sync</mat-icon>
+    Subiendo archivo...
+  </p>
+  }
+  @if (fileUploadError()) {
+  <p class="upload-error">
+    <mat-icon class="sm-icon">error</mat-icon>
+    {{ fileUploadError() }}
+  </p>
+  }
+
+  <!-- Composer inline: ya no navega a otra pantalla -->
+  <form class="message-composer" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+    <button type="button" mat-icon-button class="btn-attach" (click)="fileInput.click()"
+            [disabled]="uploadingFile()" title="Adjuntar imagen o PDF">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <input #fileInput type="file" hidden accept="image/*,application/pdf" (change)="onFileSelected($event)">
+    <mat-form-field appearance="outline" class="composer-field">
+      <mat-label>Escribe un mensaje</mat-label>
+      <input matInput formControlName="content" placeholder="Escribe aquí...">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="messageForm.invalid">
+      <mat-icon>send</mat-icon>
+      Enviar
+    </button>
+  </form>
+
+  <!-- US15 — enviar un quiz real al chat (solo el tutor puede enviarlo) -->
+  @if (iamStore.isTutor() && learningStore.quizzes().length > 0) {
+  <div class="send-quiz-row">
+    <mat-form-field appearance="outline" class="send-quiz-field">
+      <mat-label>Enviar quiz al chat</mat-label>
+      <mat-select [(value)]="selectedQuizToSend">
+        @for (quiz of learningStore.quizzes(); track quiz.id) {
+        <mat-option [value]="quiz.id">{{ quiz.title }} · {{ quiz.course }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button class="btn-send-quiz"
+            [disabled]="!selectedQuizToSend()"
+            (click)="sendQuizToChat()">
+      <mat-icon>quiz</mat-icon>
+      Enviar
+    </button>
+  </div>
+  }
+</div>
+
+<!-- US24 — Reportar conducta -->
+<div class="report-section">
+  <button mat-button class="btn-report" (click)="reportUser()">
+    <mat-icon>flag</mat-icon>
+    Reportar conducta
+  </button>
+</div>
+
+} @else if (s.status !== 'CANCELLED' && s.status !== 'COMPLETED') {
+
+<!-- Aviso: sesión no agendada aún -->
+<div class="chat-locked">
+  <mat-icon class="locked-icon">lock</mat-icon>
+  <p>El chat se habilitará cuando la sesión sea <strong>aceptada y agendada</strong>.</p>
+</div>
+
+}
+
+<!-- US18 — Donación y reseña — visible en 'COMPLETED' -->
+@if (canDonate()) {
+<div class="donate-section">
+  <div class="donate-header">
+    <mat-icon>volunteer_activism</mat-icon>
+    <div>
+      <h3 class="donate-title">¿Te ayudó esta sesión?</h3>
+      <p class="donate-hint">Puedes donar al tutor o dejarle una reseña.</p>
+    </div>
+  </div>
+  <div class="donate-actions">
+    <button mat-stroked-button class="btn-review" (click)="leaveReview()">
+      <mat-icon>rate_review</mat-icon>
+      Dejar reseña
+    </button>
+    <button mat-raised-button class="btn-donate" (click)="donate()">
+      <mat-icon>favorite</mat-icon>
+      Donar al tutor
+    </button>
+  </div>
+</div>
+}
+
+} @else {
+@if (!store.loading()) {
+<div class="not-found">
+  <mat-icon>search_off</mat-icon>
+  <p>Sesión no encontrada.</p>
+  <button mat-raised-button (click)="goBack()">Volver</button>
+</div>
+}
+}

@@ -1,0 +1,135 @@
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Mi Perfil como Tutor</h2>
+        <p class="page-subtitle">Reseñas y reputación que otros estudiantes te han dejado</p>
+    </div>
+    <button mat-stroked-button class="btn-edit-profile" (click)="navigateToEditProfile()">
+        <mat-icon>edit</mat-icon>
+        Editar mi perfil
+    </button>
+</div>
+
+<!-- Tarjeta de perfil propio (datos reales de Discovery) -->
+@if (currentTutor(); as t) {
+<div class="profile-summary-card">
+    <img [src]="t.avatarUrl" [alt]="t.name" class="profile-avatar">
+    <div class="profile-info">
+        <h3 class="profile-name">{{ t.name }}</h3>
+        <span class="profile-university">
+      <mat-icon class="sm-icon">school</mat-icon>
+      {{ t.university }}
+    </span>
+        <p class="profile-bio">{{ t.bio }}</p>
+        <div class="skills-row">
+            @for (skill of t.skills; track skill) {
+            <span class="skill-chip">{{ skill }}</span>
+            }
+        </div>
+    </div>
+    <div class="rating-summary">
+        <span class="rating-big">{{ store.myAverageRating() }}</span>
+        <div class="stars-row">
+            @for (star of stars(store.myAverageRating()); track star) {
+            <mat-icon class="star-icon"
+                      [class.star-filled]="isStarFilled(star, store.myAverageRating())">
+                {{ isStarFilled(star, store.myAverageRating()) ? 'star' : 'star_border' }}
+            </mat-icon>
+            }
+        </div>
+        <span class="review-count">{{ store.myReviews().length }} reseña{{ store.myReviews().length !== 1 ? 's' : '' }}</span>
+    </div>
+</div>
+}
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+
+<div class="section-header">
+    <h3 class="section-title">
+        <mat-icon>rate_review</mat-icon>
+        Reseñas recibidas
+    </h3>
+</div>
+
+<div class="reviews-list">
+    @for (review of store.myReviews(); track review.id) {
+    <div class="review-card">
+
+        <!-- Cabecera de la reseña -->
+        <div class="review-header">
+            <div class="reviewer-info">
+                <div class="reviewer-avatar">{{ review.learnerName | slice:0:1 }}</div>
+                <div>
+                    <span class="reviewer-name">{{ review.learnerName }}</span>
+                    <span class="review-date">{{ review.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+            <div class="review-stars">
+                @for (star of stars(review.rating); track star) {
+                <mat-icon class="star-sm"
+                          [class.star-filled]="isStarFilled(star, review.rating)">
+                    {{ isStarFilled(star, review.rating) ? 'star' : 'star_border' }}
+                </mat-icon>
+                }
+                <span class="review-rating-val">{{ review.rating }}.0</span>
+            </div>
+        </div>
+
+        <!-- Comentario -->
+        <p class="review-comment">{{ review.comment }}</p>
+
+        <!-- Respuesta existente del tutor -->
+        @if (review.tutorReply) {
+        <div class="tutor-reply-box">
+            <div class="reply-header">
+                <mat-icon class="reply-icon">reply</mat-icon>
+                <span class="reply-label">Tu respuesta</span>
+            </div>
+            <p class="reply-text">{{ review.tutorReply }}</p>
+            <button mat-button class="btn-edit-reply"
+                    (click)="openReply(review.id)">
+                <mat-icon>edit</mat-icon>
+                Editar respuesta
+            </button>
+        </div>
+        }
+
+        <!-- Formulario de respuesta -->
+        @if (replyingReviewId() === review.id) {
+        <div class="reply-form">
+          <textarea class="reply-textarea"
+                    rows="3"
+                    placeholder="Escribe tu respuesta a esta reseña..."
+                    [value]="replyText()"
+                    (input)="onReplyInput($event)"></textarea>
+            <div class="reply-actions">
+                <button mat-button class="btn-cancel-reply" (click)="cancelReply()">
+                    Cancelar
+                </button>
+                <button mat-raised-button class="btn-submit-reply"
+                        [disabled]="!replyText().trim()"
+                        (click)="submitReply(review.id)">
+                    <mat-icon>send</mat-icon>
+                    Publicar respuesta
+                </button>
+            </div>
+        </div>
+        } @else if (!review.tutorReply) {
+        <button mat-button class="btn-reply" (click)="openReply(review.id)">
+            <mat-icon>reply</mat-icon>
+            Responder reseña
+        </button>
+        }
+
+    </div>
+    }
+</div>
+
+@if (store.myReviews().length === 0 && !store.loading()) {
+<div class="empty-state">
+    <mat-icon class="empty-icon">rate_review</mat-icon>
+    <p class="empty-title">Aún no tienes reseñas</p>
+    <p class="empty-hint">Cuando completes sesiones, tus aprendices podrán calificarte aquí.</p>
+</div>
+}

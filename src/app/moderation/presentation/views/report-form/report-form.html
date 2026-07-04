@@ -1,0 +1,73 @@
+<div class="report-container">
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a la sesión
+    </button>
+
+    <div class="form-card">
+
+        <div class="warning-banner">
+            <mat-icon>warning</mat-icon>
+            Los reportes son revisados por el profesor universitario.
+            Úsalo solo si es necesario.
+        </div>
+
+        <h2 class="form-title">
+            <div class="title-icon-wrapper">
+                <mat-icon>flag</mat-icon>
+            </div>
+            Reportar conducta
+        </h2>
+
+        <!-- Info del usuario reportado -->
+        <div class="reported-user-card">
+            <mat-icon class="reported-icon">person</mat-icon>
+            <div>
+                <span class="reported-label">Usuario reportado</span>
+                <span class="reported-name">{{ reportedUserName }}</span>
+                <span class="reported-id">ID: {{ reportedUserId }}</span>
+            </div>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Motivo del reporte</mat-label>
+                <mat-select formControlName="reason">
+                    @for (opt of reasonOptions; track opt) {
+                    <mat-option [value]="opt">{{ opt }}</mat-option>
+                    }
+                </mat-select>
+                @if (form.get('reason')!.touched && form.get('reason')!.hasError('required')) {
+                <mat-error>Selecciona un motivo</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Descripción detallada</mat-label>
+                <textarea matInput
+                          formControlName="description"
+                          rows="5"
+                          placeholder="Describe con detalle lo que ocurrió..."></textarea>
+                @if (form.get('description')!.touched && form.get('description')!.hasError('required')) {
+                <mat-error>La descripción es obligatoria</mat-error>
+                }
+                @if (form.get('description')!.touched && form.get('description')!.hasError('minlength')) {
+                <mat-error>Mínimo 10 caracteres</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="form-actions">
+                <button type="button" mat-button class="btn-cancel" (click)="goBack()">
+                    Cancelar
+                </button>
+                <button type="submit" mat-raised-button class="btn-send"
+                        [disabled]="form.invalid">
+                    <mat-icon>send</mat-icon>
+                    Enviar reporte
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

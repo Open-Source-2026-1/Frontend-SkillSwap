@@ -1,0 +1,288 @@
+<div class="detail-container">
+
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a la búsqueda
+    </button>
+
+    @if (store.loading()) {
+    <div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+    }
+
+    @if (tutor(); as t) {
+    <div class="profile-card">
+
+        <!-- Cabecera -->
+        <div class="profile-header">
+            <img [src]="t.avatarUrl" [alt]="t.name" class="profile-avatar">
+            <div class="profile-info">
+                <div class="name-row">
+                    <h2 class="profile-name">{{ t.name }}</h2>
+                    <span class="verified-badge">
+              <mat-icon class="verified-icon">verified</mat-icon>
+              Verificado
+            </span>
+                    <button class="favorite-toggle-btn" type="button"
+                            [class.favorite-toggle-active]="store.isFavorite(t.id)"
+                            (click)="store.toggleFavorite(t.id)"
+                            [title]="store.isFavorite(t.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+                        <mat-icon>{{ store.isFavorite(t.id) ? 'star' : 'star_border' }}</mat-icon>
+                        {{ store.isFavorite(t.id) ? 'En favoritos' : 'Agregar a favoritos' }}
+                    </button>
+                </div>
+                <span class="profile-university">
+            <mat-icon class="sm-icon">school</mat-icon>
+            {{ t.university }}
+          </span>
+                <div class="rating-row">
+                    @if (tutorReviews().length > 0) {
+                    @for (star of stars(tutorAverageRating()); track star) {
+                    <mat-icon class="star-icon"
+                              [class.star-filled]="isStarFilled(star, tutorAverageRating())">
+                        {{ isStarFilled(star, tutorAverageRating()) ? 'star' : 'star_border' }}
+                    </mat-icon>
+                    }
+                    <span class="rating-value">{{ tutorAverageRating().toFixed(1) }} / 5.0 ({{ tutorReviews().length }})</span>
+                    } @else {
+                    <span class="no-reviews-yet">Aún sin reseñas</span>
+                    }
+                </div>
+                <span class="availability-badge"
+                      [class.badge-available]="t.available"
+                      [class.badge-unavailable]="!t.available">
+            <mat-icon class="sm-icon">
+              {{ t.available ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+            {{ t.available ? 'Disponible para tutorías' : 'No disponible actualmente' }}
+          </span>
+            </div>
+        </div>
+
+        <!-- Stats del tutor -->
+        <div class="tutor-stats-row">
+            <div class="tutor-stat">
+                <mat-icon class="stat-icon-sm" style="color:#005a9c">event_available</mat-icon>
+                <span class="stat-num-sm">{{ tutorSessionCount() }}</span>
+                <span class="stat-lbl-sm">Sesiones completadas</span>
+            </div>
+            <div class="tutor-stat">
+                <mat-icon class="stat-icon-sm" style="color:#f9a825">star</mat-icon>
+                <span class="stat-num-sm">{{ tutorReviews().length > 0 ? tutorAverageRating() : '—' }}</span>
+                <span class="stat-lbl-sm">Rating promedio</span>
+            </div>
+            <div class="tutor-stat">
+                <mat-icon class="stat-icon-sm" style="color:#6a1b9a">rate_review</mat-icon>
+                <span class="stat-num-sm">{{ tutorReviews().length }}</span>
+                <span class="stat-lbl-sm">Reseñas recibidas</span>
+            </div>
+            <div class="tutor-stat">
+                <mat-icon class="stat-icon-sm" style="color:#2e7d32">pending_actions</mat-icon>
+                <span class="stat-num-sm">{{ tutorActiveSessions() }}</span>
+                <span class="stat-lbl-sm">Sesiones activas</span>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="section">
+            <h3 class="section-title">
+                <mat-icon>person</mat-icon>
+                Sobre mí
+            </h3>
+            <p class="bio-text">{{ t.bio }}</p>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <h3 class="section-title">
+                <mat-icon>school</mat-icon>
+                Cursos y habilidades
+            </h3>
+            <div class="skills-row">
+                @for (skill of t.skills; track skill) {
+                <span class="skill-chip">{{ skill }}</span>
+                }
+            </div>
+
+            <!-- Reseñas recibidas -->
+            @if (tutorReviews().length > 0) {
+            <div class="section">
+                <h3 class="section-title">
+                    <mat-icon>rate_review</mat-icon>
+                    Reseñas recibidas
+                </h3>
+                <div class="reviews-preview">
+                    @for (review of tutorReviews(); track review.id) {
+                    <div class="review-item">
+                        <div class="review-item-header">
+                            <div class="reviewer-avatar-sm">{{ review.learnerName | slice:0:1 }}</div>
+                            <span class="reviewer-name-sm">{{ review.learnerName }}</span>
+                            <div class="review-stars-sm">
+                                @for (star of stars(review.rating); track star) {
+                                <mat-icon class="star-icon-sm"
+                                          [class.star-filled]="isStarFilled(star, review.rating)">
+                                    {{ isStarFilled(star, review.rating) ? 'star' : 'star_border' }}
+                                </mat-icon>
+                                }
+                            </div>
+                        </div>
+                        <p class="review-comment-sm">{{ review.comment }}</p>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+
+        <!-- Especialidad y experiencia -->
+        @if (t.specialty || t.yearsExperience > 0) {
+        <div class="section">
+            <h3 class="section-title">
+                <mat-icon>workspace_premium</mat-icon>
+                Especialidad y experiencia
+            </h3>
+            <div class="portfolio-grid">
+                @if (t.specialty) {
+                <div class="portfolio-item">
+                    <mat-icon class="portfolio-icon" style="color:#005a9c">star</mat-icon>
+                    <div>
+                        <span class="portfolio-label">Especialidad principal</span>
+                        <span class="portfolio-value">{{ t.specialty }}</span>
+                    </div>
+                </div>
+                }
+                @if (t.yearsExperience > 0) {
+                <div class="portfolio-item">
+                    <mat-icon class="portfolio-icon" style="color:#2e7d32">timeline</mat-icon>
+                    <div>
+                        <span class="portfolio-label">Años enseñando</span>
+                        <span class="portfolio-value">{{ t.yearsExperience }} año{{ t.yearsExperience !== 1 ? 's' : '' }}</span>
+                    </div>
+                </div>
+                }
+                @if (t.portfolioUrl) {
+                <div class="portfolio-item portfolio-link" (click)="openPortfolio(t.portfolioUrl)">
+                    <mat-icon class="portfolio-icon" style="color:#6a1b9a">open_in_new</mat-icon>
+                    <div>
+                        <span class="portfolio-label">Portafolio / Trabajos</span>
+                        <span class="portfolio-value link-val">Ver portafolio →</span>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <button mat-raised-button class="btn-request"
+                    [disabled]="!t.available"
+                    (click)="openModal()">
+                <mat-icon>calendar_today</mat-icon>
+                Solicitar tutoría
+            </button>
+            @if (!t.available) {
+            <p class="unavailable-hint">Este tutor no está disponible en este momento.</p>
+            }
+            <button mat-stroked-button class="btn-donate-profile" (click)="donate()">
+                <mat-icon>volunteer_activism</mat-icon>
+                Donar al tutor
+            </button>
+        </div>
+
+    </div>
+    } @else if (!store.loading()) {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">person_off</mat-icon>
+        <p>No se encontró el tutor.</p>
+        <button mat-stroked-button (click)="goBack()">Volver</button>
+    </div>
+    }
+
+</div>
+
+<!-- Modal de solicitud de tutoría -->
+@if (showModal()) {
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+
+        @if (!requestSent()) {
+        <h3 class="modal-title">
+            <mat-icon>event</mat-icon>
+            Solicitar tutoría con {{ tutor()?.name }}
+        </h3>
+
+        <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+
+            <div class="modal-field">
+                <label class="modal-label">Tema a tratar *</label>
+                <input class="modal-input"
+                       formControlName="topic"
+                       placeholder="Ej: Integrales dobles, POO en Java, SQL avanzado...">
+                @if (requestForm.get('topic')!.touched && requestForm.get('topic')!.hasError('required')) {
+                <span class="modal-error">El tema es requerido</span>
+                }
+            </div>
+
+            <div class="modal-field">
+                <label class="modal-label">Fecha y hora propuesta *</label>
+                <input class="modal-input"
+                       type="datetime-local"
+                       formControlName="scheduledAt">
+                @if (requestForm.get('scheduledAt')!.touched && requestForm.get('scheduledAt')!.hasError('required')) {
+                <span class="modal-error">La fecha es requerida</span>
+                }
+            </div>
+
+            <div class="modal-field">
+                <label class="modal-label">Tu nivel en este tema *</label>
+                <select class="modal-input modal-select" formControlName="studentLevel">
+                    <option value="" disabled selected>Selecciona tu nivel</option>
+                    @for (opt of levelOptions; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                    }
+                </select>
+                @if (requestForm.get('studentLevel')!.touched && requestForm.get('studentLevel')!.hasError('required')) {
+                <span class="modal-error">Selecciona tu nivel</span>
+                }
+            </div>
+
+            <div class="modal-field">
+                <label class="modal-label">Mensaje para el tutor (opcional)</label>
+                <textarea class="modal-input modal-textarea"
+                          formControlName="message"
+                          rows="3"
+                          placeholder="Cuéntale al tutor qué necesitas aprender o qué dudas tienes..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" mat-button class="btn-cancel-modal" (click)="closeModal()">
+                    Cancelar
+                </button>
+                <button type="submit" mat-raised-button class="btn-send"
+                        [disabled]="requestForm.invalid">
+                    <mat-icon>send</mat-icon>
+                    Enviar solicitud
+                </button>
+            </div>
+
+        </form>
+
+        } @else {
+        <!-- Confirmación -->
+        <div class="modal-success">
+            <mat-icon class="success-icon">check_circle</mat-icon>
+            <h3>¡Solicitud enviada!</h3>
+            <p>Tu solicitud fue enviada a <strong>{{ tutor()?.name }}</strong> y queda en estado <strong>Pendiente</strong> hasta que el tutor la confirme.</p>
+            <div class="success-actions">
+                <button mat-stroked-button (click)="closeModal()">Cerrar</button>
+                <button mat-raised-button class="btn-send" (click)="goToSessions()">
+                    <mat-icon>list</mat-icon>
+                    Ver mis sesiones
+                </button>
+            </div>
+        </div>
+        }
+
+    </div>
+</div>
+}

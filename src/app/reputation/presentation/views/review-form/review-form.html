@@ -1,0 +1,82 @@
+<div class="review-container">
+    <button mat-button class="btn-back" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a mis sesiones
+    </button>
+
+    @if (alreadyReviewed()) {
+    <div class="form-card">
+        <div class="already-reviewed-notice">
+            <mat-icon>info</mat-icon>
+            <p>Ya dejaste una reseña para esta sesión. Solo se permite una reseña por sesión.</p>
+            <button mat-raised-button (click)="goBack()">Volver</button>
+        </div>
+    </div>
+    } @else {
+    <div class="form-card">
+        <h2 class="form-title">
+            <div class="title-icon-wrapper">
+                <mat-icon>rate_review</mat-icon>
+            </div>
+            Reseña para {{ tutorName }}
+        </h2>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <!-- Nombre del aprendiz -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tu nombre</mat-label>
+                <input matInput formControlName="learnerName" placeholder="Ej: Jazmín Rosas">
+                @if (form.get('learnerName')!.touched && form.get('learnerName')!.hasError('required')) {
+                <mat-error>El nombre es obligatorio</mat-error>
+                }
+            </mat-form-field>
+
+            <!-- Rating con estrellas interactivas -->
+            <div class="rating-section">
+                <label class="rating-label">Calificación *</label>
+                <div class="stars-interactive"
+                     (mouseleave)="clearHover()">
+                    @for (star of ratingOptions; track star) {
+                    <mat-icon class="star-btn {{ starClass(star) }}"
+                              (mouseenter)="hoverStar(star)"
+                              (click)="setStar(star)">
+                        {{ starClass(star) === 'star-filled' ? 'star' : 'star_border' }}
+                    </mat-icon>
+                    }
+                </div>
+                @if (form.get('rating')!.touched && selectedStar() === 0) {
+                <span class="rating-error">Selecciona una calificación</span>
+                }
+            </div>
+
+            <!-- Comentario -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Comentario</mat-label>
+                <textarea matInput
+                          formControlName="comment"
+                          rows="4"
+                          placeholder="Describe tu experiencia con este tutor..."></textarea>
+                @if (form.get('comment')!.touched && form.get('comment')!.hasError('required')) {
+                <mat-error>El comentario es obligatorio</mat-error>
+                }
+                @if (form.get('comment')!.touched && form.get('comment')!.hasError('minlength')) {
+                <mat-error>El comentario debe tener al menos 10 caracteres</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="form-actions">
+                <button type="button" mat-button class="btn-cancel" (click)="goBack()">
+                    Cancelar
+                </button>
+                <button type="submit" mat-raised-button class="btn-send"
+                        [disabled]="form.invalid || selectedStar() === 0">
+                    <mat-icon>send</mat-icon>
+                    Enviar reseña
+                </button>
+            </div>
+
+        </form>
+    </div>
+    }
+</div>

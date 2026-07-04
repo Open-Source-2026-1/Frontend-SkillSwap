@@ -1,0 +1,136 @@
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Buscar Tutores</h2>
+        <p class="page-subtitle">Encuentra el tutor ideal para tu curso — {{ store.filteredTutors().length }} resultado{{ store.filteredTutors().length !== 1 ? 's' : '' }}</p>
+    </div>
+</div>
+
+<!-- US05 + US06 — Búsqueda y filtros -->
+<div class="filter-section">
+    <mat-form-field class="search-field" appearance="outline">
+        <mat-label>Buscar por nombre, curso o universidad</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput
+               [value]="store.searchQuery()"
+               (input)="onSearch($event)"
+               placeholder="Ej: Cálculo, UPC, Python...">
+    </mat-form-field>
+
+    <div class="filter-row">
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Universidad</mat-label>
+            <mat-select [value]="store.selectedUniversity()"
+                        (selectionChange)="onUniversityChange($event.value)">
+                <mat-option value="all">Todas las universidades</mat-option>
+                @for (uni of store.universities(); track uni) {
+                <mat-option [value]="uni">{{ uni }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Rating mínimo</mat-label>
+            <mat-select [value]="store.minRating()"
+                        (selectionChange)="onRatingChange($event.value)">
+                @for (opt of ratingOptions; track opt.value) {
+                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <button class="availability-toggle"
+                [class.toggle-active]="store.availableOnly()"
+                (click)="onAvailableOnlyChange(!store.availableOnly())">
+            <mat-icon>{{ store.availableOnly() ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            Solo disponibles
+        </button>
+
+        <button mat-stroked-button class="btn-clear" (click)="clearFilters()">
+            <mat-icon>filter_alt_off</mat-icon>
+            Limpiar
+        </button>
+    </div>
+</div>
+
+@if (store.loading()) {
+<div class="loading-wrap"><mat-spinner diameter="40"></mat-spinner></div>
+}
+@if (store.error()) {
+<mat-error class="error-msg">{{ store.error() }}</mat-error>
+}
+
+<!-- Grid de tarjetas -->
+<div class="tutors-grid">
+    @for (tutor of store.filteredTutors(); track tutor.id) {
+    <div class="tutor-card" (click)="viewTutor(tutor.id)">
+
+        <div class="card-header">
+            <img [src]="tutor.avatarUrl" [alt]="tutor.name" class="tutor-avatar">
+            <div class="tutor-meta">
+                <h3 class="tutor-name">{{ tutor.name }}</h3>
+                <span class="user-role-badge badge-tutor">Tutor</span>
+                <span class="tutor-university">
+                 <mat-icon class="sm-icon">school</mat-icon>
+                {{ tutor.university }}
+            </span>
+            </div>
+            <button class="favorite-toggle-btn" type="button"
+                    [class.favorite-toggle-active]="store.isFavorite(tutor.id)"
+                    (click)="store.toggleFavorite(tutor.id); $event.stopPropagation()"
+                    [title]="store.isFavorite(tutor.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+                <mat-icon>{{ store.isFavorite(tutor.id) ? 'star' : 'star_border' }}</mat-icon>
+            </button>
+            <span class="availability-badge"
+                  [class.badge-available]="tutor.available"
+                  [class.badge-unavailable]="!tutor.available">
+          {{ tutor.available ? 'Disponible' : 'Ocupado' }}
+        </span>
+        </div>
+
+        <div class="rating-row">
+            @if (reviewCount(tutor.id) > 0) {
+            @for (star of stars(averageRating(tutor.id)); track star) {
+            <mat-icon class="star-icon"
+                      [class.star-filled]="isStarFilled(star, averageRating(tutor.id))">
+                {{ isStarFilled(star, averageRating(tutor.id)) ? 'star' : 'star_border' }}
+            </mat-icon>
+            }
+            <span class="rating-value">{{ averageRating(tutor.id).toFixed(1) }} ({{ reviewCount(tutor.id) }})</span>
+            } @else {
+            <span class="no-reviews-yet">Aún sin reseñas</span>
+            }
+        </div>
+
+        <p class="tutor-bio">{{ tutor.bio }}</p>
+
+        <div class="skills-row">
+            @for (skill of tutor.skills; track skill) {
+            <span class="skill-chip">{{ skill }}</span>
+            }
+            @if (tutor.specialty) {
+            <span class="skill-chip specialty-chip">⭐ {{ tutor.specialty }}</span>
+            }
+        </div>
+
+        <div class="card-footer">
+            <button mat-raised-button class="btn-view"
+                    (click)="viewTutor(tutor.id); $event.stopPropagation()">
+                Ver perfil
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    }
+</div>
+
+@if (store.filteredTutors().length === 0 && !store.loading()) {
+<div class="empty-state">
+    <mat-icon class="empty-icon">search_off</mat-icon>
+    <p class="empty-title">No se encontraron tutores</p>
+    <p class="empty-hint">Intenta con términos más generales o limpia los filtros.</p>
+    <button mat-stroked-button (click)="clearFilters()">
+        <mat-icon>refresh</mat-icon>
+        Limpiar filtros
+    </button>
+</div>
+}

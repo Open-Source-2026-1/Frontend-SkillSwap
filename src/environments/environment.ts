@@ -1,0 +1,22 @@
+export const environment = {
+  production: true,
+
+  platformProviderBackendApiBaseUrl: 'https://backend-skillswap-production-746f.up.railway.app/api/v1',
+  platformProviderApiBaseUrl: 'https://my-json-server.typicode.com/Open-Source-2026-1/db-skillswap',
+  platformProviderSecondaryApiBaseUrl: 'https://my-json-server.typicode.com/Agnizzz/db-quizz-open-sources',
+  platformProviderTertiaryApiBaseUrl:'https://my-json-server.typicode.com/Agnizzz/moderation-open-source',
+  platformProviderTutoringSessionsEndpointPath: '/tutoring-sessions',
+  platformProviderMessagesEndpointPath: '/messages',
+  platformProviderTutorsEndpointPath: '/tutors',
+  platformProviderReviewsEndpointPath: '/reviews',
+  platformProviderQuizzesEndpointPath: '/quizzes',
+  platformProviderQuizAttemptsEndpointPath: '/quiz-attempts',
+  platformProviderReportsEndpointPath: '/reports',
+  platformProviderDonationsEndpointPath: '/donations',
+  platformProviderWalletsEndpointPath: '/wallets',
+  platformProviderSanctionsEndpointPath: '/sanctions',
+  platformProviderFavoritesEndpointPath: '/favorites',
+  platformProviderAuthenticationEndpointPath: '/authentication',
+  platformProviderUsersEndpointPath: '/users',
+  platformProviderRolesEndpointPath: '/roles',
+};

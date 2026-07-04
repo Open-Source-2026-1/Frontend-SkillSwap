@@ -1,0 +1,145 @@
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 24px;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.auth-logo-icon {
+    color: #e63946;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+}
+
+.auth-logo-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1a1a2e;
+}
+
+.auth-title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 24px;
+}
+
+.auth-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fdecea;
+    color: #c62828;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.full-width { width: 100%; }
+
+.name-row {
+    display: flex;
+    gap: 12px;
+}
+
+.field-half { flex: 1; }
+
+.roles-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    margin: 8px 0 8px;
+}
+
+.roles-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.role-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+.roles-error {
+    color: #c62828;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
+.tutor-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #666;
+    background: #f3f8ff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 4px 0 8px;
+}
+
+.sm-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.btn-submit {
+    background-color: #005a9c !important;
+    color: #fff !important;
+    margin-top: 8px;
+    height: 44px;
+}
+
+.auth-switch {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 20px;
+}
+
+.auth-switch a {
+    color: #005a9c;
+    font-weight: 600;
+    text-decoration: none;
+}

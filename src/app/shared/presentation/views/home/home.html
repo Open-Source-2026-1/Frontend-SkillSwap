@@ -1,0 +1,249 @@
+<div class="home-wrap">
+
+    <!-- SALUDO -->
+    <div class="greeting-row">
+        <div>
+            <h2 class="greeting">{{ greetingTime() }}, <span class="name-highlight">{{ currentUser().name }}</span> 👋</h2>
+            <p class="greeting-sub">{{ currentUser().subtitle }} · Plataforma SkillSwap</p>
+        </div>
+        <button mat-raised-button class="btn-discover" (click)="goToDiscover()">
+            <mat-icon>search</mat-icon>
+            Buscar tutor
+        </button>
+    </div>
+
+    <!-- BANNER CTA BÚSQUEDA -->
+    <div class="search-cta-banner" (click)="goToDiscover()">
+        <div class="search-cta-left">
+            <mat-icon class="search-cta-icon">school</mat-icon>
+            <div>
+                <span class="search-cta-title">¿Necesitas ayuda con algún curso?</span>
+                <span class="search-cta-sub">
+          Conecta con tutores de UPC, PUCP, UNI, UP y más universidades.
+        </span>
+            </div>
+        </div>
+        <button mat-raised-button class="btn-cta-big"
+                (click)="goToDiscover(); $event.stopPropagation()">
+            <mat-icon>search</mat-icon>
+            Encontrar tutor ahora
+        </button>
+    </div>
+
+    <!-- BANNER INTERUNIVERSITARIO — F3 -->
+    <div class="inter-uni-banner">
+        <div class="inter-uni-left">
+            <mat-icon class="inter-uni-icon">public</mat-icon>
+            <div>
+                <span class="inter-uni-title">Aprende más allá de tu universidad</span>
+                <span class="inter-uni-sub">
+          SkillSwap conecta estudiantes de diferentes instituciones.
+          Obtén perspectivas únicas de alumnos de UPC, PUCP, UNI, UP, USIL, USMP y más.
+        </span>
+            </div>
+        </div>
+        <div class="uni-badges">
+            @for (uni of ['UPC','PUCP','UNI','UP','USIL']; track uni) {
+            <span class="uni-badge">{{ uni }}</span>
+            }
+        </div>
+    </div>
+
+    <!-- STATS RÁPIDAS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <mat-icon class="stat-icon icon-total">school</mat-icon>
+            <span class="stat-num">{{ stats().total }}</span>
+            <span class="stat-lbl">Total sesiones</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon icon-scheduled">event</mat-icon>
+            <span class="stat-num">{{ stats().scheduled }}</span>
+            <span class="stat-lbl">Confirmadas</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon icon-pending">schedule</mat-icon>
+            <span class="stat-num">{{ stats().pending }}</span>
+            <span class="stat-lbl">Pendientes</span>
+        </div>
+        <div class="stat-card">
+            <mat-icon class="stat-icon icon-completed">check_circle</mat-icon>
+            <span class="stat-num">{{ stats().completed }}</span>
+            <span class="stat-lbl">Completadas</span>
+        </div>
+    </div>
+
+    <div class="main-grid">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="col-left">
+
+            <!-- Sesiones recientes -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <mat-icon>calendar_today</mat-icon>
+                        Sesiones recientes
+                    </h3>
+                    <button mat-button class="btn-ver-todas" (click)="goToSessions()">
+                        Ver todas
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+
+                @if (workspaceStore.loading()) {
+                <div class="mini-loading"><mat-spinner diameter="28"></mat-spinner></div>
+                }
+
+                <div class="sessions-list">
+                    @for (session of recentSessions(); track session.id) {
+                    <div class="session-item" (click)="goToSession(session.id)">
+                        <div class="session-icon-wrap">
+                            <mat-icon class="session-icon">menu_book</mat-icon>
+                        </div>
+                        <div class="session-info">
+                            <span class="session-topic">{{ session.topic }}</span>
+                            <span class="session-meta">
+                  {{ session.scheduledAt | date:'dd/MM/yyyy' }} ·
+                  {{ getTutorName(session.tutorId) }}
+                </span>
+                        </div>
+                        <span class="status-chip {{ statusClass(session.status) }}">
+                {{ statusLabel(session.status) }}
+              </span>
+                    </div>
+                    }
+                </div>
+
+                @if (recentSessions().length === 0 && !workspaceStore.loading()) {
+                <div class="empty-mini">
+                    <mat-icon>calendar_today</mat-icon>
+                    <p>No tienes sesiones aún. ¡Busca un tutor!</p>
+                    <button mat-stroked-button class="btn-go" (click)="goToDiscover()">
+                        Buscar tutor
+                    </button>
+                </div>
+                }
+            </div>
+
+            <!-- Solicitudes entrantes -->
+            @if (incomingRequests().length > 0) {
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <mat-icon>notifications_active</mat-icon>
+                        Solicitudes pendientes
+                        <span class="count-badge">{{ incomingRequests().length }}</span>
+                    </h3>
+                </div>
+                <div class="sessions-list">
+                    @for (req of incomingRequests(); track req.id) {
+                    <div class="session-item" (click)="goToSession(req.id)">
+                        <div class="session-icon-wrap request-icon-wrap">
+                            <mat-icon class="session-icon">person_add</mat-icon>
+                        </div>
+                        <div class="session-info">
+                            <span class="session-topic">{{ req.topic }}</span>
+                            <span class="session-meta">
+                    Aprendiz #{{ req.learnerId }} · {{ req.scheduledAt | date:'dd/MM/yyyy' }}
+                  </span>
+                            @if (req.studentLevel) {
+                            <span class="level-badge level-{{ req.studentLevel }}">
+                      @if (req.studentLevel === 'basico') { 🟢 Básico }
+                      @if (req.studentLevel === 'intermedio') { 🟡 Intermedio }
+                      @if (req.studentLevel === 'avanzado') { 🔴 Avanzado }
+                    </span>
+                            }
+                        </div>
+                        <span class="status-chip chip-pending">Ver</span>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="col-right">
+
+            <!-- Tutores disponibles -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <mat-icon>people</mat-icon>
+                        Tutores disponibles
+                    </h3>
+                    <button mat-button class="btn-ver-todas" (click)="goToDiscover()">
+                        Ver todos
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+
+                <div class="tutors-mini-list">
+                    @for (tutor of availableTutors(); track tutor.id) {
+                    <div class="tutor-mini-card" (click)="goToTutor(tutor.id)">
+                        <img [src]="tutor.avatarUrl" [alt]="tutor.name" class="tutor-mini-avatar">
+                        <div class="tutor-mini-info">
+                            <span class="tutor-mini-name">{{ tutor.name }}</span>
+                            <span class="tutor-mini-uni">{{ tutor.university }}</span>
+                            @if (tutor.specialty) {
+                            <span class="tutor-mini-specialty">{{ tutor.specialty }}</span>
+                            }
+                            <div class="tutor-mini-skills">
+                                @for (skill of tutor.skills | slice:0:2; track skill) {
+                                <span class="skill-mini">{{ skill }}</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="tutor-mini-right">
+                            <span class="tutor-mini-rating">⭐ {{ tutor.rating }}</span>
+                            <span class="available-dot"></span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Accesos rápidos -->
+            <div class="section-card">
+                <h3 class="section-title" style="margin-bottom: 12px">
+                    <mat-icon>apps</mat-icon>
+                    Accesos rápidos
+                </h3>
+                <div class="quick-grid">
+                    <button class="quick-btn" (click)="goToSessions()">
+                        <mat-icon>event_note</mat-icon>
+                        Mis sesiones
+                    </button>
+                    <button class="quick-btn" (click)="goToProfile()">
+                        <mat-icon>star</mat-icon>
+                        Mi reputación
+                    </button>
+                    <button class="quick-btn" (click)="goToWallet()">
+                        <mat-icon>account_balance_wallet</mat-icon>
+                        Mi wallet
+                    </button>
+                    <button class="quick-btn" (click)="goToDiscover()">
+                        <mat-icon>search</mat-icon>
+                        Descubrir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Balance mini -->
+            <div class="balance-mini-card">
+                <mat-icon class="balance-icon">account_balance_wallet</mat-icon>
+                <div class="balance-info">
+                    <span class="balance-label">Saldo en wallet</span>
+                    <span class="balance-val">S/ {{ paymentsStore.totalBalance().toFixed(2) }}</span>
+                </div>
+                <button mat-stroked-button class="btn-wallet-mini" (click)="goToWallet()">
+                    Ver
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
