@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { computed, Signal, signal } from '@angular/core';
+import { computed, effect, Signal, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Tutor } from '../domain/model/tutor.entity';
 import { Favorite } from '../domain/model/favorite.entity';
 import { CreateTutorRequest } from '../domain/model/create-tutor.request';
 import { UpdateTutorRequest } from '../domain/model/update-tutor.request';
 import { DiscoveryApi } from '../infrastructure/discovery-api';
+import { IamStore } from '../../iam/application/iam-store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CURRENT_LEARNER_ID, isSignedIn } from '../../shared/infrastructure/current-user';
+import { CURRENT_LEARNER_ID } from '../../shared/infrastructure/current-user';
 
 @Injectable({
     providedIn: 'root',
@@ -66,11 +67,18 @@ export class DiscoveryStore {
         });
     });
 
-    constructor(private discoveryApi: DiscoveryApi) {
+    constructor(
+        private discoveryApi: DiscoveryApi,
+        private iamStore: IamStore,
+    ) {
         this.loadTutors();
-        if (isSignedIn()) {
-            this.loadFavorites();
-        }
+        effect(() => {
+            if (this.iamStore.isSignedIn()) {
+                this.loadFavorites();
+            } else {
+                this.favoritesSignal.set([]);
+            }
+        });
     }
 
     getTutorById(id: number | null | undefined): Signal<Tutor | undefined> {
@@ -124,7 +132,6 @@ export class DiscoveryStore {
     private loadFavorites(): void {
         this.discoveryApi
             .getFavoritesByLearner(CURRENT_LEARNER_ID())
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (favorites) => this.favoritesSignal.set(favorites),
                 error: (err) =>
@@ -164,6 +171,10 @@ export class DiscoveryStore {
 
 
     toggleFavorite(tutorId: number): void {
+        if (!this.iamStore.isSignedIn()) {
+            this.errorSignal.set('Inicia sesión para guardar favoritos');
+            return;
+        }
         if (this.isFavorite(tutorId)) {
             this.discoveryApi.removeFavorite(CURRENT_LEARNER_ID(), tutorId).subscribe({
                 next: () => {

@@ -2,25 +2,27 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PaymentsStore } from '../../../application/payments-store';
+import { IamStore } from '../../../../iam/application/iam-store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DatePipe  } from '@angular/common';
+import { DatePipe, SlicePipe } from '@angular/common';
 
 
 @Component({
     selector: 'app-wallet',
     imports: [
         MatButtonModule, MatIconModule, MatProgressSpinner,
-        MatFormFieldModule, MatInputModule, ReactiveFormsModule, DatePipe ,
+        MatFormFieldModule, MatInputModule, ReactiveFormsModule, DatePipe, SlicePipe,
     ],
     templateUrl: './wallet.html',
     styleUrl: './wallet.css',
 })
 export class WalletView {
     readonly store = inject(PaymentsStore);
+    readonly iamStore = inject(IamStore);
     protected router = inject(Router);
     private fb = inject(FormBuilder);
 

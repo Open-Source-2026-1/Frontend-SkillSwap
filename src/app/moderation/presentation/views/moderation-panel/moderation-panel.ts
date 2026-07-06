@@ -1,4 +1,3 @@
-import { CURRENT_LEARNER_ID, CURRENT_FULL_NAME } from '../../../../shared/infrastructure/current-user';
 import {
     isQuizMessage,
     isQuizResultMessage,
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
 import { ModerationStore } from '../../../application/moderation-store';
 import { WorkspaceStore } from '../../../../workspace/application/workspace-store';
 import { DiscoveryStore } from '../../../../discovery/application/discovery-store';
+import { IamStore } from '../../../../iam/application/iam-store';
 import { SanctionType } from '../../../domain/model/sanction.entity';
 import { Report } from '../../../domain/model/report.entity';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +28,7 @@ export class ModerationPanel {
     readonly store = inject(ModerationStore);
     readonly workspaceStore = inject(WorkspaceStore);
     readonly discoveryStore = inject(DiscoveryStore);
+    readonly iamStore = inject(IamStore);
     protected router = inject(Router);
 
     readonly activeTab = signal<'pending' | 'resolved' | 'sanctions'>('pending');
@@ -139,7 +140,7 @@ export class ModerationPanel {
         return map[type];
     }
 
-    /** Nombre del remitente del mensaje */
+
     getSenderName(senderId: number): string {
         const session = this.selectedSession();
         if (!session) return `Usuario #${senderId}`;
@@ -147,7 +148,7 @@ export class ModerationPanel {
             const tutor = this.discoveryStore.tutors().find((t) => t.id === senderId);
             return tutor ? tutor.name : `Tutor #${senderId}`;
         }
-        return `Aprendiz #${senderId}`;
+        return this.iamStore.resolveUserName(senderId);
     }
 
     isQuizMessage = isQuizMessage;
@@ -166,17 +167,9 @@ export class ModerationPanel {
         return parseQuizResultMessage(content)?.resultText ?? '';
     }
 
-    /**
-     * El backend de Report/Sanction solo guarda IDs genéricos (podrían ser un
-     * tutor o un aprendiz, no hay forma de saberlo desde este BC). Resolvemos
-     * el nombre contra Discovery si es un tutor conocido; si no, mostramos
-     * el mock del usuario actual o un fallback genérico.
-     */
+    /** Report.reporterUserId/reportedUserId siempre son User.id (nunca Tutor.id) — se resuelve contra IAM. */
     resolveUserName(userId: number): string {
-        const tutor = this.discoveryStore.tutors().find((t) => t.id === userId);
-        if (tutor) return tutor.name;
-        if (userId === CURRENT_LEARNER_ID()) return CURRENT_FULL_NAME();
-        return `Usuario #${userId}`;
+        return this.iamStore.resolveUserName(userId);
     }
 
     isTutorMessage(senderId: number): boolean {

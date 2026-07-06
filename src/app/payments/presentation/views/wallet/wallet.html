@@ -169,9 +169,9 @@
 <div class="donations-list">
     @for (donation of store.myDonations(); track donation.id) {
     <div class="donation-card">
-        <div class="donor-avatar">D</div>
+        <div class="donor-avatar">{{ iamStore.resolveUserName(donation.donorId) | slice:0:1 }}</div>
         <div class="donation-info">
-            <span class="donor-name">Aprendiz #{{ donation.donorId }}</span>
+            <span class="donor-name">{{ iamStore.resolveUserName(donation.donorId) }}</span>
             <span class="donation-date">{{ donation.createdAt | date:'dd/MM/yyyy' }}</span>
         </div>
         <div class="donation-amounts">

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { computed, Signal, signal } from '@angular/core';
+import { computed, effect, Signal, signal } from '@angular/core';
 import { Quiz } from '../domain/model/quiz.entity';
 import { QuizAttempt } from '../domain/model/quiz-attempt.entity';
 import { LearningApi } from '../infrastructure/learning-api';
 import { CreateQuizRequest } from '../domain/model/create-quiz.request';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { retry, switchMap } from 'rxjs';
-import { CURRENT_LEARNER_ID, isSignedIn } from '../../shared/infrastructure/current-user';
+import { IamStore } from '../../iam/application/iam-store';
+import { CURRENT_LEARNER_ID } from '../../shared/infrastructure/current-user';
 
 @Injectable({
     providedIn: 'root',
@@ -30,11 +31,18 @@ export class LearningStore {
         return uniq;
     });
 
-    constructor(private learningApi: LearningApi) {
+    constructor(
+        private learningApi: LearningApi,
+        private iamStore: IamStore,
+    ) {
         this.loadQuizzes();
-        if (isSignedIn()) {
-            this.loadMyAttempts();
-        }
+        effect(() => {
+            if (this.iamStore.isSignedIn()) {
+                this.loadMyAttempts();
+            } else {
+                this.attemptsSignal.set([]);
+            }
+        });
     }
 
     getQuizById(id: number | null | undefined): Signal<Quiz | undefined> {
@@ -149,7 +157,6 @@ export class LearningStore {
     private loadMyAttempts(): void {
         this.learningApi
             .getMyAttempts(CURRENT_LEARNER_ID())
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (attempts) => this.attemptsSignal.set(attempts),
                 error: (err) =>

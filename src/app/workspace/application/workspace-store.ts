@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, effect, signal } from '@angular/core';
 import { retry } from 'rxjs';
 import { TutoringSession } from '../domain/model/tutoring-session.entity';
 import { Message } from '../domain/model/message.entity';
@@ -6,7 +6,8 @@ import { SessionStatus } from '../domain/model/session-status';
 import { CreateTutoringSessionRequest } from '../domain/model/create-tutoring-session.request';
 import { CreateMessageRequest } from '../domain/model/create-message.request';
 import { WorkspaceApi } from '../infrastructure/workspace-api';
-import { CURRENT_LEARNER_ID, CURRENT_TUTOR_ID, hasTutorProfile, isSignedIn } from '../../shared/infrastructure/current-user';
+import { IamStore } from '../../iam/application/iam-store';
+import { CURRENT_LEARNER_ID, CURRENT_TUTOR_ID } from '../../shared/infrastructure/current-user';
 
 
 @Injectable({
@@ -26,13 +27,25 @@ export class WorkspaceStore {
     private readonly errorSignal = signal<string | null>(null);
     readonly error = this.errorSignal.asReadonly();
 
-    constructor(private workspaceApi: WorkspaceApi) {
-        if (isSignedIn()) {
-            this.loadSessionsAsLearner();
-        }
-        if (hasTutorProfile()) {
-            this.loadSessionsAsTutor();
-        }
+    constructor(
+        private workspaceApi: WorkspaceApi,
+        private iamStore: IamStore,
+    ) {
+
+        effect(() => {
+            if (this.iamStore.isSignedIn()) {
+                this.loadSessionsAsLearner();
+            } else {
+                this.sessionsCache.set(new Map());
+                this.messagesCache.set(new Map());
+            }
+        });
+
+        effect(() => {
+            if (this.iamStore.currentTutorId() !== null) {
+                this.loadSessionsAsTutor();
+            }
+        });
     }
 
     /** Sesión puntual desde el cache, como Signal reactivo. */

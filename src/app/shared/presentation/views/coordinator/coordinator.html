@@ -120,7 +120,7 @@
                 @for (s of workspaceStore.tutoringSessions() | slice:0:6; track s.id) {
                 <div class="table-row">
                     <span class="td-topic">{{ s.topic | slice:0:20 }}</span>
-                    <span class="td-tutor">#{{ s.tutorId }}</span>
+                    <span class="td-tutor">{{ resolveTutorName(s.tutorId) }}</span>
                     <span><span class="user-role-badge badge-tutor">Tutor</span></span>
                     <span class="status-chip {{ statusClass(s.status) }}">
               {{ statusLabel(s.status) }}

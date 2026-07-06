@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { computed, signal } from '@angular/core';
+import { computed, effect, signal } from '@angular/core';
 import { catchError, of, switchMap } from 'rxjs';
 import { Donation } from '../domain/model/donation.entity';
 import { Wallet } from '../domain/model/wallet.entity';
 import { PaymentsApi } from '../infrastructure/payments-api';
+import { IamStore } from '../../iam/application/iam-store';
 import { CURRENT_TUTOR_ID, hasTutorProfile } from '../../shared/infrastructure/current-user';
 
 /** Comisión fija de la plataforma. NUNCA editable desde la UI (ver nota de seguridad
@@ -34,11 +35,23 @@ export class PaymentsStore {
     readonly error = this.errorSignal.asReadonly();
     readonly donationSuccess = this.donationSuccessSignal.asReadonly();
 
-    constructor(private paymentsApi: PaymentsApi) {
-        if (hasTutorProfile()) {
-            this.loadMyWallet();
-            this.loadMyDonations();
-        }
+    constructor(
+        private paymentsApi: PaymentsApi,
+        private iamStore: IamStore,
+    ) {
+        // Reacciona de verdad a sign-in/sign-out/cambio de perfil de tutor — no solo
+        // una vez al arrancar la app. Sin esto, cambiar de cuenta sin refrescar la
+        // página dejaba ver la wallet/donaciones de la sesión anterior (o ninguna).
+        effect(() => {
+            const tutorId = this.iamStore.currentTutorId();
+            if (tutorId !== null) {
+                this.loadMyWallet();
+                this.loadMyDonations();
+            } else {
+                this.walletSignal.set(null);
+                this.donationsSignal.set([]);
+            }
+        });
     }
 
     private loadMyWallet(): void {
@@ -63,15 +76,7 @@ export class PaymentsStore {
         });
     }
 
-    /**
-     * US18 — flujo completo de donación (simula Stripe):
-     * 1) POST /donations (nace 'pending')
-     * 2) PATCH status -> 'completed' (simula que el pago se aprobó)
-     * 3) PATCH add-funds a la wallet del tutor receptor (Donation y Wallet no
-     *    están conectados en el backend, así que lo hace el front). Si el tutor
-     *    no tiene wallet todavía, la donación queda registrada igual, solo que
-     *    no se refleja en ningún saldo hasta que la cree.
-     */
+
     donate(donorId: number, tutorId: number, sessionId: number, amount: number): void {
         this.loadingSignal.set(true);
         this.errorSignal.set(null);
@@ -93,8 +98,18 @@ export class PaymentsStore {
                         switchMap((wallet) =>
                             this.paymentsApi.addFundsToWallet(wallet.id, completed.netAmount),
                         ),
-                        // El tutor aún no tiene wallet: la donación queda registrada de todos modos.
-                        catchError(() => of(null)),
+                        catchError((err) => {
+                            const isMissingWallet =
+                                err instanceof Error && err.message.includes('Wallet no encontrada');
+                            if (!isMissingWallet) {
+                                // Error real (no el 404 esperado) — se reporta, no se traga en silencio.
+                                this.errorSignal.set(
+                                    'La donación se registró, pero no se pudo abonar al saldo del tutor: ' +
+                                    this.formatError(err, 'error desconocido'),
+                                );
+                            }
+                            return of(null);
+                        }),
                         switchMap(() => of(completed)),
                     ),
                 ),
@@ -115,7 +130,7 @@ export class PaymentsStore {
             });
     }
 
-    /** US20 — crear wallet (solo una vez; no existe endpoint para editarla después). */
+    /** US20 — crear wallet  */
     createWallet(bankName: string, accountNumber: string): void {
         this.loadingSignal.set(true);
         this.errorSignal.set(null);
@@ -138,7 +153,7 @@ export class PaymentsStore {
             });
     }
 
-    /** Retira el saldo completo disponible hacia la cuenta bancaria registrada. */
+
     withdrawAll(): void {
         const wallet = this.myWallet();
         if (!wallet || wallet.balance <= 0) return;

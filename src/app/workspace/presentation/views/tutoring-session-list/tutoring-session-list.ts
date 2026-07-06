@@ -7,6 +7,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
 import { DiscoveryStore } from '../../../../discovery/application/discovery-store';
+import { IamStore } from '../../../../iam/application/iam-store';
 import { SessionStatus } from '../../../domain/model/session-status';
 import { CURRENT_LEARNER_ID, CURRENT_TUTOR_ID } from '../../../../shared/infrastructure/current-user';
 
@@ -22,6 +23,7 @@ export class TutoringSessionList {
   readonly store = inject(WorkspaceStore);
   protected router = inject(Router);
   readonly discoveryStore = inject(DiscoveryStore);
+  readonly iamStore = inject(IamStore);
 
   /** US08/US09 — la misma persona puede ver sus solicitudes como Aprendiz o como Tutor */
   readonly roleFilter = signal<RoleFilter>('learner');
@@ -94,13 +96,6 @@ export class TutoringSessionList {
   }
 
   getLearnerName(learnerId: number): string {
-    const names: Record<number, string> = {
-      101: 'Valeria Torres',
-      102: 'Jazmín Rosas',
-      103: 'Luis Becerra',
-      104: 'Rafael Pacheco',
-      108: 'Santiago Vargas',
-    };
-    return names[learnerId] ?? `Aprendiz #${learnerId}`;
+    return this.iamStore.resolveUserName(learnerId);
   }
 }

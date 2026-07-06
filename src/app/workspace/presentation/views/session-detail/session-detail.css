@@ -402,6 +402,19 @@
   font-weight: 600;
 }
 
+.waiting-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fff8e1;
+  color: #8a6d00;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
 /* ── US10 — Chat locked ──────────────────────────────────── */
 .chat-locked {
   text-align: center;

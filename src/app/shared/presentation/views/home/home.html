@@ -145,7 +145,7 @@
                         <div class="session-info">
                             <span class="session-topic">{{ req.topic }}</span>
                             <span class="session-meta">
-                    Aprendiz #{{ req.learnerId }} · {{ req.scheduledAt | date:'dd/MM/yyyy' }}
+                    {{ iamStore.resolveUserName(req.learnerId) }} · {{ req.scheduledAt | date:'dd/MM/yyyy' }}
                   </span>
                             @if (req.studentLevel) {
                             <span class="level-badge level-{{ req.studentLevel }}">

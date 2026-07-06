@@ -4,6 +4,7 @@ import { ModerationStore } from '../../../../moderation/application/moderation-s
 import { WorkspaceStore } from '../../../../workspace/application/workspace-store';
 import { DiscoveryStore } from '../../../../discovery/application/discovery-store';
 import { ReputationStore } from '../../../../reputation/application/reputation-store';
+import { IamStore } from '../../../../iam/application/iam-store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -25,6 +26,7 @@ export class Coordinator {
     readonly searchCode = signal<string>('');
     readonly searchDone = signal<boolean>(false);
     readonly reputationStore = inject(ReputationStore);
+    readonly iamStore = inject(IamStore);
     readonly showGuide = signal<boolean>(false);
 
     /** Mock estudiantes para la búsqueda */
@@ -145,8 +147,13 @@ export class Coordinator {
 
 
     resolveReporterName(userId: number): string {
-        const tutor = this.discoveryStore.tutors().find((t) => t.id === userId);
-        return tutor ? tutor.name : `Usuario #${userId}`;
+        return this.iamStore.resolveUserName(userId);
+    }
+
+
+    resolveTutorName(tutorId: number): string {
+        const tutor = this.discoveryStore.tutors().find((t) => t.id === tutorId);
+        return tutor ? tutor.name : `Tutor #${tutorId}`;
     }
 
     resolveReport(event: Event, id: number): void {

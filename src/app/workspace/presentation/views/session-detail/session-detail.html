@@ -31,7 +31,7 @@
       </span>
   </div>
 
-  <!-- US09 — Aceptar / Rechazar (solo si pending) -->
+  <!-- US09 — Aceptar / Rechazar (solo si pending y eres el tutor de ESTA sesión) -->
   @if (isPending()) {
   <div class="session-actions">
 
@@ -82,6 +82,12 @@
         Rechazar
       </button>
     </div>
+  </div>
+  } @else if (s.status === 'PENDING') {
+  <!-- Eres el aprendiz que la envió (o cualquiera que no sea el tutor destino): solo ves el estado. -->
+  <div class="waiting-notice">
+    <mat-icon>hourglass_empty</mat-icon>
+    Esperando que el tutor confirme tu solicitud.
   </div>
   }
 
@@ -209,7 +215,7 @@
       </div>
       <div class="bubble-body">
         <div class="bubble-meta">
-          <span class="bubble-sender">Usuario #{{ msg.senderId }}</span>
+          <span class="bubble-sender">{{ senderName(msg.senderId) }}</span>
           <span class="bubble-time">{{ msg.sentAt | date:'hh:mm a' }}</span>
         </div>
         <p class="bubble-content">{{ msg.content }}</p>

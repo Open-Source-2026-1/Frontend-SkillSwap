@@ -85,8 +85,13 @@ export class SessionDetail {
     return s === 'PENDING' || s === 'SCHEDULED';
   });
 
-  /** US09 — puede aceptar/rechazar solo si está pending */
-  readonly isPending = computed(() => this.session()?.status === 'PENDING');
+
+  /** US09 — solo puede aceptar/rechazar quien de verdad sea el tutor de ESTA sesión. */
+  readonly isPending = computed(() => {
+    const s = this.session();
+    if (!s || s.status !== 'PENDING') return false;
+    return this.iamStore.currentTutorId() === s.tutorId;
+  });
 
   /** US15 — el tutor elige explícitamente cuál quiz enviar (ya no se auto-adivina). */
   readonly selectedQuizToSend = signal<number | null>(null);
@@ -116,11 +121,21 @@ export class SessionDetail {
     });
   }
 
-  /** Quién manda el mensaje, inferido según el rol que Valeria tiene en ESTA sesión. */
+
   private currentSenderId(): number {
     const s = this.session();
     if (!s) return CURRENT_LEARNER_ID();
     return s.learnerId === CURRENT_LEARNER_ID() ? CURRENT_LEARNER_ID() : CURRENT_TUTOR_ID();
+  }
+
+
+  senderName(senderId: number): string {
+    const s = this.session();
+    if (s && senderId === s.tutorId) {
+      const tutor = this.discoveryStore.tutors().find((t) => t.id === senderId);
+      return tutor ? tutor.name : `Tutor #${senderId}`;
+    }
+    return this.iamStore.resolveUserName(senderId);
   }
 
   /** US15 — el tutor envía el quiz elegido, como un mensaje real en el chat. */
@@ -276,11 +291,16 @@ export class SessionDetail {
   reportUser(): void {
     const s = this.session();
     if (!s) return;
-    const tutor = this.discoveryStore.tutors().find((t) => t.id === s.tutorId);
-    const reportedName = tutor ? tutor.name : 'Tutor #' + s.tutorId;
+
+    const viewerIsTutor = this.iamStore.currentTutorId() === s.tutorId;
+    const reportedUserId = viewerIsTutor ? s.learnerId : s.tutorId;
+    const reportedName = viewerIsTutor
+        ? this.iamStore.resolveUserName(s.learnerId)
+        : (this.discoveryStore.tutors().find((t) => t.id === s.tutorId)?.name ?? `Tutor #${s.tutorId}`);
+
     this.router
         .navigate(['moderation/report/new'], {
-          queryParams: { sessionId: s.id, reportedUserId: s.tutorId, reportedUserName: reportedName },
+          queryParams: { sessionId: s.id, reportedUserId, reportedUserName: reportedName },
         })
         .then();
   }

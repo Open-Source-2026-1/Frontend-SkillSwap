@@ -49,8 +49,11 @@ export class SignInForm {
                 this.router.navigateByUrl(pending).then();
                 return;
             }
-            const fallback = this.store.isModerator() ? '/coordinator' : '/home';
-            this.router.navigateByUrl(this.returnUrl ?? fallback).then();
+            if (this.store.isModerator()) {
+                this.router.navigateByUrl('/coordinator').then();
+                return;
+            }
+            this.router.navigateByUrl(this.returnUrl ?? '/home').then();
         });
     }
 

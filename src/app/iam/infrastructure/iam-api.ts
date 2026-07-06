@@ -37,4 +37,8 @@ export class IamApi extends BaseApi {
     verifyUser(userId: number): Observable<User> {
         return this.usersEndpoint.verify(userId);
     }
+
+    getUserById(userId: number): Observable<User> {
+        return this.usersEndpoint.getById(userId);
+    }
 }

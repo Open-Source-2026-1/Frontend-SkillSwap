@@ -178,6 +178,37 @@ export class IamStore {
         }
     }
 
+
+    private readonly userNamesCacheSignal = signal<Map<number, string>>(new Map());
+    private readonly pendingUserFetches = new Set<number>();
+
+
+    resolveUserName(userId: number): string {
+        const cached = this.userNamesCacheSignal().get(userId);
+        if (cached) return cached;
+
+        if (userId === this.currentUserSignal()?.id) {
+            return this.currentUserSignal()!.fullName;
+        }
+
+        if (!this.pendingUserFetches.has(userId)) {
+            this.pendingUserFetches.add(userId);
+            this.iamApi.getUserById(userId).subscribe({
+                next: (user) => {
+                    this.userNamesCacheSignal.update((cache) => {
+                        const next = new Map(cache);
+                        next.set(userId, user.fullName);
+                        return next;
+                    });
+                    this.pendingUserFetches.delete(userId);
+                },
+                error: () => this.pendingUserFetches.delete(userId),
+            });
+        }
+
+        return `Usuario #${userId}`;
+    }
+
     private resolveTutorProfileAndSetSession(user: User, token: string) {
         // Si todavía no verificó su correo, ni tiene sentido preguntar por el perfil de tutor.
         if (!user.verified || !user.hasRole('ROLE_TUTOR')) {
