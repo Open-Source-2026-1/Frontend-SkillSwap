@@ -210,7 +210,9 @@ export class IamStore {
     }
 
     private resolveTutorProfileAndSetSession(user: User, token: string) {
-        // Si todavía no verificó su correo, ni tiene sentido preguntar por el perfil de tutor.
+
+        this.tokenSignal.set(token);
+
         if (!user.verified || !user.hasRole('ROLE_TUTOR')) {
             this.setSession(user, token, null);
             return of(null);

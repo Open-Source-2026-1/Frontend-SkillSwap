@@ -4,7 +4,6 @@ import { Quiz } from '../domain/model/quiz.entity';
 import { QuizAttempt } from '../domain/model/quiz-attempt.entity';
 import { LearningApi } from '../infrastructure/learning-api';
 import { CreateQuizRequest } from '../domain/model/create-quiz.request';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { retry, switchMap } from 'rxjs';
 import { IamStore } from '../../iam/application/iam-store';
 import { CURRENT_LEARNER_ID } from '../../shared/infrastructure/current-user';
@@ -17,11 +16,13 @@ export class LearningStore {
     private readonly attemptsSignal = signal<QuizAttempt[]>([]);
     private readonly loadingSignal = signal<boolean>(false);
     private readonly errorSignal = signal<string | null>(null);
+    private readonly quizCreatedSignal = signal<boolean>(false);
 
     readonly quizzes = this.quizzesSignal.asReadonly();
     readonly attempts = this.attemptsSignal.asReadonly();
     readonly loading = this.loadingSignal.asReadonly();
     readonly error = this.errorSignal.asReadonly();
+    readonly quizCreated = this.quizCreatedSignal.asReadonly();
 
     readonly quizCount = computed(() => this.quizzes().length);
 
@@ -35,11 +36,12 @@ export class LearningStore {
         private learningApi: LearningApi,
         private iamStore: IamStore,
     ) {
-        this.loadQuizzes();
         effect(() => {
             if (this.iamStore.isSignedIn()) {
+                this.loadQuizzes();
                 this.loadMyAttempts();
             } else {
+                this.quizzesSignal.set([]);
                 this.attemptsSignal.set([]);
             }
         });
@@ -75,12 +77,14 @@ export class LearningStore {
     addQuiz(request: CreateQuizRequest): void {
         this.loadingSignal.set(true);
         this.errorSignal.set(null);
+        this.quizCreatedSignal.set(false);
         this.learningApi
             .createQuiz(request)
             .pipe(retry(2))
             .subscribe({
                 next: (created) => {
                     this.quizzesSignal.update((quizzes) => [...quizzes, created]);
+                    this.quizCreatedSignal.set(true);
                     this.loadingSignal.set(false);
                 },
                 error: (err) => {
@@ -141,7 +145,6 @@ export class LearningStore {
         this.errorSignal.set(null);
         this.learningApi
             .getQuizzes()
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (quizzes) => {
                     this.quizzesSignal.set(quizzes);

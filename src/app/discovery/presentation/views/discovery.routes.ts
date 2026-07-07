@@ -9,7 +9,7 @@ const editTutorProfile = () =>
     import('./edit-tutor-profile/edit-tutor-profile').then((m) => m.EditTutorProfile);
 
 export const discoveryRoutes: Routes = [
-    { path: 'tutors', loadComponent: tutorList },
-    { path: 'tutors/:id', loadComponent: tutorDetail },
+    { path: 'tutors', loadComponent: tutorList, canActivate: [iamGuard] },
+    { path: 'tutors/:id', loadComponent: tutorDetail, canActivate: [iamGuard] },
     { path: 'edit-profile', loadComponent: editTutorProfile, canActivate: [iamGuard, tutorGuard] },
 ];

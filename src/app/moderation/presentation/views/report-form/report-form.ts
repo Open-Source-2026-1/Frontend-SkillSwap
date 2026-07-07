@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModerationStore } from '../../../application/moderation-store';
@@ -11,10 +11,6 @@ import { CURRENT_LEARNER_ID } from '../../../../shared/infrastructure/current-us
 
 /**
  * US24 — enviar un reporte.
- *
- * El backend solo tiene un campo `reason: String` (no separa "categoría" de
- * "descripción" como hacía el mock), así que combinamos ambos en un solo
- * string al armar el request: "Categoría: descripción detallada".
  */
 @Component({
     selector: 'app-report-form',
@@ -33,7 +29,7 @@ export class ReportForm {
     private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
     private router = inject(Router);
-    private store = inject(ModerationStore);
+    readonly store = inject(ModerationStore);
 
     /** Datos que vienen como query params desde session-detail */
     private readonly sessionId: number =
@@ -63,6 +59,14 @@ export class ReportForm {
         }),
     });
 
+    constructor() {
+        effect(() => {
+            if (this.store.reportSuccess()) {
+                this.goBack();
+            }
+        });
+    }
+
     submit(): void {
         if (this.form.invalid) return;
 
@@ -72,7 +76,6 @@ export class ReportForm {
             sessionId: this.sessionId,
             reason: `${this.form.value.reason}: ${this.form.value.description}`,
         });
-        this.goBack();
     }
 
     goBack(): void {

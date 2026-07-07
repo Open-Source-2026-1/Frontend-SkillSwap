@@ -12,6 +12,13 @@
             Crear nuevo quiz
         </h2>
 
+        @if (store.error()) {
+        <div class="quiz-error">
+            <mat-icon>error</mat-icon>
+            {{ store.error() }}
+        </div>
+        }
+
         <!-- Datos generales del quiz -->
         <form [formGroup]="form">
             <div class="fields-row">
@@ -130,7 +137,7 @@
                 Cancelar
             </button>
             <button mat-raised-button class="btn-save"
-                    [disabled]="form.invalid || questions().length === 0"
+                    [disabled]="form.invalid || questions().length === 0 || store.loading()"
                     (click)="submit()">
                 <mat-icon>save</mat-icon>
                 Guardar quiz

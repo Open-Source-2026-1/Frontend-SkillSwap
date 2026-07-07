@@ -172,7 +172,7 @@
         <span class="chat-quiz-label">📝 Quiz enviado</span>
         <span class="chat-quiz-title">{{ quizTitleFromMessage(msg.content) }}</span>
       </div>
-      @if (!sessionHasQuizAttempt() && !iamStore.isTutor()) {
+      @if (!sessionHasQuizAttempt() && iamStore.currentTutorId() !== s.tutorId) {
       <button mat-raised-button class="btn-take-quiz-chat"
               (click)="openQuizById(quizIdFromMessage(msg.content))">
         <mat-icon>play_arrow</mat-icon>
@@ -247,7 +247,7 @@
   </p>
   }
 
-  <!-- Composer inline: ya no navega a otra pantalla -->
+  <!-- Composer inline -->
   <form class="message-composer" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
     <button type="button" mat-icon-button class="btn-attach" (click)="fileInput.click()"
             [disabled]="uploadingFile()" title="Adjuntar imagen o PDF">
@@ -264,8 +264,7 @@
     </button>
   </form>
 
-  <!-- US15 — enviar un quiz real al chat (solo el tutor puede enviarlo) -->
-  @if (iamStore.isTutor() && learningStore.quizzes().length > 0) {
+  @if (iamStore.currentTutorId() === s.tutorId && learningStore.quizzes().length > 0) {
   <div class="send-quiz-row">
     <mat-form-field appearance="outline" class="send-quiz-field">
       <mat-label>Enviar quiz al chat</mat-label>

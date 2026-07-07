@@ -34,25 +34,6 @@
 </div>
 }
 
-<!-- US05 — Search bar -->
-<div class="search-bar-wrap">
-  <span class="search-icon-wrap">
-    <mat-icon>search</mat-icon>
-  </span>
-  <input class="search-input"
-         type="text"
-         placeholder="Busca por nombre, especialidad o habilidad (ej: Física, SQL...)"
-         (input)="onSearch($event)">
-</div>
-
-<!-- No results -->
-@if (filteredTutors().length === 0) {
-<div class="empty-search">
-  <mat-icon>search_off</mat-icon>
-  <p>No se encontraron tutores para tu búsqueda. Intenta con otros términos.</p>
-</div>
-}
-
 <!-- Tutor cards grid -->
 <div class="tutors-grid">
   @for (tutor of filteredTutors(); track tutor.id) {
@@ -110,7 +91,6 @@
     </div>
 
     <!-- Stars -->
-
     @if (tutor.reviewCount > 0) {
     <div class="stars-row">
       @for (star of stars(tutor.rating); track star) {

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { computed, signal } from '@angular/core';
+import { computed, effect, signal } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { Report } from '../domain/model/report.entity';
 import { Sanction, SanctionType } from '../domain/model/sanction.entity';
 import { ModerationApi } from '../infrastructure/moderation-api';
 import { CreateReportRequest } from '../domain/model/create-report.request';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IamStore } from '../../iam/application/iam-store';
 import { retry } from 'rxjs';
 
 @Injectable({
@@ -16,11 +16,13 @@ export class ModerationStore {
     private readonly sanctionsSignal = signal<Sanction[]>([]);
     private readonly loadingSignal = signal<boolean>(false);
     private readonly errorSignal = signal<string | null>(null);
+    private readonly reportSuccessSignal = signal<boolean>(false);
 
     readonly reports = this.reportsSignal.asReadonly();
     readonly sanctions = this.sanctionsSignal.asReadonly();
     readonly loading = this.loadingSignal.asReadonly();
     readonly error = this.errorSignal.asReadonly();
+    readonly reportSuccess = this.reportSuccessSignal.asReadonly();
 
     readonly pendingReports = computed(() =>
         this.reports().filter((r) => r.status === 'pending'),
@@ -54,21 +56,32 @@ export class ModerationStore {
         return this.sanctions().filter((s) => s.sanctionedUserId === userId);
     }
 
-    constructor(private moderationApi: ModerationApi) {
-        this.loadReports();
-        this.loadSanctions();
+    constructor(
+        private moderationApi: ModerationApi,
+        private iamStore: IamStore,
+    ) {
+        effect(() => {
+            if (this.iamStore.isSignedIn()) {
+                this.loadReports();
+                this.loadSanctions();
+            } else {
+                this.reportsSignal.set([]);
+                this.sanctionsSignal.set([]);
+            }
+        });
     }
-
     /** US24 — estudiante envía reporte */
     addReport(request: CreateReportRequest): void {
         this.loadingSignal.set(true);
         this.errorSignal.set(null);
+        this.reportSuccessSignal.set(false);
         this.moderationApi
             .createReport(request)
             .pipe(retry(2))
             .subscribe({
                 next: (created) => {
                     this.reportsSignal.update((reports) => [...reports, created]);
+                    this.reportSuccessSignal.set(true);
                     this.loadingSignal.set(false);
                 },
                 error: (err) => {
@@ -159,7 +172,6 @@ export class ModerationStore {
         this.errorSignal.set(null);
         this.moderationApi
             .getReports()
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (reports) => {
                     this.reportsSignal.set(reports);
@@ -175,7 +187,6 @@ export class ModerationStore {
     private loadSanctions(): void {
         this.moderationApi
             .getSanctions()
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (sanctions) => {
                     this.sanctionsSignal.set(sanctions);

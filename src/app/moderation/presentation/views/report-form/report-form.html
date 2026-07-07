@@ -29,6 +29,13 @@
             </div>
         </div>
 
+        @if (store.error()) {
+        <div class="report-error">
+            <mat-icon>error</mat-icon>
+            {{ store.error() }}
+        </div>
+        }
+
         <form [formGroup]="form" (ngSubmit)="submit()">
 
             <mat-form-field appearance="outline" class="full-width">
@@ -62,7 +69,7 @@
                     Cancelar
                 </button>
                 <button type="submit" mat-raised-button class="btn-send"
-                        [disabled]="form.invalid">
+                        [disabled]="form.invalid || store.loading()">
                     <mat-icon>send</mat-icon>
                     Enviar reporte
                 </button>

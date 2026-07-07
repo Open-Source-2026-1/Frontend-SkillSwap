@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { computed, Signal, signal } from '@angular/core';
+import { computed, effect, Signal, signal } from '@angular/core';
 import { Review } from '../domain/model/review.entity';
 import { ReputationApi } from '../infrastructure/reputation-api';
 import { CreateReviewRequest } from '../domain/model/create-review.request';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IamStore } from '../../iam/application/iam-store';
 import { retry } from 'rxjs';
 import { CURRENT_TUTOR_ID } from '../../shared/infrastructure/current-user';
 
@@ -34,8 +34,14 @@ export class ReputationStore {
         return Math.round((sum / mine.length) * 10) / 10;
     });
 
-    constructor(private reputationApi: ReputationApi) {
-        this.loadReviews();
+    constructor(private reputationApi: ReputationApi, private iamStore: IamStore) {
+        effect(() => {
+            if (this.iamStore.isSignedIn()) {
+                this.loadReviews();
+            } else {
+                this.reviewsSignal.set([]);
+            }
+        });
     }
 
     /** Reseñas filtradas por tutorId — para usar en tutor-detail */
@@ -118,7 +124,6 @@ export class ReputationStore {
         this.errorSignal.set(null);
         this.reputationApi
             .getReviews()
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (reviews) => {
                     this.reviewsSignal.set(reviews);

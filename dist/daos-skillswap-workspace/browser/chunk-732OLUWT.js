@@ -1,0 +1,1 @@
+import{c as t}from"./chunk-UBUAIFFT.js";import"./chunk-5RDSYLOX.js";import"./chunk-5N5ZSK7Y.js";import"./chunk-2NFLSA4Y.js";var e=()=>import("./chunk-VO4TUC54.js").then(o=>o.ReportForm),r=()=>import("./chunk-JWNRHWXX.js").then(o=>o.ModerationPanel),a=[{path:"report/new",loadComponent:e},{path:"panel",loadComponent:r,canActivate:[t]}];export{a as moderationRoutes};

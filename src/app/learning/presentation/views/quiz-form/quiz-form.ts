@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LearningStore } from '../../../application/learning-store';
@@ -27,14 +27,18 @@ import { CURRENT_LEARNER_ID } from '../../../../shared/infrastructure/current-us
 export class QuizForm {
     private fb = inject(FormBuilder);
     private router = inject(Router);
-    private store = inject(LearningStore);
+    readonly store = inject(LearningStore);
     private discoveryStore = inject(DiscoveryStore);
 
-    /**
-     * Las categorías de curso ya no son una lista fija: se calculan de las
-     * especialidades reales de los tutores en Discovery. Va creciendo sola
-     * a medida que se registran tutores con especialidades nuevas.
-     */
+    constructor() {
+
+        effect(() => {
+            if (this.store.quizCreated()) {
+                this.router.navigate(['learning/admin']).then();
+            }
+        });
+    }
+
     readonly courseOptions = computed(() => {
         const specialties = this.discoveryStore
             .tutors()
@@ -111,10 +115,11 @@ export class QuizForm {
         this.store.addQuiz({
             title: this.form.value.title!,
             course: this.form.value.course!,
+            // El backend ya hizo tutorId opcional/nullable — el banco de quizzes lo
+            // administra el moderador (createdBy = su User.id), no un tutor.
             createdBy: CURRENT_LEARNER_ID(),
             questions: this.questions(),
         });
-        this.router.navigate(['learning/admin']).then();
     }
 
     goBack(): void {

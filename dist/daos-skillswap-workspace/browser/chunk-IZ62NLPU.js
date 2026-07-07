@@ -1,0 +1,1 @@
+import{b as t}from"./chunk-UBUAIFFT.js";import"./chunk-5RDSYLOX.js";import"./chunk-5N5ZSK7Y.js";import"./chunk-2NFLSA4Y.js";var e=()=>import("./chunk-RV57EP2F.js").then(o=>o.MyProfile),r=()=>import("./chunk-THSWCEA2.js").then(o=>o.ReviewForm),m=[{path:"my-profile",loadComponent:e,canActivate:[t]},{path:"review/new",loadComponent:r}];export{m as reputationRoutes};

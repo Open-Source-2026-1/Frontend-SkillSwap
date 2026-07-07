@@ -1,0 +1,1 @@
+import{b as o}from"./chunk-UBUAIFFT.js";import"./chunk-5RDSYLOX.js";import"./chunk-5N5ZSK7Y.js";import"./chunk-2NFLSA4Y.js";var e=()=>import("./chunk-WM7AQ4ZW.js").then(t=>t.Donate),a=()=>import("./chunk-QWJUYLHE.js").then(t=>t.WalletView),p=[{path:"donate",loadComponent:e},{path:"wallet",loadComponent:a,canActivate:[o]}];export{p as paymentsRoutes};

@@ -52,7 +52,10 @@ export class CompleteTutorProfile {
             nonNullable: true,
             validators: [Validators.required, Validators.minLength(20)],
         }),
-        avatarUrl: new FormControl<string>('https://i.pravatar.cc/150', { nonNullable: true }),
+        avatarUrl: new FormControl<string>(
+            `https://i.pravatar.cc/150?u=${this.iamStore.currentUser()?.username ?? 'default'}`,
+            { nonNullable: true },
+        ),
         portfolioUrl: new FormControl<string>('', { nonNullable: true }),
         yearsExperience: new FormControl<number>(0, { nonNullable: true }),
     });

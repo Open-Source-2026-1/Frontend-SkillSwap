@@ -7,7 +7,6 @@ import { CreateTutorRequest } from '../domain/model/create-tutor.request';
 import { UpdateTutorRequest } from '../domain/model/update-tutor.request';
 import { DiscoveryApi } from '../infrastructure/discovery-api';
 import { IamStore } from '../../iam/application/iam-store';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CURRENT_LEARNER_ID } from '../../shared/infrastructure/current-user';
 
 @Injectable({
@@ -71,11 +70,12 @@ export class DiscoveryStore {
         private discoveryApi: DiscoveryApi,
         private iamStore: IamStore,
     ) {
-        this.loadTutors();
         effect(() => {
             if (this.iamStore.isSignedIn()) {
+                this.loadTutors();
                 this.loadFavorites();
             } else {
+                this.tutorsSignal.set([]);
                 this.favoritesSignal.set([]);
             }
         });
@@ -116,7 +116,6 @@ export class DiscoveryStore {
         this.errorSignal.set(null);
         this.discoveryApi
             .getTutors()
-            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (tutors) => {
                     this.tutorsSignal.set(tutors);

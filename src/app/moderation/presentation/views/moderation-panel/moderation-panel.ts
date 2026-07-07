@@ -200,7 +200,7 @@ export class ModerationPanel {
     }
 
     goBack(): void {
-        this.router.navigate(['/workspace/tutoring-sessions']).then();
+        this.router.navigate(['/coordinator']).then();
     }
 
     exportToPDF(): void {
